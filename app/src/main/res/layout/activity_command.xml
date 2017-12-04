@@ -1,0 +1,67 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.stur.chest.Chest" >
+
+    <EditText
+        android:id="@+id/et_cmd_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="input" />
+
+    <Button
+        android:id="@+id/Btn_cmd_exc"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:background="@drawable/shape4"
+        android:minHeight="92dp"
+        android:onClick="onCmdExcClick"
+        android:text="exec" >
+    </Button>
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/Btn_cmd_wifiadb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:onClick="onWifiAdbClick"
+                android:text="wifi adb"
+                android:textSize="22dp" >
+            </Button>
+
+            <Button
+                android:id="@+id/Btn_cmd_pc_wakeup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:onClick="onPCWakeup"
+                android:text="wakeup pc"
+                android:textSize="22dp" >
+            </Button>
+        </LinearLayout>
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/tv_cmd_output"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="output" />
+
+</LinearLayout>

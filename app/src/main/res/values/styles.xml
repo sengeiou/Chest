@@ -1,0 +1,120 @@
+<resources>
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+
+    <style name="button" >
+        <item name="android:textColor" >#ffffff</item>
+        <item name="android:gravity" >center</item>
+        <item name="android:layout_margin" >3dp</item>
+        <item name="android:textSize" >30dp</item>
+        <item name="android:textStyle" >bold</item>
+        <item name="android:shadowColor" >#000000</item>
+        <item name="android:shadowDx" >1</item>
+        <item name="android:shadowDy" >1</item>
+        <item name="android:shadowRadius" >2</item>
+    </style>
+
+    <style name="AppTheme.TextItemStyle" parent="AppTheme">
+        <item name="android:layout_width">match_parent</item>
+        <!-- item name="android:layout_height">@dimen/view_text_height</item-->
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_marginLeft">@dimen/border_frame_left</item>
+        <item name="android:layout_marginRight">@dimen/border_frame_right</item>
+        <item name="android:textColor">@color/main_content_color</item>
+        <item name="android:textSize">@dimen/font_main_content_size</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="AppTheme.PreferenceTextStyle" parent="AppTheme.TextItemStyle">
+        <!-- item name="android:drawableRight">@drawable/ic_more</item-->
+        <item name="android:layout_marginLeft">@dimen/border_frame_left</item>
+        <item name="android:layout_marginRight">@dimen/border_frame_right</item>
+    </style>
+
+
+    <style name="AppTheme.MenuTextStyle" parent="AppTheme">
+        <item name="android:textColor">@color/title_text_color</item>
+        <item name="android:textSize">@dimen/font_title_size</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="AppTheme.TextButtonStyle" parent="AppTheme">
+        <!-- item name="android:textColor">@color/white</item-->
+        <item name="android:textSize">@dimen/font_lev2_content_size</item>
+        <item name="android:textStyle">bold</item>
+        <!-- item name="android:background">@drawable/ic_click_bg</item-->
+        <item name="android:gravity">center</item>
+    </style>
+    <style name="AppTheme.ButtonStyle" parent="AppTheme">
+        <!-- item name="android:textColor">@color/white</item-->
+        <item name="android:textSize">@dimen/font_main_content_size</item>
+        <item name="android:textStyle">bold</item>
+        <!-- item name="android:background">@drawable/ic_click_bg</item-->
+        <item name="android:gravity">center</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/view_button_height</item>
+        <item name="android:layout_marginBottom">@dimen/border_frame</item>
+        <item name="android:layout_marginTop">@dimen/border_frame_top</item>
+    </style>
+
+    <style name="AppTheme.MainContentTextStyle" parent="AppTheme">
+        <item name="android:textColor">@color/main_content_color</item>
+        <item name="android:textSize">@dimen/font_main_content_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="AppTheme.Lev1ContentTextStyle" parent="AppTheme">
+        <item name="android:textColor">@color/lev1_content_color</item>
+        <item name="android:textSize">@dimen/font_lev1_content_size</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="AppTheme.Lev2ContentTextStyle" parent="AppTheme">
+        <item name="android:textColor">@color/lev2_content_color</item>
+        <item name="android:textSize">@dimen/font_lev2_content_size</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="AppTheme.FullScreen" parent="AppTheme">
+        <item name="android:windowNoTitle">true</item>
+        <!-- item name="windowActionBar">false</item-->
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="AppTheme.SearchEditView" parent="AppTheme">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/search_bar_height</item>
+        <item name="android:paddingTop">@dimen/dp_8</item>
+        <item name="android:paddingBottom">@dimen/dp_8</item>
+        <item name="android:layout_marginLeft">@dimen/border_frame_left</item>
+        <!-- item name="android:drawableLeft">@drawable/ic_search</item-->
+        <!-- item name="android:hint">@string/hint_search</item-->
+        <item name="android:background">@color/transparent</item>
+        <item name="android:imeOptions">actionSearch</item>
+        <item name="android:inputType">text</item>
+        <item name="android:paddingRight">@dimen/dp_8</item>
+        <item name="android:singleLine">true</item>
+        <!-- item name="android:textCursorDrawable">@drawable/shape_color_cursor</item-->
+    </style>
+
+    <style name="AppTheme.Diffuse" parent="AppTheme">
+        <!-- Customize your theme here. -->
+    </style>
+</resources>

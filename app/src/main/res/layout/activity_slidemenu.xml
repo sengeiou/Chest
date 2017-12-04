@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.yulong.cloneit.tools.SlideMenu
+            android:id="@+id/slide_menu"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+
+            <!-- include layout="@layout/layout_menu" /-->
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="#ffffff">
+
+<!-- android:background="@drawable/banner_01" -->
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dip"
+                    android:layout_weight="5" >
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="24dp" >
+
+                        <ImageView
+                            android:id="@+id/down_half"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:src="@drawable/newphone" />
+
+                        <TextView
+                            android:id="@+id/old_main_tittle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/down_half"
+                            android:paddingTop="4dp"
+                            android:layout_centerHorizontal="true"
+                            android:text="newPhone"
+                            android:textColor="#4c4c4c"
+                            android:textSize="16dp" />
+
+
+                    </RelativeLayout>
+
+
+                    <!--
+                     <ImageView
+                    android:id="@+id/arrow_uptodown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="26dp"
+                    android:background="@drawable/arrow_down"
+                    android:scaleType="centerInside" />
+                    -->
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dip"
+                    android:layout_weight="9"
+                    android:layout_marginBottom="8dp" >
+
+
+                    <!--  <ImageView
+                    android:id="@+id/arrow_downtoup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top"
+                    android:layout_marginLeft="26dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/arrow_up"
+                    android:scaleType="centerInside" /> -->
+                     <ImageView
+                    android:id="@+id/arrow_downtoup"
+                    android:layout_width="360dp"
+                    android:layout_height="180dp"
+                    android:layout_gravity="top|center_horizontal"
+                    android:background="@drawable/zhuanlun"
+                    android:scaleType="centerInside" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="116dp" >
+
+                        <ImageView
+                            android:id="@+id/up_half"
+                            android:layout_width="104dp"
+                            android:layout_height="104dp"
+                            android:layout_centerHorizontal="true"
+                            android:src="@drawable/oldphone" />
+
+                        <TextView
+                            android:id="@+id/new_main_tittle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/up_half"
+                            android:layout_centerHorizontal="true"
+                            android:text="oldPhone"
+                            android:textColor="#4c4c4c"
+                            android:textSize="16dp"
+                            android:paddingTop="4dp"/>
+
+                    </RelativeLayout>
+
+
+                </FrameLayout>
+                 <LinearLayout
+                     android:id="@+id/clone_invite_install"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_gravity="bottom|center"
+                     android:layout_marginBottom="24dp"
+                     android:gravity="center_vertical"
+                     android:orientation="horizontal"
+                     android:clickable="true">
+                    <ImageView
+
+                        android:id="@+id/erweima_icon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_centerHorizontal="true"
+                            android:src="@drawable/erweima" />
+                  <TextView
+                      android:layout_toRightOf="@id/erweima_icon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:text="Invite friends to install"
+                        android:textColor="#808080"
+                       android:paddingLeft="8dp"
+                        android:textSize="14dp" />
+                </LinearLayout>
+            </LinearLayout>
+            <View
+            android:id="@+id/view_mask_slider"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="bottom"
+            android:background="#000000"
+            android:alpha="0.0"
+            android:orientation="vertical"
+            />
+            </FrameLayout>
+        </com.yulong.cloneit.tools.SlideMenu>
+</LinearLayout>

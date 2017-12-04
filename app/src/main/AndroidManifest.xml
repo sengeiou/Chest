@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.stur.chest"
+
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="23"
+        android:targetSdkVersion="24" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAPTURE_VIDEO_OUTPUT" />
+    <uses-permission android:name="android.permission.CAPTURE_SECURE_VIDEO_OUTPUT" />
+    <uses-permission android:name="android.permission.ACCESS_SUPERUSER" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.INJECT_EVENTS" tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.WRITE_CONTACTS"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+
+    <application
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".ChestActivity"
+            android:label="@string/app_name"
+            android:theme="@style/Base.V7.Theme.AppCompat" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.tab.view.TabMainActivity"/>
+        <activity android:name="com.tab.view.demo1.FirstActivity" />
+        <activity android:name="com.tab.view.demo2.SecondActivity" />
+        <activity android:name="com.tab.view.demo3.ThirdActivity" />
+        <activity android:name="com.tab.view.demo4.FourthActivity" />
+        <activity android:name="com.tab.view.demo5.FifthActivity" />
+
+        <!-- used for lib activity -->
+        <activity
+            android:name="com.stur.lib.activity.WiFiActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="com.stur.lib.activity.WelcomeActivity"
+            android:label="@string/title_activity_welcome"
+            android:theme="@style/AppTheme.FullScreen" />
+        <activity
+            android:name="com.stur.lib.activity.DiffuseActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.FullScreen" />
+        <activity
+            android:name="com.stur.lib.activity.ViewGroupActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.FullScreen" />
+        <activity
+            android:name="com.stur.lib.activity.FilesTransferActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.FullScreen" />
+        <activity
+            android:name="com.stur.lib.activity.FilesViewActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.FullScreen" />
+        <activity
+            android:name="com.stur.lib.activity.QRCodeActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.FullScreen" />
+        <activity
+            android:name="com.stur.lib.activity.WebServerActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.FullScreen" />
+        <service android:name="com.stur.lib.service.SocketService" />
+        <activity
+            android:name="com.stur.lib.activity.SplashActivity"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name="com.stur.lib.activity.CameraActivity" />
+        <activity android:name="com.stur.lib.activity.CameraGLSurfaceActivity" />
+        <activity android:name="com.stur.chest.CommandActivity" />
+        <activity android:name="com.stur.lib.activity.MediaEncoderActivity" />
+        <activity android:name="com.stur.lib.activity.MediaDecoderActivity" />
+        <activity android:name="com.stur.lib.activity.LocationActivity" />
+        <service android:name="com.stur.lib.location.LocationService" />
+        <activity android:name="com.stur.lib.activity.RecorderActivity" />
+
+        <service android:name="com.stur.chest.ChestService" />
+    </application>
+
+</manifest>

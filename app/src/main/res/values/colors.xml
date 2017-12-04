@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="description">#ff486e6d</color>
+    <color name="primary">#FF03A9F4</color>
+    <color name="primary_dark">#FF0288D1</color>
+    <color name="status_bar_color">@color/primary_dark</color>
+
+    <color name="bg_window_main">#CCFFFFFF</color>
+    <color name="bg_window_titlebar">#FFFFFF</color>
+    <color name="content_window_bg">#FFFFFF</color>
+
+    <color name="title_text_color">#55030303</color>
+    <color name="main_content_color">#555555</color>
+    <color name="lev1_content_color">#CC030303</color>
+    <color name="lev2_content_color">#CC888888</color>
+
+    <color name="icon_text_color">#555555</color>
+    <color name="text_bg_gray">#CCCCCC</color>
+    <color name="transparent">#00000000</color>
+
+    <!-- used for diffuse -->
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#00FFFF</color>
+    
+    <!-- used for Tab -->
+    <color name="tab_down">#37aaa9</color>
+    <color name="tab">#46dad8</color>
+
+    <!-- used for P1 -->
+    <color name="bg_select_device">#9A35FF</color>
+</resources>

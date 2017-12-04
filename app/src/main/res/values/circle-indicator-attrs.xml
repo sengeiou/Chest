@@ -1,0 +1,13 @@
+<resources>
+
+    <declare-styleable name="CircleIndicator">
+        <attr name="circle_spacing" format="dimension"/>
+        <attr name="circle_fill_color" format="color|reference"/>
+        <attr name="circle_stroke_color" format="color|reference"/>
+        <attr name="circle_radius" format="dimension"/>
+        <attr name="circle_auto_scroll" format="boolean"/>
+        <attr name="circle_scroll_delay_time" format="integer"/>
+        <attr name="circle_scroll_animation" format="boolean"/>
+    </declare-styleable>
+
+</resources>

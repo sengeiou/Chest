@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Chest</string>
+    <string name="app_version">v1.0</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_welcome">WelcomeActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_down_load">Http下载测试</string>
+    <string name="title_activity_network_test">数据传输性能测试工具</string>
+    <string name="title_activity_ping_test">Ping测试</string>
+    <string name="title_activity_ftp_load">Ftp上传/下载测试</string>
+    <string name="title_activity_local_file">本地目录</string>
+    <string name="title_activity_remote_file">远程目录</string>
+    <string name="title_activity_config_file">配置文件</string>
+    <string name="title_activity_net_state">网络状态配置信息</string>
+    <string name="title_activity_net_info">网络状态信息</string>
+    <string name="title_activity_config_info">网络配置信息</string>
+    <string name="title_activity_dns_info">DNS信息</string>
+    <string name="title_activity_route_info">Route信息</string>
+    <string name="title_activity_ping_wave">Ping曲线图</string>
+    <string name="title_activity_running_process">实时网速详情</string>
+    <string name="title_activity_auto_mode">自动模式</string>
+
+    <string name="host_name">主机名</string>
+    <string name="port_name">端     口</string>
+    <string name="user_name">用户名</string>
+    <string name="pass_word">密     码</string>
+    <string name="operate_interval">执行间隔/s</string>
+    <string name="do_cancel">取     消</string>
+    <string name="do_ok">确    定</string>
+    <string name="hint_host">119.147.25.41</string>
+    <string name="hint_port">21</string>
+    <string name="hint_user"></string>
+    <string name="hint_password"></string>
+    <string name="hint_interval">5</string>
+    <string name="hint_times">20</string>
+
+    <string name="write_down_url">填写下载URL</string>
+    <string name="write_down_filename">填写文件名及文件格式</string>
+    <string name="download_num_of_thread">下载线程数量</string>
+    <string name="download_times">下载文件次数</string>
+    <string name="start_download">开始下载</string>
+  <string name="stop_download">暂停下载</string>
+  <string name="max_time">最大时间/M</string>
+  <string name="save_config">保存配置</string>
+
+
+  <string name="local_filelist">本地目录</string>
+  <string name="glance_over">浏览</string>
+  <string name="remote_filelist">远程目录</string>
+  <string name="operate_times">执行次数</string>
+  <string name="operate_mode">模式</string>
+  <string name="do_config">配置</string>
+  <string name="do_upload">上传</string>
+  <string name="do_download">下载</string>
+  <string name="load_times">上传/下载次数</string>
+  <string name="parent_filelist">上一级</string>
+
+  <string name="select_item">选择测试项目</string>
+  <string name="http_download">Http下载测试</string>
+  <string name="ftp_download_upload">FTP上传/下载测试</string>
+  <string name="ping_test">ping测试</string>
+  <string name="auto_mode">自动模式</string>
+  <string name="change_net">切换数据业务主网</string>
+  <string name="traffic_info">网速信息</string>
+  <string name="android_test">TestingSettings</string>
+
+  <string name="write_down_ip_address">填写IP地址</string>
+  <string name="ping_times">ping次数</string>
+  <string name="max_interval">时间间隔/s</string>
+  <string name="wave_view">波形视图</string>
+  <string name="do_back">返回</string>
+
+  <string name="ftp_upload">Ftp上传</string>
+  <string name="ftp_download">Ftp下载</string>
+  <string name="do_run">运   行</string>
+
+  <string name="networkinfo">网络状态信息</string>
+  <string name="networkstate">网络状态信息</string>
+  <string name="configinfo">网络配置信息</string>
+  <string name="routeinfo">Route信息</string>
+  <string name="addroute">添加路由</string>
+  <string name="delroute">删除路由</string>
+  <string name="editroute">编辑路由</string>
+  <string name="ipaddress">IP address</string>
+  <string name="dev">interface </string>
+  <string name="dnsinfo">DNS信息</string>
+  <string name="weburl">输入域名进行DNS测试</string>
+  <string name="dnstest">DNS测试</string>
+  <string name="editdns1">编辑DNS1</string>
+  <string name="editdns2">编辑DNS2</string>
+
+  <string name="app_list">应用程序</string>
+  <string name="app_realtime_traffic">↑↓应用程序实时速率KB/S</string>
+  <string name="app_realtime_traffic_all">所有:</string>
+
+  <!--Remote Droid used-->
+    <string name="title_activity_client">Client Activity</string>
+    <string name="title_activity_server">Server Activity</string>
+    <string name="description_server">Choose this to cast the display of this device to a client.</string>
+    <string name="description_client">Choose this to get the display of some other device.</string>
+    <string name="note_1">1. As of now it\'ll work ONLY on a local network.</string>
+    <string name="note_2">2. Start the server first, ONLY then start the client.</string>
+    <string name="note_3">3. Try creating hotspot on one device and connect the other device using WiFi.</string>
+    <string name="note_4">4. The server app will ONLY work on a rooted KitKat device and the app must be installed to /system.</string>
+    
+    <!--Stream Encoder used-->
+    <string name="btn_capture">Publish</string>
+    <string name="btn_stop">Stop</string>
+</resources>

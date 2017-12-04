@@ -1,0 +1,1 @@
+adb shell setprop persist.stur.activity com.jay.rtspserver.MainActivity
