@@ -1,0 +1,79 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:divider="@drawable/separator"
+    android:showDividers="middle"
+    tools:context="com.stur.chest.ChestActivity" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/border_toolbar_top"
+        android:layout_marginLeft="@dimen/border_frame_left">
+
+        <EditText
+            android:id="@+id/et_cmd_input"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:text="input" />
+
+        <Button
+            android:id="@+id/Btn_cmd_exc"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginLeft="@dimen/border_edit_padding"
+            android:background="@drawable/shape4"
+            android:minHeight="50dp"
+            android:onClick="onCmdExcClick"
+            android:text="exec" >
+        </Button>
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginTop="10dp" >
+
+        <TextView
+            android:id="@+id/tv_output"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="output" />
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/Btn_wakeup_pc"
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="@dimen/border_frame_left"
+            android:background="@drawable/shape1"
+            android:text="wakeup pc"
+            android:textSize="@dimen/font_lev1_content_size"></Button>
+
+        <Button
+            android:id="@+id/Btn_wifiadb"
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="60dp"
+            android:background="@drawable/shape1"
+            android:text="wifi adb"
+            android:textSize="@dimen/font_lev1_content_size"></Button>
+
+        <Button
+            android:id="@+id/Btn_log_level"
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="60dp"
+            android:background="@drawable/shape1"
+            android:text="Log"
+            android:textSize="@dimen/font_lev1_content_size"></Button>
+    </LinearLayout>
+</LinearLayout>

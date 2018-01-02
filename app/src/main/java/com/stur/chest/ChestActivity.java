@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,11 +23,14 @@ import com.stur.lib.SystemPropertiesProxy;
 import com.stur.lib.Utils;
 import com.stur.lib.activity.ActivityBase;
 import com.stur.lib.web.NanoHttpdServer;
+import com.tab.view.demo3.FragmentAdapter;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class ChestActivity extends ActivityBase {
     public static final String PROP_ACTIVITY_NAME = "persist.stur.activity";
+    public static final String DEFAULT_ACTIVITY = "com.tab.view.TabMainActivity";
 
     Button mBtnDemo;
     TextView mTvOutput;
@@ -37,10 +42,9 @@ public class ChestActivity extends ActivityBase {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chest);
-        mBtnDemo = (Button)findViewById(R.id.Btn_chest_demo);
-        mTvOutput = (TextView)findViewById(R.id.tv_output);
-        mQRCodeImg = (ImageView)findViewById(R.id.iv_qrcode);
+        //mBtnDemo = (Button)findViewById(R.id.Btn_chest_demo);
+        //mTvOutput = (TextView)findViewById(R.id.tv_output);
+        //mQRCodeImg = (ImageView)findViewById(R.id.iv_qrcode);
         mHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
@@ -109,7 +113,7 @@ public class ChestActivity extends ActivityBase {
     }
 
     public void onTestClick(View view) {
-        String clsName = SystemPropertiesProxy.get(this, PROP_ACTIVITY_NAME, "");
+        String clsName = SystemPropertiesProxy.get(this, PROP_ACTIVITY_NAME, DEFAULT_ACTIVITY);
         if (clsName != null && clsName.length() > 0) {
             try {
                 Class cls = Class.forName(clsName);
@@ -135,7 +139,6 @@ public class ChestActivity extends ActivityBase {
 
         //boolean b = Settings.System.putInt(this.getContentResolver(),"hd_voice_on",2);
         //Utils.display(this, String.valueOf(b));
-
 
         /*String out = "";
         ArrayList<HashMap<String,String>> allPics = MediaUtils.getAllPictures(this);
@@ -181,27 +184,19 @@ public class ChestActivity extends ActivityBase {
         Log.d(this, "onDestroy");
     }
 
-    public void onCmdClick(View view) {
-        Intent intent = new Intent(this, CommandActivity.class);
-        startActivity(intent);
-    }
+    protected void initViewPager() {
+        viewPager = (ViewPager) findViewById(R.id.vp_content);
+        fragmentsList = new ArrayList<>();
+        Fragment fragment = new ToolsFragment();
+        fragmentsList.add(fragment);
+        fragment = new ToolsFragment();
+        fragmentsList.add(fragment);
+        fragment = new ToolsFragment();
+        fragmentsList.add(fragment);
 
-    public void onLogClick(View view) {
-        String prop = "log.tag." + com.stur.lib.config.ConfigBase.APP_NAME;
-        String[] llArr = {"V", "D", "I", "W", "E", "A"};
-        String logLevel = SystemPropertiesProxy.get(this, prop, "V");
-        String nextLogLevel = "D";
-        for(int i=0; i<llArr.length; i++) {
-            if (llArr[i].equals(logLevel) && i != llArr.length - 1) {
-                nextLogLevel = llArr[i+1];
-                break;
-            } else if (logLevel.equals(llArr[llArr.length -1])) {
-                nextLogLevel = llArr[0];
-                break;
-            }
-        }
-
-        mTvOutput.setText("log.tag." + com.stur.lib.config.ConfigBase.APP_NAME + ": " + nextLogLevel);
-        SystemPropertiesProxy.set(this, prop, nextLogLevel);
+        viewPager.setAdapter(new FragmentAdapter(getSupportFragmentManager(),
+                fragmentsList));
+        viewPager.setCurrentItem(0);
+        viewPager.setOnPageChangeListener(this);
     }
 }

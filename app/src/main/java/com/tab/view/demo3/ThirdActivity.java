@@ -1,13 +1,5 @@
 package com.tab.view.demo3;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.stur.chest.R;
-import com.tab.view.demo2.Tab1Fragment;
-import com.tab.view.demo2.Tab2Fragment;
-import com.tab.view.demo2.Tab3Fragment;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -15,13 +7,19 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
+
+import com.stur.chest.R;
+import com.tab.view.demo2.Tab1Fragment;
+import com.tab.view.demo2.Tab2Fragment;
+import com.tab.view.demo2.Tab3Fragment;
+
+import java.util.ArrayList;
 
 /**
  * 第三种tab界面的实现方式 --ViewPager + Fragment + FragmentPagerAdapter
