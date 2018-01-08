@@ -19,7 +19,6 @@ import android.widget.Toast;
 
 import com.stur.chest.ChestService.MyBinder;
 import com.stur.lib.Log;
-import com.stur.lib.SystemPropertiesProxy;
 import com.stur.lib.Utils;
 import com.stur.lib.activity.ActivityBase;
 import com.stur.lib.web.NanoHttpdServer;
@@ -29,9 +28,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class ChestActivity extends ActivityBase {
-    public static final String PROP_ACTIVITY_NAME = "persist.stur.activity";
-    public static final String DEFAULT_ACTIVITY = "com.tab.view.TabMainActivity";
-
     Button mBtnDemo;
     TextView mTvOutput;
     ImageView mQRCodeImg;
@@ -112,51 +108,6 @@ public class ChestActivity extends ActivityBase {
         }*/
     }
 
-    public void onTestClick(View view) {
-        String clsName = SystemPropertiesProxy.get(this, PROP_ACTIVITY_NAME, DEFAULT_ACTIVITY);
-        if (clsName != null && clsName.length() > 0) {
-            try {
-                Class cls = Class.forName(clsName);
-                Intent intent = new Intent(this, cls);
-                startActivity(intent);
-                return;
-            } catch (ClassNotFoundException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
-
-        //selectActivity("encoder", "decoder", MediaEncoderActivity.class, MediaDecoderActivity.class);
-
-        //mTvOutput.setText("ScreenMetrics:" +DisplayUtil.getScreenMetrics(this).x + ", " + DisplayUtil.getScreenMetrics(this).y);
-
-        /*try {
-            runDownloadManagerTest(R.raw.valid_chain, R.raw.test_key);
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }*/
-
-        //boolean b = Settings.System.putInt(this.getContentResolver(),"hd_voice_on",2);
-        //Utils.display(this, String.valueOf(b));
-
-        /*String out = "";
-        ArrayList<HashMap<String,String>> allPics = MediaUtils.getAllPictures(this);
-        for(HashMap<String,String> hm : allPics) {
-            out += hm.get("thumbnail_path");
-            out += "/";
-        }
-        Utils.display(this, out);*/
-
-        /*Intent startIntent = new Intent(this, SocketService.class);
-        startService(startIntent);*/
-
-        //TCPClient tc = TCPClient.init(this, "www.baidu.com", "80");
-        //tc.start();
-
-    }
-
-
     private ServiceConnection mConnection = new ServiceConnection() {
 
         @Override
@@ -189,13 +140,12 @@ public class ChestActivity extends ActivityBase {
         fragmentsList = new ArrayList<>();
         Fragment fragment = new ToolsFragment();
         fragmentsList.add(fragment);
-        fragment = new ToolsFragment();
+        fragment = new TestFragment();
         fragmentsList.add(fragment);
         fragment = new ToolsFragment();
         fragmentsList.add(fragment);
 
-        viewPager.setAdapter(new FragmentAdapter(getSupportFragmentManager(),
-                fragmentsList));
+        viewPager.setAdapter(new FragmentAdapter(getSupportFragmentManager(), fragmentsList));
         viewPager.setCurrentItem(0);
         viewPager.setOnPageChangeListener(this);
     }

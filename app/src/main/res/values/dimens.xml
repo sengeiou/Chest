@@ -1,51 +1,5 @@
 <resources>
 
-    <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
-    
-    <dimen name="padding_small">8dp</dimen>
-    <dimen name="padding_medium">8dp</dimen>
-    <dimen name="padding_large">16dp</dimen>
-    
-    <dimen name="text_size">10sp</dimen>
-    <dimen name="list_size">15sp</dimen>
-
-    <dimen name="view_logo_height">160dp</dimen>
-    <dimen name="search_bar_height">48dp</dimen>
-    <dimen name="toolbar_height">64dp</dimen>
-
-    <dimen name="font_title_size">12sp</dimen>
-    <dimen name="font_content_size">8sp</dimen>
-
-    <dimen name="grid_img_size">192dp</dimen>
-    <dimen name="grid_title_height">32dp</dimen>
-    <dimen name="grid_desc_height">24dp</dimen>
-
-    <dimen name="border_frame_top">28dp</dimen>
-    <dimen name="border_frame_bottom">10dp</dimen>
-    <dimen name="border_frame_left">15dp</dimen>
-    <dimen name="border_frame_right">15dp</dimen>
-
-    <dimen name="border_frame">15dp</dimen>
-    <dimen name="border_edit_padding">5dp</dimen>
-    <dimen name="view_edit_height">38dp</dimen>
-    <dimen name="view_text_height">52dp</dimen>
-    <dimen name="view_lev0_content_height">38dp</dimen>
-    <dimen name="view_lev1_content_height">32dp</dimen>
-    <dimen name="view_button_height">48dp</dimen>
-
-    <dimen name="font_main_content_size">14sp</dimen>
-    <dimen name="font_lev1_content_size">10sp</dimen>
-    <dimen name="font_lev2_content_size">8sp</dimen>
-    <dimen name="font_icon_text_size">8sp</dimen>
-
-    <dimen name="border_toolbar_top">3dp</dimen>
-    <dimen name="border_toolbar_bottom">3dp</dimen>
-    <dimen name="icon_text_height">28dp</dimen>
-    <dimen name="fab_margin">16dp</dimen>
-    <dimen name="text_button_width">80dp</dimen>
-    <dimen name="dp_8">8dp</dimen> 
     
     <!-- usded for P1 -->
     <dimen name="diffuse_core_radius">100dp</dimen> 

@@ -21,7 +21,7 @@ import com.stur.lib.network.WifiUtils;
 
 import java.io.IOException;
 
-public class ToolsFragment extends Fragment {
+public class MineFragment extends Fragment {
     Button mBtnCmdExc;
     TextView mEtInput;
     TextView mTvOutput;
@@ -35,7 +35,6 @@ public class ToolsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater,
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_tools, null);
-        Log.d(view, "onCreateView");
 
         mBtnCmdExc = (Button)view.findViewById(R.id.Btn_cmd_exc);
         mBtnCmdExc.setOnClickListener(new View.OnClickListener() {
@@ -119,7 +118,6 @@ public class ToolsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Log.d(getActivity(), "ToolsFragment onResume");
         StringBuilder sb = new StringBuilder();
         sb.append("setprop " + AdbUtils.WIFI_ADB_PORT_PROP + " " + AdbUtils.WIFI_ADB_DEFAULT_PORT + "\n");
         sb.append("adb connect " + WifiUtils.getIp(getActivity()) + ":" + AdbUtils.WIFI_ADB_DEFAULT_PORT + "\n");
