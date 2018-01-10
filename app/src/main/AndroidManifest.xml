@@ -96,7 +96,6 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name="com.stur.lib.activity.CameraActivity" />
         <activity android:name="com.stur.lib.activity.CameraGLSurfaceActivity" />
-        <activity android:name="com.stur.chest.CommandActivity" />
         <activity android:name="com.stur.lib.activity.MediaEncoderActivity" />
         <activity android:name="com.stur.lib.activity.MediaDecoderActivity" />
         <activity android:name="com.stur.lib.activity.LocationActivity" />

@@ -1,11 +1,5 @@
 package com.stur.lib.activity;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import com.stur.lib.R;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +11,12 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.stur.lib.R;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class FilesViewActivity extends Activity {
     private SimpleAdapter adapter;
@@ -86,6 +86,7 @@ public class FilesViewActivity extends Activity {
                 listItem.add(0, map);
             }
         }else{
+
             Toast.makeText(getApplicationContext(), "该目录不能读取", Toast.LENGTH_SHORT).show();
         }
     }

@@ -1,5 +1,6 @@
 package com.stur.chest;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -11,6 +12,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.animation.Easing;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.github.mikephil.charting.utils.ColorTemplate;
 import com.stur.lib.AdbUtils;
 import com.stur.lib.Constant;
 import com.stur.lib.Log;
@@ -20,6 +29,7 @@ import com.stur.lib.network.WakeOnLan;
 import com.stur.lib.network.WifiUtils;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class ToolsFragment extends Fragment {
     Button mBtnCmdExc;
@@ -28,6 +38,7 @@ public class ToolsFragment extends Fragment {
     Button mBtnWifiAdb;
     Button mBtnPCWakeup;
     Button mBtnLogLevel;
+    PieChart mPieChart;
     Handler mHandler;
     String mOutput = "";
 
@@ -37,6 +48,17 @@ public class ToolsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_tools, null);
         Log.d(view, "onCreateView");
 
+        initView(view);
+
+        mHandler = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+            }
+        };
+        return view;
+    }
+
+    private void initView(View view) {
         mBtnCmdExc = (Button)view.findViewById(R.id.Btn_cmd_exc);
         mBtnCmdExc.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,12 +130,87 @@ public class ToolsFragment extends Fragment {
             }
         });
 
-        mHandler = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-            }
-        };
-        return view;
+        initPieChart(view);
+    }
+
+    private void initPieChart(View view) {
+        mPieChart = (PieChart)view.findViewById(R.id.pc_controller);
+        //mPieChart.setUsePercentValues(true);//设置value是否用显示百分数,默认为false
+        mPieChart.setDescription(null);  //右下角的总体描述部分，设为null即为不显示
+        //mPieChart.setDescription("全年消费情况");//设置描述
+        //mPieChart.setDescriptionTextSize(20);//设置描述字体大小
+        //mPieChart.setDescriptionColor(); //设置描述颜色
+        //pieChart.setDescriptionTypeface();//设置描述字体
+        mPieChart.setDrawLegendEnabled(false);  //设置右边中间的说明图表是否显示
+
+        mPieChart.setExtraOffsets(5, 5, 5, 5);//设置饼状图距离左上右下的偏移量，以dp为单位
+
+        mPieChart.setDragDecelerationFrictionCoef(0.95f);//设置阻尼系数,范围在[0,1]之间,越小饼状图转动越困难
+
+        mPieChart.setDrawCenterText(true);//是否绘制中间的文字
+        mPieChart.setCenterTextColor(Color.RED);//中间的文字颜色
+        mPieChart.setCenterTextSize(24);//中间的文字字体大小
+
+        mPieChart.setDrawHoleEnabled(true);//是否绘制饼状图中间的圆
+        mPieChart.setHoleColor(Color.WHITE);//饼状图中间的圆的绘制颜色
+        mPieChart.setHoleRadius(58f);//饼状图中间的圆的半径大小
+
+        mPieChart.setTransparentCircleColor(Color.BLACK);//设置圆环的颜色
+        mPieChart.setTransparentCircleAlpha(110);//设置圆环的透明度[0,255]
+        mPieChart.setTransparentCircleRadius(60f);//设置圆环的半径值
+
+        // enable rotation of the chart by touch
+        mPieChart.setRotationEnabled(true);//设置饼状图是否可以旋转(默认为true)
+        mPieChart.setRotationAngle(10);//设置饼状图旋转的角度
+
+        mPieChart.setHighlightPerTapEnabled(true);//设置旋转的时候点中的tab是否高亮(默认为true)
+
+        Legend l = mPieChart.getLegend();  //Legend就是右边中间的说明区域，一般用于指明不同颜色对应的类别
+        l.setPosition(Legend.LegendPosition.RIGHT_OF_CHART_CENTER);//设置每个tab的显示位置
+        l.setXEntrySpace(0f);
+        l.setYEntrySpace(0f);//设置tab之间Y轴方向上的空白间距值
+        l.setYOffset(0f);
+
+        // entry label styling
+        //mPieChart.setDrawEntryLabels(true);//设置是否绘制Label
+        //mPieChart.setEntryLabelColor(Color.BLACK);//设置绘制Label的颜色
+        //pieChart.setEntryLabelTypeface(mTfRegular);
+        //mPieChart.setEntryLabelTextSize(10f);//设置绘制Label的字体大小
+
+        //mPieChart.setOnChartValueSelectedListener(this);//设值点击时候的回调
+        mPieChart.animateY(3400, Easing.EasingOption.EaseInQuad);//设置Y轴上的绘制动画
+        ArrayList<PieEntry> pieEntries = new ArrayList<>();
+        for (int i = 0; i < 3; i++){
+            PieEntry pieEntry = new PieEntry((float)20, 400);
+            pieEntries.add(pieEntry);
+        }
+
+        String centerText = "控制面板";
+        mPieChart.setCenterText(centerText);//设置中间的文字
+
+        PieDataSet pieDataSet = new PieDataSet(pieEntries, "");
+        ArrayList<Integer> colors = new ArrayList<Integer>();
+        for (int c : ColorTemplate.VORDIPLOM_COLORS)
+            colors.add(c);
+        for (int c : ColorTemplate.JOYFUL_COLORS)
+            colors.add(c);
+        for (int c : ColorTemplate.COLORFUL_COLORS)
+            colors.add(c);
+        pieDataSet.setColors(colors);
+
+        pieDataSet.setSliceSpace(3f);//设置选中的Tab离两边的距离
+        pieDataSet.setSelectionShift(5f);//设置选中的tab的多出来的
+        PieData pieData = new PieData();
+        pieData.setDataSet(pieDataSet);
+
+        pieData.setValueFormatter(new PercentFormatter());
+        pieData.setValueTextSize(12f);
+        pieData.setValueTextColor(Color.BLUE);
+
+        mPieChart.setData(pieData);
+        // undo all highlights
+        mPieChart.highlightValues(null);
+        mPieChart.invalidate();
     }
 
     @Override

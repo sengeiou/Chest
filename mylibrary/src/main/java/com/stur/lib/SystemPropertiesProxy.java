@@ -12,6 +12,7 @@
  *
  * File name: SystemPropertiesProxy.java
  * Description:Systemproperties类在android.os下，但这个类是隐藏的，上层程序开发无法直接使用。使用Java的反射机制是可以使用这个类
+ * 进行系统属性设置的程序也必须有system或root权限，否则反射调用时会抛InvocationTargetException
  * Others:
 
  * Department:  Communication Software Development
