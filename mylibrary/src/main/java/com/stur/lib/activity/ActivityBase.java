@@ -257,6 +257,19 @@ public class ActivityBase extends FragmentActivity
 
     @Override
     public void onClick(View v) {
+        /* for Resource IDs are not allowed to be used in a switch statement in Android library modules
+        switch (v.getId()) {
+            case R.id.tv_tab1:
+                viewPager.setCurrentItem(0);
+                break;
+            case R.id.tv_tab2:
+                viewPager.setCurrentItem(1);
+                break;
+            case R.id.tv_tab3:
+                viewPager.setCurrentItem(2);
+                break;
+        }*/
+
         if (v.getId() == R.id.tv_tab1 ) {
             viewPager.setCurrentItem(0);
         } else if (v.getId() == R.id.tv_tab2) {
@@ -264,6 +277,8 @@ public class ActivityBase extends FragmentActivity
         } else if (v.getId() == R.id.tv_tab3) {
             viewPager.setCurrentItem(2);
         }
+
+
     }
 
     @Override
