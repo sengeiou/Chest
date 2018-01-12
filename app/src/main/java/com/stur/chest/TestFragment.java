@@ -27,6 +27,9 @@ public class TestFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        if (DEFAULT_ACTIVITY.length() > 0) {
+            startTestActivity();
+        }
         Log.d(getActivity(), "TestFragment onResume");
     }
 

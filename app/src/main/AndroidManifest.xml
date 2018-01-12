@@ -55,6 +55,7 @@
         <activity android:name="com.tab.view.demo3.ThirdActivity" />
         <activity android:name="com.tab.view.demo4.FourthActivity" />
         <activity android:name="com.tab.view.demo5.FifthActivity" />
+        <activity android:name="com.xxmassdeveloper.mpchartexample.PieChartActivity" />
 
         <!-- used for lib activity -->
         <activity

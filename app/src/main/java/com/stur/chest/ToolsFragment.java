@@ -135,58 +135,72 @@ public class ToolsFragment extends Fragment {
 
     private void initPieChart(View view) {
         mPieChart = (PieChart)view.findViewById(R.id.pc_controller);
-        //mPieChart.setUsePercentValues(true);//ÉèÖÃvalueÊÇ·ñÓÃÏÔÊ¾°Ù·ÖÊı,Ä¬ÈÏÎªfalse
-        mPieChart.setDescription(null);  //ÓÒÏÂ½ÇµÄ×ÜÌåÃèÊö²¿·Ö£¬ÉèÎªnull¼´Îª²»ÏÔÊ¾
-        //mPieChart.setDescription("È«ÄêÏû·ÑÇé¿ö");//ÉèÖÃÃèÊö
-        //mPieChart.setDescriptionTextSize(20);//ÉèÖÃÃèÊö×ÖÌå´óĞ¡
-        //mPieChart.setDescriptionColor(); //ÉèÖÃÃèÊöÑÕÉ«
-        //pieChart.setDescriptionTypeface();//ÉèÖÃÃèÊö×ÖÌå
-        mPieChart.setDrawLegendEnabled(false);  //ÉèÖÃÓÒ±ßÖĞ¼äµÄËµÃ÷Í¼±íÊÇ·ñÏÔÊ¾
+        //mPieChart.setUsePercentValues(true);//è®¾ç½®valueæ˜¯å¦ç”¨æ˜¾ç¤ºç™¾åˆ†æ•°,é»˜è®¤ä¸ºfalse
+        //mPieChart.setDescription(null);  //å³ä¸‹è§’çš„æ€»ä½“æè¿°éƒ¨åˆ†ï¼Œè®¾ä¸ºnullå³ä¸ºä¸æ˜¾ç¤º
 
-        mPieChart.setExtraOffsets(5, 5, 5, 5);//ÉèÖÃ±ı×´Í¼¾àÀë×óÉÏÓÒÏÂµÄÆ«ÒÆÁ¿£¬ÒÔdpÎªµ¥Î»
+        //è®¾ç½®æè¿°éƒ¨åˆ†
+//        Description des = new Description();
+//        des.setText("æµé‡å¥—é¤æ¦‚å†µ");
+//        des.setTextSize(5);
+//        des.setTextColor(0x555555);
+//        des.setPosition(765,1683);
+//        des.setEnabled(true);
+//        mPieChart.setDescription(des);
 
-        mPieChart.setDragDecelerationFrictionCoef(0.95f);//ÉèÖÃ×èÄáÏµÊı,·¶Î§ÔÚ[0,1]Ö®¼ä,Ô½Ğ¡±ı×´Í¼×ª¶¯Ô½À§ÄÑ
+//        Description des = mPieChart.getDescription();
+//        des.setText("æµé‡å¥—é¤æ¦‚å†µ");
+//        des.setTextSize(5);
+//        des.setTextColor(0x555555);
+//        des.setPosition(765,1683);
+        mPieChart.getDescription().setEnabled(true);
 
-        mPieChart.setDrawCenterText(true);//ÊÇ·ñ»æÖÆÖĞ¼äµÄÎÄ×Ö
-        mPieChart.setCenterTextColor(Color.RED);//ÖĞ¼äµÄÎÄ×ÖÑÕÉ«
-        mPieChart.setCenterTextSize(24);//ÖĞ¼äµÄÎÄ×Ö×ÖÌå´óĞ¡
 
-        mPieChart.setDrawHoleEnabled(true);//ÊÇ·ñ»æÖÆ±ı×´Í¼ÖĞ¼äµÄÔ²
-        mPieChart.setHoleColor(Color.WHITE);//±ı×´Í¼ÖĞ¼äµÄÔ²µÄ»æÖÆÑÕÉ«
-        mPieChart.setHoleRadius(58f);//±ı×´Í¼ÖĞ¼äµÄÔ²µÄ°ë¾¶´óĞ¡
+        mPieChart.setDrawLegendEnabled(true);  //è®¾ç½®å³è¾¹ä¸­é—´çš„è¯´æ˜å›¾è¡¨æ˜¯å¦æ˜¾ç¤º
 
-        mPieChart.setTransparentCircleColor(Color.BLACK);//ÉèÖÃÔ²»·µÄÑÕÉ«
-        mPieChart.setTransparentCircleAlpha(110);//ÉèÖÃÔ²»·µÄÍ¸Ã÷¶È[0,255]
-        mPieChart.setTransparentCircleRadius(60f);//ÉèÖÃÔ²»·µÄ°ë¾¶Öµ
+        mPieChart.setExtraOffsets(5, 5, 5, 5);//è®¾ç½®é¥¼çŠ¶å›¾è·ç¦»å·¦ä¸Šå³ä¸‹çš„åç§»é‡ï¼Œä»¥dpä¸ºå•ä½
+
+        mPieChart.setDragDecelerationFrictionCoef(0.95f);//è®¾ç½®é˜»å°¼ç³»æ•°,èŒƒå›´åœ¨[0,1]ä¹‹é—´,è¶Šå°é¥¼çŠ¶å›¾è½¬åŠ¨è¶Šå›°éš¾
+
+        mPieChart.setDrawCenterText(true);//æ˜¯å¦ç»˜åˆ¶ä¸­é—´çš„æ–‡å­—
+        mPieChart.setCenterTextColor(Color.RED);//ä¸­é—´çš„æ–‡å­—é¢œè‰²
+        mPieChart.setCenterTextSize(24);//ä¸­é—´çš„æ–‡å­—å­—ä½“å¤§å°
+
+        mPieChart.setDrawHoleEnabled(true);//æ˜¯å¦ç»˜åˆ¶é¥¼çŠ¶å›¾ä¸­é—´çš„åœ†
+        mPieChart.setHoleColor(Color.WHITE);//é¥¼çŠ¶å›¾ä¸­é—´çš„åœ†çš„ç»˜åˆ¶é¢œè‰²
+        mPieChart.setHoleRadius(58f);//é¥¼çŠ¶å›¾ä¸­é—´çš„åœ†çš„åŠå¾„å¤§å°
+
+        mPieChart.setTransparentCircleColor(Color.BLACK);//è®¾ç½®åœ†ç¯çš„é¢œè‰²
+        mPieChart.setTransparentCircleAlpha(110);//è®¾ç½®åœ†ç¯çš„é€æ˜åº¦[0,255]
+        mPieChart.setTransparentCircleRadius(60f);//è®¾ç½®åœ†ç¯çš„åŠå¾„å€¼
 
         // enable rotation of the chart by touch
-        mPieChart.setRotationEnabled(true);//ÉèÖÃ±ı×´Í¼ÊÇ·ñ¿ÉÒÔĞı×ª(Ä¬ÈÏÎªtrue)
-        mPieChart.setRotationAngle(10);//ÉèÖÃ±ı×´Í¼Ğı×ªµÄ½Ç¶È
+        mPieChart.setRotationEnabled(false);//è®¾ç½®é¥¼çŠ¶å›¾æ˜¯å¦å¯ä»¥æ—‹è½¬(é»˜è®¤ä¸ºtrue)
+        mPieChart.setRotationAngle(10);//è®¾ç½®é¥¼çŠ¶å›¾æ—‹è½¬çš„è§’åº¦
 
-        mPieChart.setHighlightPerTapEnabled(true);//ÉèÖÃĞı×ªµÄÊ±ºòµãÖĞµÄtabÊÇ·ñ¸ßÁÁ(Ä¬ÈÏÎªtrue)
+        mPieChart.setHighlightPerTapEnabled(true);//è®¾ç½®æ—‹è½¬çš„æ—¶å€™ç‚¹ä¸­çš„tabæ˜¯å¦é«˜äº®(é»˜è®¤ä¸ºtrue)
 
-        Legend l = mPieChart.getLegend();  //Legend¾ÍÊÇÓÒ±ßÖĞ¼äµÄËµÃ÷ÇøÓò£¬Ò»°ãÓÃÓÚÖ¸Ã÷²»Í¬ÑÕÉ«¶ÔÓ¦µÄÀà±ğ
-        l.setPosition(Legend.LegendPosition.RIGHT_OF_CHART_CENTER);//ÉèÖÃÃ¿¸ötabµÄÏÔÊ¾Î»ÖÃ
+        Legend l = mPieChart.getLegend();  //Legendå°±æ˜¯å³è¾¹ä¸­é—´çš„è¯´æ˜åŒºåŸŸï¼Œä¸€èˆ¬ç”¨äºæŒ‡æ˜ä¸åŒé¢œè‰²å¯¹åº”çš„ç±»åˆ«
+        l.setPosition(Legend.LegendPosition.RIGHT_OF_CHART_CENTER);//è®¾ç½®æ¯ä¸ªtabçš„æ˜¾ç¤ºä½ç½®
         l.setXEntrySpace(0f);
-        l.setYEntrySpace(0f);//ÉèÖÃtabÖ®¼äYÖá·½ÏòÉÏµÄ¿Õ°×¼ä¾àÖµ
+        l.setYEntrySpace(0f);//è®¾ç½®tabä¹‹é—´Yè½´æ–¹å‘ä¸Šçš„ç©ºç™½é—´è·å€¼
         l.setYOffset(0f);
 
         // entry label styling
-        //mPieChart.setDrawEntryLabels(true);//ÉèÖÃÊÇ·ñ»æÖÆLabel
-        //mPieChart.setEntryLabelColor(Color.BLACK);//ÉèÖÃ»æÖÆLabelµÄÑÕÉ«
-        //pieChart.setEntryLabelTypeface(mTfRegular);
-        //mPieChart.setEntryLabelTextSize(10f);//ÉèÖÃ»æÖÆLabelµÄ×ÖÌå´óĞ¡
+        mPieChart.setDrawEntryLabels(true);//è®¾ç½®æ˜¯å¦ç»˜åˆ¶Label
+        mPieChart.setEntryLabelColor(Color.BLACK);//è®¾ç½®ç»˜åˆ¶Labelçš„é¢œè‰²
+        //mPieChart.setEntryLabelTypeface(mTfRegular);
+        mPieChart.setEntryLabelTextSize(10f);//è®¾ç½®ç»˜åˆ¶Labelçš„å­—ä½“å¤§å°
 
-        //mPieChart.setOnChartValueSelectedListener(this);//ÉèÖµµã»÷Ê±ºòµÄ»Øµ÷
-        mPieChart.animateY(3400, Easing.EasingOption.EaseInQuad);//ÉèÖÃYÖáÉÏµÄ»æÖÆ¶¯»­
+        //mPieChart.setOnChartValueSelectedListener(this);//è®¾å€¼ç‚¹å‡»æ—¶å€™çš„å›è°ƒ
+        mPieChart.animateY(3400, Easing.EasingOption.EaseInQuad);//è®¾ç½®Yè½´ä¸Šçš„ç»˜åˆ¶åŠ¨ç”»
         ArrayList<PieEntry> pieEntries = new ArrayList<>();
         for (int i = 0; i < 3; i++){
             PieEntry pieEntry = new PieEntry((float)20, 400);
             pieEntries.add(pieEntry);
         }
 
-        String centerText = "¿ØÖÆÃæ°å";
-        mPieChart.setCenterText(centerText);//ÉèÖÃÖĞ¼äµÄÎÄ×Ö
+        String centerText = "æ§åˆ¶é¢æ¿";
+        mPieChart.setCenterText(centerText);//è®¾ç½®ä¸­é—´çš„æ–‡å­—
 
         PieDataSet pieDataSet = new PieDataSet(pieEntries, "");
         ArrayList<Integer> colors = new ArrayList<Integer>();
@@ -198,8 +212,8 @@ public class ToolsFragment extends Fragment {
             colors.add(c);
         pieDataSet.setColors(colors);
 
-        pieDataSet.setSliceSpace(3f);//ÉèÖÃÑ¡ÖĞµÄTabÀëÁ½±ßµÄ¾àÀë
-        pieDataSet.setSelectionShift(5f);//ÉèÖÃÑ¡ÖĞµÄtabµÄ¶à³öÀ´µÄ
+        pieDataSet.setSliceSpace(3f);//è®¾ç½®é€‰ä¸­çš„Tabç¦»ä¸¤è¾¹çš„è·ç¦»
+        pieDataSet.setSelectionShift(5f);//è®¾ç½®é€‰ä¸­çš„tabçš„å¤šå‡ºæ¥çš„
         PieData pieData = new PieData();
         pieData.setDataSet(pieDataSet);
 
