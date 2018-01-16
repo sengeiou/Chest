@@ -43,7 +43,8 @@ public class Constant {
     /*SystemProperty*/
     static final String PROPERTY_OPERATORS_MODE = "persist.yulong.operators.mode";
     public static final String PROP_ACTIVITY_NAME = "persist.stur.activity";
-    public static final String DEFAULT_ACTIVITY = "com.tab.view.TabMainActivity";
+    public static final String DEFAULT_ACTIVITY = "";
+    //com.tab.view.TabMainActivity
 
     public static final String WIFI_P2P_PREFIX_DEVICE_NAME = "IVVI P1 ";
 

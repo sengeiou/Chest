@@ -1,13 +1,13 @@
-package com.stur.lib.activity;
+package com.stur.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
+import com.stur.chest.R;
 import com.stur.lib.Constant;
 import com.stur.lib.Constant.ViewState;
-import com.stur.lib.R;
 
 public class WelcomeActivity extends Activity {
     protected static final int DELAY_LONG = 1000;
