@@ -59,9 +59,7 @@
 
         <!-- used for lib activity -->
         <activity
-            android:name="com.stur.lib.activity.WiFiActivity"
-            android:label="@string/app_name" >
-        </activity>
+            android:name="com.stur.lib.activity.WiFiActivity"/>
         <activity
             android:name="com.stur.lib.activity.WelcomeActivity"
             android:label="@string/title_activity_welcome"
