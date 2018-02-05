@@ -69,7 +69,7 @@
             android:id="@+id/Btn_wifiadb"
             android:layout_width="70dp"
             android:layout_height="50dp"
-            android:layout_marginLeft="60dp"
+            android:layout_marginLeft="20dp"
             android:background="@drawable/shape1"
             android:text="wifi adb"
             android:textSize="@dimen/font_lev1_content_size"></Button>
@@ -78,9 +78,18 @@
             android:id="@+id/Btn_log_level"
             android:layout_width="70dp"
             android:layout_height="50dp"
-            android:layout_marginLeft="60dp"
+            android:layout_marginLeft="20dp"
             android:background="@drawable/shape1"
             android:text="Log"
+            android:textSize="@dimen/font_lev1_content_size"></Button>
+
+        <Button
+            android:id="@+id/Btn_test"
+            android:layout_width="70dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/shape1"
+            android:text="Test"
             android:textSize="@dimen/font_lev1_content_size"></Button>
     </LinearLayout>
 </LinearLayout>

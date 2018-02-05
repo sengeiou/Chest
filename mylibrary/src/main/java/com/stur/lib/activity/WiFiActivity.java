@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.stur.lib.Constant;
+import com.stur.lib.StConstant;
 import com.stur.lib.R;
 import com.stur.lib.Log;
 import com.stur.lib.network.SendDateToServer;
@@ -35,7 +35,7 @@ public class WiFiActivity extends Activity {
     private Button mP2PDisconn;
     private WiFiAdmin mWifiAdmin;
     private WiFiP2PAdmin mWifiP2PAdmin;
-    private int mWiFiMode = Constant.WIFI_RM_UNKNOWN;
+    private int mWiFiMode = StConstant.WIFI_RM_UNKNOWN;
 
     private MyListener mListener;
     // 扫描结果列表
@@ -107,7 +107,7 @@ public class WiFiActivity extends Activity {
                 Toast.makeText(WiFiActivity.this, "当前wifi状态为：" + mWifiAdmin.checkState(), Toast.LENGTH_SHORT).show();
             }  else if (v.getId() == R.id.bt_wifi_p2p_go) {
                 String id = Settings.Secure.getString(WiFiActivity.this.getContentResolver(), Settings.Secure.ANDROID_ID);
-                mWifiP2PAdmin.setDeviceName(Constant.WIFI_P2P_PREFIX_DEVICE_NAME + id.substring(0,4));
+                mWifiP2PAdmin.setDeviceName(StConstant.WIFI_P2P_PREFIX_DEVICE_NAME + id.substring(0,4));
                 mWifiP2PAdmin.startAutoGO();
             }  else if (v.getId() == R.id.bt_wifi_p2p_search) {
                 mWifiP2PAdmin.startP2PSearch();

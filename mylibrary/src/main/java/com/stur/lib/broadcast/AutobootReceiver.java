@@ -13,7 +13,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 
-import com.stur.lib.Constant;
+import com.stur.lib.StConstant;
 import com.stur.lib.Log;
 
 public class AutobootReceiver extends BroadcastReceiver {
@@ -28,7 +28,7 @@ public class AutobootReceiver extends BroadcastReceiver {
         }*/
         String intentAction = intent.getAction();
         if (Intent.ACTION_BOOT_COMPLETED.equals(intentAction)) {
-            if (!isServiceRunning(context) && Constant.isRoleServer()) {
+            if (!isServiceRunning(context) && StConstant.isRoleServer()) {
                 Log.d(this, "Starting " + mClassName + " : " + intentAction + " received. ");
                 startService(context);
             } else {

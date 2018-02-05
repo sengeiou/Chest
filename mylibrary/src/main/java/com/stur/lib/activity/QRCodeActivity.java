@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.stur.lib.Constant;
+import com.stur.lib.StConstant;
 import com.stur.lib.R;
 import com.stur.lib.QRCode;
 
@@ -26,7 +26,7 @@ public class QRCodeActivity extends Activity {
 
 
     public void onGenerateButtonClick(View view) {
-        Bitmap qrBitmap = QRCode.generateBitmap(Constant.QRCODE_CONTENT,400, 400);
+        Bitmap qrBitmap = QRCode.generateBitmap(StConstant.QRCODE_CONTENT,400, 400);
         mIv.setImageBitmap(qrBitmap);
     }
 }

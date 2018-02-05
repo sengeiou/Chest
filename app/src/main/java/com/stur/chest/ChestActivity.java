@@ -21,6 +21,7 @@ import com.stur.chest.ChestService.MyBinder;
 import com.stur.lib.Log;
 import com.stur.lib.Utils;
 import com.stur.lib.activity.ActivityBase;
+import com.stur.lib.bt.StBluetoothActivity;
 import com.stur.lib.web.NanoHttpdServer;
 import com.tab.view.demo3.FragmentAdapter;
 
@@ -148,5 +149,14 @@ public class ChestActivity extends ActivityBase {
         viewPager.setAdapter(new FragmentAdapter(getSupportFragmentManager(), fragmentsList));
         viewPager.setCurrentItem(0);
         viewPager.setOnPageChangeListener(this);
+    }
+
+    public void onBluetoothClick(View view) {
+        Intent intent = new Intent(this, StBluetoothActivity.class);
+        startActivity(intent);
+    }
+
+    public void onUserClick(View view) {
+        startTestActivity();
     }
 }

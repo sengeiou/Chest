@@ -21,10 +21,11 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.stur.lib.AdbUtils;
-import com.stur.lib.Constant;
+import com.stur.lib.StConstant;
 import com.stur.lib.Log;
 import com.stur.lib.SystemPropertiesProxy;
 import com.stur.lib.Utils;
+import com.stur.lib.bt.BluetoothUtils;
 import com.stur.lib.network.WakeOnLan;
 import com.stur.lib.network.WifiUtils;
 
@@ -38,6 +39,7 @@ public class ToolsFragment extends Fragment {
     Button mBtnWifiAdb;
     Button mBtnPCWakeup;
     Button mBtnLogLevel;
+    Button mBtnTest;
     PieChart mPieChart;
     Handler mHandler;
     String mOutput = "";
@@ -129,6 +131,16 @@ public class ToolsFragment extends Fragment {
                 SystemPropertiesProxy.set(getActivity(), prop, nextLogLevel);
             }
         });
+
+        mBtnTest = (Button)view.findViewById(R.id.Btn_test);
+        mBtnTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //this is test field
+                BluetoothUtils.getBondedDevices();
+            }
+        });
+
 
         initPieChart(view);
     }
@@ -234,7 +246,7 @@ public class ToolsFragment extends Fragment {
         StringBuilder sb = new StringBuilder();
         sb.append("setprop " + AdbUtils.WIFI_ADB_PORT_PROP + " " + AdbUtils.WIFI_ADB_DEFAULT_PORT + "\n");
         sb.append("adb connect " + WifiUtils.getIp(getActivity()) + ":" + AdbUtils.WIFI_ADB_DEFAULT_PORT + "\n");
-        sb.append("setprop  " + Constant.PROP_ACTIVITY_NAME + "com.stur.lib.activity.SplashActivity" + "\n");
+        sb.append("setprop  " + StConstant.PROP_ACTIVITY_NAME + "com.stur.lib.activity.SplashActivity" + "\n");
         mTvOutput.setText(sb);
     }
 }

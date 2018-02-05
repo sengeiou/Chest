@@ -8,11 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.stur.lib.Constant;
+import com.stur.lib.StConstant;
 import com.stur.lib.Log;
 import com.stur.lib.SystemPropertiesProxy;
 
-import static com.stur.lib.Constant.DEFAULT_ACTIVITY;
+import static com.stur.lib.StConstant.DEFAULT_ACTIVITY;
 
 public class TestFragment extends Fragment {
 
@@ -28,13 +28,13 @@ public class TestFragment extends Fragment {
     public void onResume() {
         super.onResume();
         if (DEFAULT_ACTIVITY.length() > 0) {
-            startTestActivity();
+            //startTestActivity();
         }
         Log.d(getActivity(), "TestFragment onResume");
     }
 
     public void startTestActivity() {
-        String clsName = SystemPropertiesProxy.get(getActivity(), Constant.PROP_ACTIVITY_NAME, DEFAULT_ACTIVITY);
+        String clsName = SystemPropertiesProxy.get(getActivity(), StConstant.PROP_ACTIVITY_NAME, DEFAULT_ACTIVITY);
         if (clsName != null && clsName.length() > 0) {
             try {
                 Class cls = Class.forName(clsName);

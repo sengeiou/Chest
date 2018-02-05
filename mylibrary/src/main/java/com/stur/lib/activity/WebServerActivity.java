@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.widget.TextView;
 
-import com.stur.lib.Constant;
+import com.stur.lib.StConstant;
 import com.stur.lib.R;
 import com.stur.lib.network.WifiUtils;
 import com.stur.lib.web.NanoHttpdServer;
@@ -24,7 +24,7 @@ public class WebServerActivity extends ActivityBase {
         mTipsTextView = (TextView) findViewById(R.id.tv_content);
         String ip = WifiUtils.getIp(this);
         mTipsTextView.setText("please input in the browser:\n\n" + ip);
-        httpServer = new NanoHttpdServer(this, new File(Environment.getExternalStorageDirectory() + Constant.IVVI_PATH));
+        httpServer = new NanoHttpdServer(this, new File(Environment.getExternalStorageDirectory() + StConstant.IVVI_PATH));
         try {
             httpServer.start();
         } catch (IOException e) {

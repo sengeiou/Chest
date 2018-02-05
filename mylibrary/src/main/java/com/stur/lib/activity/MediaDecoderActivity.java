@@ -18,7 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SurfaceHolder;
 
-import com.stur.lib.Constant;
+import com.stur.lib.StConstant;
 import com.stur.lib.R;
 import com.stur.lib.Utils;
 import com.stur.lib.web.NanoHttpdServer;
@@ -96,7 +96,7 @@ public class MediaDecoderActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        httpServer = new NanoHttpdServer(this, new File(Environment.getExternalStorageDirectory() + Constant.IVVI_PATH));
+        httpServer = new NanoHttpdServer(this, new File(Environment.getExternalStorageDirectory() + StConstant.IVVI_PATH));
         try {
             httpServer.start();
         } catch (IOException e) {

@@ -24,7 +24,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.stur.lib.Constant;
+import com.stur.lib.StConstant;
 import com.stur.lib.R;
 import com.stur.lib.web.SrsHttpFlv;
 
@@ -63,7 +63,7 @@ public class MediaEncoderActivity extends Activity {
     private int vtrack;
     private int vcolor;
 
-    private String flv_url = "http://10.230.8.62:" + String.valueOf(Constant.DEFAULT_WEB_SERVER_PORT) + "/live/sea.flv";
+    private String flv_url = "http://10.230.8.62:" + String.valueOf(StConstant.DEFAULT_WEB_SERVER_PORT) + "/live/sea.flv";
     //private String flv_url = "http://ossrs.net:8936/live/livestream.flv";
     //private String flv_url = "http://192.168.1.137:8936/live/livestream.flv";
     //private String flv_url = "http://192.168.2.111:8936/live/livestream.flv";

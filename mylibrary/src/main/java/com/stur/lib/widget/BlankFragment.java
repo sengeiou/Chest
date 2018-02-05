@@ -12,7 +12,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.stur.lib.Constant;
+import com.stur.lib.StConstant;
 import com.stur.lib.R;
 import com.stur.lib.SharedPreferenceUtils;
 import com.stur.lib.Utils;
@@ -84,7 +84,7 @@ public class BlankFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     int versionCode=Utils.getAppVersionCode(getActivity());
-                    SharedPreferenceUtils.set(getActivity(),Constant.FILE_NAME,versionCode+"",true);
+                    SharedPreferenceUtils.set(getActivity(),StConstant.FILE_NAME,versionCode+"",true);
                     Intent intent=new Intent(getActivity(),null/*SelectDeivce.class*/);
                     startActivity(intent);
                     getActivity().finish();

@@ -3,13 +3,13 @@ package com.stur.lib.web;
 import android.content.Context;
 import android.os.Environment;
 
-import java.io.File;
-import java.util.List;
-
-import com.stur.lib.Constant;
 import com.stur.lib.Log;
+import com.stur.lib.StConstant;
 import com.stur.lib.file.FileUtils;
 import com.stur.lib.network.WifiUtils;
+
+import java.io.File;
+import java.util.List;
 
 import fi.iki.elonen.SimpleWebServer;
 
@@ -19,14 +19,14 @@ import fi.iki.elonen.SimpleWebServer;
 public class NanoHttpdServer extends SimpleWebServer {
 
     public NanoHttpdServer(Context context, File wwwroot) {
-        super(WifiUtils.getIp(context), Constant.DEFAULT_WEB_SERVER_PORT, wwwroot, false);
+        super(WifiUtils.getIp(context), StConstant.DEFAULT_WEB_SERVER_PORT, wwwroot, false);
         Log.d(this, "NanoHttpdServer");
     }
 
     @Override
     public Response serve(IHTTPSession session) {
         String uri = session.getUri();
-        String action = uri.substring(uri.indexOf(Constant.REQUEST_ROOT) + 1);
+        String action = uri.substring(uri.indexOf(StConstant.REQUEST_ROOT) + 1);
         Log.d(this, "OnRequest: [action]" + action + " [uri]" + session.getUri());
         if (action == null || "/".equals(action)) {
             return response404("HomePage");
@@ -36,9 +36,9 @@ public class NanoHttpdServer extends SimpleWebServer {
             return super.serve(session);
         } else {
             String filePath = "";
-            String root = Environment.getExternalStorageDirectory() + Constant.IVVI_PATH;
+            String root = Environment.getExternalStorageDirectory() + StConstant.IVVI_PATH;
             File rootFile = new File(root);
-            List<String> fileList = FileUtils.searchFile(rootFile, Constant.CONTROLLING_APK);
+            List<String> fileList = FileUtils.searchFile(rootFile, StConstant.CONTROLLING_APK);
             if(fileList != null && fileList.size() > 0) {
                 for (String fileName : fileList) {
                     Log.e(this, "[fileName]" + fileName);
@@ -50,7 +50,7 @@ public class NanoHttpdServer extends SimpleWebServer {
     }
 
     private Response redirectFile(String fileName) {
-        String filePath = Environment.getExternalStorageDirectory() + Constant.IVVI_PATH + fileName;
+        String filePath = Environment.getExternalStorageDirectory() + StConstant.IVVI_PATH + fileName;
         Log.i(this, "redirectFile to " + filePath);
         File file = new File(filePath);
         if (!file.exists()) {

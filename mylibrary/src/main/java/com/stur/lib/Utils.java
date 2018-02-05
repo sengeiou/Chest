@@ -8,7 +8,6 @@ import java.net.InetAddress;
 import java.util.Calendar;
 import java.util.TimeZone;
 
-import com.stur.lib.Constant;
 import com.stur.lib.Log;
 
 import android.content.ComponentName;

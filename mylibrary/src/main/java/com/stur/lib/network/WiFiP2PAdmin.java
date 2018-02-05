@@ -22,8 +22,8 @@ import android.os.Message;
 import android.provider.Settings;
 import android.widget.Toast;
 
-import com.stur.lib.Constant;
 import com.stur.lib.Log;
+import com.stur.lib.StConstant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,7 +69,7 @@ public class WiFiP2PAdmin {
                 mAllPeers = (WifiP2pDeviceList) intent.getParcelableExtra(
                         WifiP2pManager.EXTRA_P2P_DEVICE_LIST);
                 Log.d(this, "onReceive: WIFI_P2P_PEERS_CHANGED_ACTION, mPeers = " + mAllPeers);
-                if(Constant.TEST_TAG) {
+                if(StConstant.TEST_TAG) {
                     Toast.makeText(mContext,"peers: " + mAllPeers.toString(), Toast.LENGTH_SHORT).show();
                 }
                 handlePeersChanged(mAllPeers);
@@ -82,7 +82,7 @@ public class WiFiP2PAdmin {
                         WifiP2pManager.EXTRA_WIFI_P2P_INFO);
                 if (networkInfo.isConnected()) {
                     Log.d(this, "***************Connected******************");
-                    Message.obtain(mServiceHandler, Constant.EVENT_P2P_CONNECTED, null).sendToTarget();
+                    Message.obtain(mServiceHandler, StConstant.EVENT_P2P_CONNECTED, null).sendToTarget();
                     //mP2PConnectedRegistrants.notifyRegistrants();
                 } else if (mLastGroupFormed != true) {
                     //start a search when we are disconnected
@@ -154,7 +154,7 @@ public class WiFiP2PAdmin {
         mWifiP2pManager = (WifiP2pManager)context.getSystemService(Context.WIFI_P2P_SERVICE);
         mWifiP2pChannel = mWifiP2pManager.initialize(context, Looper.getMainLooper(), null);
         String id = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
-        setDeviceName(Constant.WIFI_P2P_PREFIX_DEVICE_NAME + id.substring(0,4));
+        setDeviceName(StConstant.WIFI_P2P_PREFIX_DEVICE_NAME + id.substring(0,4));
 
         mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
         mIntentFilter.addAction(WifiP2pManager.WIFI_P2P_PEERS_CHANGED_ACTION);
@@ -336,13 +336,13 @@ public class WiFiP2PAdmin {
                 new ActionListener() {
                     public void onSuccess() {
                         Log.d(this, "connectToPeer success");
-                        Message.obtain(mServiceHandler, Constant.EVENT_P2P_CONNECTED, null).sendToTarget();
+                        Message.obtain(mServiceHandler, StConstant.EVENT_P2P_CONNECTED, null).sendToTarget();
                     }
 
                     //ERROR = 0; P2P_UNSUPPORTED = 1; BUSY = 2;  NO_SERVICE_REQUESTS = 3;
                     public void onFailure(int reason) {
                         Log.d(this, "connectToPeer fail " + reason);
-                        if(Constant.TEST_TAG) {
+                        if(StConstant.TEST_TAG) {
 //                            Toast.makeText(mContext,
 //                                    R.string.wifi_p2p_failed_connect_message,
 //                                    Toast.LENGTH_LONG).show();
@@ -386,12 +386,12 @@ public class WiFiP2PAdmin {
     }
 
     private void handlePeersChanged(WifiP2pDeviceList deviceList) {
-        Log.d(this, "handlePeersChanged at " + Constant.getRoleDefinition());
-        if (Constant.isRoleClient()) {
+        Log.d(this, "handlePeersChanged at " + StConstant.getRoleDefinition());
+        if (StConstant.isRoleClient()) {
             mP1Peers.clear();
             //HashMap<String, String> hm = new HashMap<String, String>();
             for (WifiP2pDevice peer: deviceList.getDeviceList()) {
-                if(peer.deviceName.startsWith(Constant.WIFI_P2P_PREFIX_DEVICE_NAME)) {
+                if(peer.deviceName.startsWith(StConstant.WIFI_P2P_PREFIX_DEVICE_NAME)) {
                     //hm.put(peer.deviceName, peer.deviceAddress);
                     mP1Peers.add(peer);
                 }

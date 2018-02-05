@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.stur.lib.AdbUtils;
-import com.stur.lib.Constant;
+import com.stur.lib.StConstant;
 import com.stur.lib.Log;
 import com.stur.lib.SystemPropertiesProxy;
 import com.stur.lib.Utils;
@@ -121,7 +121,7 @@ public class MineFragment extends Fragment {
         StringBuilder sb = new StringBuilder();
         sb.append("setprop " + AdbUtils.WIFI_ADB_PORT_PROP + " " + AdbUtils.WIFI_ADB_DEFAULT_PORT + "\n");
         sb.append("adb connect " + WifiUtils.getIp(getActivity()) + ":" + AdbUtils.WIFI_ADB_DEFAULT_PORT + "\n");
-        sb.append("setprop  " + Constant.PROP_ACTIVITY_NAME + "com.stur.lib.activity.SplashActivity" + "\n");
+        sb.append("setprop  " + StConstant.PROP_ACTIVITY_NAME + "com.stur.lib.activity.SplashActivity" + "\n");
         mTvOutput.setText(sb);
     }
 }

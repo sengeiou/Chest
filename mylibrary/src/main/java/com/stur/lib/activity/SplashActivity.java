@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
-import com.stur.lib.Constant;
+import com.stur.lib.StConstant;
 import com.stur.lib.R;
 import com.stur.lib.SharedPreferenceUtils;
 import com.stur.lib.Utils;
@@ -32,7 +32,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private boolean ignoreSplash() {
-        if(ConfigBase.SPLASH_ONLY_ONCE && SharedPreferenceUtils.contatins(this, Constant.FILE_NAME, Utils.getAppVersionCode(this) + "")){
+        if(ConfigBase.SPLASH_ONLY_ONCE && SharedPreferenceUtils.contatins(this, StConstant.FILE_NAME, Utils.getAppVersionCode(this) + "")){
             /*Intent intent=new Intent(SplashActivity.this,SelectDeivce.class);
             startActivity(intent);*/
             this.finish();

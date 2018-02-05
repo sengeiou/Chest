@@ -6,8 +6,8 @@ import android.os.Handler;
 import android.os.Message;
 
 import com.stur.chest.R;
-import com.stur.lib.Constant;
-import com.stur.lib.Constant.ViewState;
+import com.stur.lib.StConstant;
+import com.stur.lib.StConstant.ViewState;
 
 public class WelcomeActivity extends Activity {
     protected static final int DELAY_LONG = 1000;
@@ -16,7 +16,7 @@ public class WelcomeActivity extends Activity {
         @Override
         public void handleMessage(Message msg) {
             if (mViewState == ViewState.CREATED) {
-                if (Constant.EVENT_WELCOM_DELAY == msg.what) {
+                if (StConstant.EVENT_WELCOM_DELAY == msg.what) {
                     //startActivity(new Intent(WelcomeActivity.this, ChestActivity.class));
                     finish();
                 }
@@ -29,7 +29,7 @@ public class WelcomeActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-        mHandler.sendEmptyMessageDelayed(Constant.EVENT_WELCOM_DELAY, DELAY_LONG);
+        mHandler.sendEmptyMessageDelayed(StConstant.EVENT_WELCOM_DELAY, DELAY_LONG);
         mViewState = ViewState.CREATED;
     }
 

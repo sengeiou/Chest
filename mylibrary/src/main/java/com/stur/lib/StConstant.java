@@ -1,6 +1,6 @@
 package com.stur.lib;
 
-public class Constant {
+public class StConstant {
     public static final boolean TEST_TAG = true;
 
     /* UI */
@@ -43,8 +43,9 @@ public class Constant {
     /*SystemProperty*/
     static final String PROPERTY_OPERATORS_MODE = "persist.yulong.operators.mode";
     public static final String PROP_ACTIVITY_NAME = "persist.stur.activity";
-    public static final String DEFAULT_ACTIVITY = "";
+    public static final String DEFAULT_ACTIVITY = "com.stur.lib.bt.StBluetoothActivity";
     //com.tab.view.TabMainActivity
+    //com.stur.lib.bt.StBluetoothActivity
 
     public static final String WIFI_P2P_PREFIX_DEVICE_NAME = "IVVI P1 ";
 

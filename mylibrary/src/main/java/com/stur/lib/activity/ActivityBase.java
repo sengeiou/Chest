@@ -20,7 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.stur.lib.Constant;
+import com.stur.lib.StConstant;
 import com.stur.lib.Log;
 import com.stur.lib.PackageUtils;
 import com.stur.lib.R;
@@ -31,6 +31,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.stur.lib.StConstant.DEFAULT_ACTIVITY;
 
 
 public class ActivityBase extends FragmentActivity
@@ -83,7 +85,7 @@ public class ActivityBase extends FragmentActivity
         int hasWriteContactsPermission = checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION);
         if (hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[] { Manifest.permission.ACCESS_COARSE_LOCATION },
-                    Constant.REQUEST_CODE_WIFI_SCAN);
+                    StConstant.REQUEST_CODE_WIFI_SCAN);
             return;
         }
     }
@@ -91,7 +93,7 @@ public class ActivityBase extends FragmentActivity
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
-            case Constant.REQUEST_CODE_WIFI_SCAN:
+            case StConstant.REQUEST_CODE_WIFI_SCAN:
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // Permission Granted
                 } else {
@@ -140,13 +142,13 @@ public class ActivityBase extends FragmentActivity
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         requestPermissions(new String[] { Manifest.permission.ACCESS_COARSE_LOCATION },
-                                Constant.REQUEST_CODE_WIFI_SCAN);
+                                StConstant.REQUEST_CODE_WIFI_SCAN);
                     }
                 });
                 return;
             }
             requestPermissions(new String[] { Manifest.permission.ACCESS_COARSE_LOCATION },
-                    Constant.REQUEST_CODE_WIFI_SCAN);
+                    StConstant.REQUEST_CODE_WIFI_SCAN);
             return;
         }
         // granted, continue to do something
@@ -289,6 +291,7 @@ public class ActivityBase extends FragmentActivity
         final float scale = getResources().getDisplayMetrics().density;
         if (position == 0) {// 0<->1
             lp.leftMargin = (int) (positionOffsetPixels / 3) + offset;
+            //startTestActivity();
         } else if (position == 1) {// 1<->2
             lp.leftMargin = (int) (positionOffsetPixels / 3) + screen1_3 +offset;
         }
@@ -302,5 +305,20 @@ public class ActivityBase extends FragmentActivity
 
     @Override
     public void onPageSelected(int arg0) {
+    }
+
+    public void startTestActivity() {
+        String clsName = SystemPropertiesProxy.get(this, StConstant.PROP_ACTIVITY_NAME, DEFAULT_ACTIVITY);
+        if (clsName != null && clsName.length() > 0) {
+            try {
+                Class cls = Class.forName(clsName);
+                Intent intent = new Intent(this, cls);
+                startActivity(intent);
+                return;
+            } catch (ClassNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
     }
 }
