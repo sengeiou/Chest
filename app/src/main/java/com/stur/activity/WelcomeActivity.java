@@ -6,48 +6,38 @@ import android.os.Handler;
 import android.os.Message;
 
 import com.stur.chest.R;
-import com.stur.lib.StConstant;
-import com.stur.lib.StConstant.ViewState;
 
 public class WelcomeActivity extends Activity {
     protected static final int DELAY_LONG = 1000;
-    protected static ViewState mViewState = ViewState.UNKNOWN;
     Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            if (mViewState == ViewState.CREATED) {
-                if (StConstant.EVENT_WELCOM_DELAY == msg.what) {
+            if (com.stur.lib.StConstant.EVENT_WELCOM_DELAY == msg.what) {
                     //startActivity(new Intent(WelcomeActivity.this, ChestActivity.class));
                     finish();
                 }
             }
-            super.handleMessage(msg);
-        }
-    };
+        };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-        mHandler.sendEmptyMessageDelayed(StConstant.EVENT_WELCOM_DELAY, DELAY_LONG);
-        mViewState = ViewState.CREATED;
+        mHandler.sendEmptyMessageDelayed(com.stur.lib.StConstant.EVENT_WELCOM_DELAY, DELAY_LONG);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        mViewState = ViewState.CREATED;
     }
 
     @Override
     protected void onPause() {
-        mViewState = ViewState.DESTROED;
         super.onPause();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mViewState = ViewState.DESTROED;
     }
 }
