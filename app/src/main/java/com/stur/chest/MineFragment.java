@@ -12,10 +12,11 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.stur.lib.AdbUtils;
-import com.stur.lib.StConstant;
 import com.stur.lib.Log;
+import com.stur.lib.StConstant;
 import com.stur.lib.SystemPropertiesProxy;
 import com.stur.lib.Utils;
+import com.stur.lib.config.ConfigBase;
 import com.stur.lib.network.WakeOnLan;
 import com.stur.lib.network.WifiUtils;
 
@@ -88,7 +89,7 @@ public class MineFragment extends Fragment {
         mBtnLogLevel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String prop = "log.tag." + com.stur.lib.config.ConfigBase.APP_NAME;
+                String prop = "log.tag." + ConfigBase.APP_NAME;
                 String[] llArr = {"V", "D", "I", "W", "E", "A"};
                 String logLevel = SystemPropertiesProxy.get(getActivity(), prop, "V");
                 String nextLogLevel = "D";
@@ -102,7 +103,7 @@ public class MineFragment extends Fragment {
                     }
                 }
 
-                mTvOutput.setText("log.tag." + com.stur.lib.config.ConfigBase.APP_NAME + ": " + nextLogLevel);
+                mTvOutput.setText("log.tag." + ConfigBase.APP_NAME + ": " + nextLogLevel);
                 SystemPropertiesProxy.set(getActivity(), prop, nextLogLevel);
             }
         });

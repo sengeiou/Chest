@@ -21,13 +21,14 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.stur.lib.AdbUtils;
-import com.stur.lib.StConstant;
 import com.stur.lib.Log;
+import com.stur.lib.StConstant;
 import com.stur.lib.SystemPropertiesProxy;
 import com.stur.lib.Utils;
-import com.stur.lib.bt.BluetoothUtils;
+import com.stur.lib.config.ConfigBase;
 import com.stur.lib.network.WakeOnLan;
 import com.stur.lib.network.WifiUtils;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -113,7 +114,7 @@ public class ToolsFragment extends Fragment {
         mBtnLogLevel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String prop = "log.tag." + com.stur.lib.config.ConfigBase.APP_NAME;
+                String prop = "log.tag." + ConfigBase.APP_NAME;
                 String[] llArr = {"V", "D", "I", "W", "E", "A"};
                 String logLevel = SystemPropertiesProxy.get(getActivity(), prop, "V");
                 String nextLogLevel = "D";
@@ -127,7 +128,7 @@ public class ToolsFragment extends Fragment {
                     }
                 }
 
-                mTvOutput.setText("log.tag." + com.stur.lib.config.ConfigBase.APP_NAME + ": " + nextLogLevel);
+                mTvOutput.setText("log.tag." + ConfigBase.APP_NAME + ": " + nextLogLevel);
                 SystemPropertiesProxy.set(getActivity(), prop, nextLogLevel);
             }
         });
@@ -137,7 +138,8 @@ public class ToolsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //this is test field
-                BluetoothUtils.getBondedDevices();
+                //BluetoothUtils.getBondedDevices();
+                CrashReport.testJavaCrash();
             }
         });
 

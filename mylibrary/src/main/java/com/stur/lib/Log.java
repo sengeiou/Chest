@@ -1,5 +1,7 @@
 package com.stur.lib;
 
+import com.stur.lib.config.ConfigBase;
+
 /**
  * Manages logging for the entire class.
  */
@@ -12,9 +14,9 @@ public class Log {
      */
 
     // Generic tag for all In Call logging
-    public static final String TAG = com.stur.lib.config.ConfigBase.APP_NAME;
+    public static final String TAG = ConfigBase.LOG_TAG;
 
-    public static final boolean FORCE_DEBUG = com.stur.lib.config.ConfigBase.FORCE_DEBUG;
+    public static final boolean FORCE_DEBUG = ConfigBase.FORCE_DEBUG;
     public static final boolean DEBUG = FORCE_DEBUG || android.util.Log.isLoggable(TAG, android.util.Log.DEBUG);
     public static final boolean VERBOSE = FORCE_DEBUG || android.util.Log.isLoggable(TAG, android.util.Log.VERBOSE);
     public static final String TAG_DELIMETER = " : ";

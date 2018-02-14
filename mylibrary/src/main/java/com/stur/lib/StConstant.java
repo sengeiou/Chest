@@ -3,6 +3,9 @@ package com.stur.lib;
 public class StConstant {
     public static final boolean TEST_TAG = true;
 
+    //腾讯bugly上注册的appid，用于异常统计
+    public static final String BUGLY_APP_ID = "2eb19fb274";
+
     /* UI */
     public static final String FILE_NAME="splash";
     public static final int APP_LIST_GRIDE_ROW = 2;

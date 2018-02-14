@@ -37,6 +37,14 @@ import java.lang.reflect.Method;
 
 public class SystemPropertiesProxy
 {
+    public static String getTag() {
+        return new Object() {
+            public String getClassName() {
+                String clazzName = this.getClass().getName();
+                return clazzName.substring(clazzName.lastIndexOf('.')+1, clazzName.lastIndexOf('$'));
+            }
+        }.getClassName();
+    }
 
     /**
      * 根据给定Key获取值.
@@ -256,9 +264,7 @@ public class SystemPropertiesProxy
      * @throws IllegalArgumentException 如果value超过92个字符则抛出该异常
      */
     public static void set(Context context, String key, String val) throws IllegalArgumentException {
-
         try{
-
             //@SuppressWarnings("unused")
             //DexFile df = new DexFile(new File("/system/app/Settings.apk"));
             @SuppressWarnings("unused")
@@ -280,10 +286,12 @@ public class SystemPropertiesProxy
             params[1]= new String(val);
 
             set.invoke(SystemProperties, params);
-
+            Log.d(getTag(), "set property: " + key + " to " + val + " success");
         }catch( IllegalArgumentException iAE ){
+            Log.d(getTag(), "set property: " + key + " to " + val + " exception: " + iAE);
             throw iAE;
         }catch( Exception e ){
+            Log.d(getTag(), "set property: " + key + " to " + val + " exception: " + e);
             e.printStackTrace();
             //TODO
         }
