@@ -6,15 +6,15 @@
     tools:context="com.stur.chest.ChestActivity" >
 
     <Button
+        android:id="@+id/btn_bluetooth"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Bluetooth"
-        android:onClick="onBluetoothClick"/>
+        android:text="Bluetooth"/>
 
     <Button
+        android:id="@+id/btn_user_click"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="persist.stur.activity"
-        android:onClick="onUserClick"/>
+        android:text="persist.stur.activity" />
 
 </LinearLayout>

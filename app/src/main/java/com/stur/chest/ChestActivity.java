@@ -22,7 +22,6 @@ import com.stur.lib.Log;
 import com.stur.lib.StConstant;
 import com.stur.lib.Utils;
 import com.stur.lib.activity.ActivityBase;
-import com.stur.lib.bt.StBluetoothActivity;
 import com.stur.lib.web.NanoHttpdServer;
 import com.tab.view.demo3.FragmentAdapter;
 import com.tencent.bugly.crashreport.CrashReport;
@@ -31,11 +30,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class ChestActivity extends ActivityBase {
-    Button mBtnDemo;
-    TextView mTvOutput;
-    ImageView mQRCodeImg;
-    Handler mHandler;
-    MyBinder myBinder;
+    private Button mBtnDemo;
+    private TextView mTvOutput;
+    private ImageView mQRCodeImg;
+    private Handler mHandler;
+    private MyBinder myBinder;
     private NanoHttpdServer httpServer;
 
     @Override
@@ -54,7 +53,6 @@ public class ChestActivity extends ActivityBase {
         //第三个参数为SDK调试模式开关，打开后输出详细Bugly SDK的Log，每一条Crash都会被立即上报，自定义日志将会在Logcat中输出
         //建议在测试阶段设置为true，发布时设置为false
         CrashReport.initCrashReport(getApplicationContext(), StConstant.BUGLY_APP_ID, true);
-
     }
 
     @Override
@@ -149,20 +147,11 @@ public class ChestActivity extends ActivityBase {
         fragmentsList.add(fragment);
         fragment = new TestFragment();
         fragmentsList.add(fragment);
-        fragment = new ToolsFragment();
+        fragment = new MineFragment();
         fragmentsList.add(fragment);
 
         viewPager.setAdapter(new FragmentAdapter(getSupportFragmentManager(), fragmentsList));
         viewPager.setCurrentItem(0);
         viewPager.setOnPageChangeListener(this);
-    }
-
-    public void onBluetoothClick(View view) {
-        Intent intent = new Intent(this, StBluetoothActivity.class);
-        startActivity(intent);
-    }
-
-    public void onUserClick(View view) {
-        //startTestActivity();
     }
 }

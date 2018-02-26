@@ -12,7 +12,9 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="@dimen/border_toolbar_top"
-        android:layout_marginLeft="@dimen/border_frame_left">
+        android:layout_marginLeft="@dimen/border_frame_left"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
 
         <EditText
             android:id="@+id/et_cmd_input"
@@ -21,7 +23,7 @@
             android:text="input" />
 
         <Button
-            android:id="@+id/Btn_cmd_exc"
+            android:id="@+id/btn_cmd_exc"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_marginLeft="@dimen/border_edit_padding"
@@ -34,7 +36,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="86dp"
+        android:layout_height="100dp"
         android:layout_marginTop="10dp" >
 
         <TextView
@@ -49,47 +51,62 @@
         android:layout_width="match_parent"
         android:layout_marginRight="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_height="320dip" />
+        android:layout_height="350dip" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <HorizontalScrollView
+        android:id="@+id/sv_cmd_btn"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_marginTop="3dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/Btn_wakeup_pc"
-            android:layout_width="70dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="@dimen/border_frame_left"
-            android:background="@drawable/shape1"
-            android:text="wakeup pc"
-            android:textSize="@dimen/font_lev1_content_size"></Button>
+            <Button
+                android:id="@+id/btn_wakeup_pc"
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="@dimen/border_frame_left"
+                android:background="@drawable/shape1"
+                android:text="wakeup pc"
+                android:textSize="@dimen/font_lev1_content_size"/>
 
-        <Button
-            android:id="@+id/Btn_wifiadb"
-            android:layout_width="70dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="20dp"
-            android:background="@drawable/shape1"
-            android:text="wifi adb"
-            android:textSize="@dimen/font_lev1_content_size"></Button>
+            <Button
+                android:id="@+id/btn_wifiadb"
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/shape1"
+                android:text="wifi adb"
+                android:textSize="@dimen/font_lev1_content_size"/>
 
-        <Button
-            android:id="@+id/Btn_log_level"
-            android:layout_width="70dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="20dp"
-            android:background="@drawable/shape1"
-            android:text="Log"
-            android:textSize="@dimen/font_lev1_content_size"></Button>
+            <Button
+                android:id="@+id/btn_log_level"
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/shape1"
+                android:text="Log"
+                android:textSize="@dimen/font_lev1_content_size"/>
 
-        <Button
-            android:id="@+id/Btn_test"
-            android:layout_width="70dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="20dp"
-            android:background="@drawable/shape1"
-            android:text="Test"
-            android:textSize="@dimen/font_lev1_content_size"></Button>
-    </LinearLayout>
+            <Button
+                android:id="@+id/btn_cert"
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/shape1"
+                android:text="Cert"
+                android:textSize="@dimen/font_lev1_content_size"/>
+
+            <Button
+                android:id="@+id/btn_test"
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/shape1"
+                android:text="Test"
+                android:textSize="@dimen/font_lev1_content_size"/>
+        </LinearLayout>
+    </HorizontalScrollView>
 </LinearLayout>

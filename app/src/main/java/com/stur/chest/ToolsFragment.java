@@ -28,22 +28,23 @@ import com.stur.lib.Utils;
 import com.stur.lib.config.ConfigBase;
 import com.stur.lib.network.WakeOnLan;
 import com.stur.lib.network.WifiUtils;
-import com.tencent.bugly.crashreport.CrashReport;
+import com.stur.lib.os.PackageUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class ToolsFragment extends Fragment {
-    Button mBtnCmdExc;
-    TextView mEtInput;
-    TextView mTvOutput;
-    Button mBtnWifiAdb;
-    Button mBtnPCWakeup;
-    Button mBtnLogLevel;
-    Button mBtnTest;
-    PieChart mPieChart;
-    Handler mHandler;
-    String mOutput = "";
+    private Button mBtnCmdExc;
+    private TextView mEtInput;
+    private TextView mTvOutput;
+    private Button mBtnWifiAdb;
+    private Button mBtnPCWakeup;
+    private Button mBtnLogLevel;
+    private Button mBtnTest;
+    private Button mBtnCert;
+    private PieChart mPieChart;
+    private Handler mHandler;
+    private String mOutput = "";
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -62,7 +63,7 @@ public class ToolsFragment extends Fragment {
     }
 
     private void initView(View view) {
-        mBtnCmdExc = (Button)view.findViewById(R.id.Btn_cmd_exc);
+        mBtnCmdExc = (Button)view.findViewById(R.id.btn_cmd_exc);
         mBtnCmdExc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,9 +85,9 @@ public class ToolsFragment extends Fragment {
 
         mEtInput = (TextView)view.findViewById(R.id.et_cmd_input);
         mTvOutput = (TextView)view.findViewById(R.id.tv_output);
-        mEtInput.setText("setprop " + AdbUtils.WIFI_ADB_PORT_PROP + " " + AdbUtils.WIFI_ADB_DEFAULT_PORT);
+        mEtInput.setText("getprop " + AdbUtils.WIFI_ADB_PORT_PROP );
 
-        mBtnWifiAdb = (Button) view.findViewById(R.id.Btn_wifiadb);
+        mBtnWifiAdb = (Button) view.findViewById(R.id.btn_wifiadb);
         mBtnWifiAdb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -100,7 +101,7 @@ public class ToolsFragment extends Fragment {
             }
         });
 
-        mBtnPCWakeup = (Button)view.findViewById(R.id.Btn_wakeup_pc);
+        mBtnPCWakeup = (Button)view.findViewById(R.id.btn_wakeup_pc);
         mBtnPCWakeup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -110,7 +111,7 @@ public class ToolsFragment extends Fragment {
             }
         });
 
-        mBtnLogLevel = (Button)view.findViewById(R.id.Btn_log_level);
+        mBtnLogLevel = (Button)view.findViewById(R.id.btn_log_level);
         mBtnLogLevel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -133,16 +134,27 @@ public class ToolsFragment extends Fragment {
             }
         });
 
-        mBtnTest = (Button)view.findViewById(R.id.Btn_test);
+        mBtnTest = (Button)view.findViewById(R.id.btn_test);
         mBtnTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //this is test field
                 //BluetoothUtils.getBondedDevices();
-                CrashReport.testJavaCrash();
+                //CrashReport.testJavaCrash();
+                //mTvOutput.setText(PackageUtils.getSign(getContext(), "com.qualcomm.uimremoteclient"));
             }
         });
 
+        mBtnCert = (Button)view.findViewById(R.id.btn_cert);
+        mBtnCert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String pkg = mEtInput.getText().toString();
+                if (pkg != null && pkg.length() > 0) {
+                    mTvOutput.setText(PackageUtils.getSign(getContext(), pkg));
+                }
+            }
+        });
 
         initPieChart(view);
     }
