@@ -6,8 +6,6 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.ConnectivityManager.NetworkCallback;
 import android.net.Network;
-import android.net.NetworkInfo;
-import android.os.Build;
 
 import com.stur.lib.Log;
 
@@ -62,63 +60,4 @@ public class CMUtils {
         filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
         mContext.registerReceiver(mDataReceiver, filter);// 注册Broadcast Receiver
     }
-
-    /*
-    * <uses-permission
-    * android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
-    * return ssid if wifi connected, or preferapn if cellular data enabled
-    */
-    public static String getSsidOrPreferApn(Context context) {
-        ConnectivityManager conManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo ni = conManager.getActiveNetworkInfo();
-        String apn = ni.getExtraInfo();// 获取网络接入点，这里一般为cmwap和cmnet
-        return apn;
-    }
-
-    /**
-     * Checking for all possible internet providers
-     **/
-    public static boolean isConnectingToInternet(Context context) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) context
-                .getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Network[] networks = connectivityManager.getAllNetworks();
-            NetworkInfo networkInfo;
-            for (Network mNetwork : networks) {
-                networkInfo = connectivityManager.getNetworkInfo(mNetwork);
-                if (networkInfo.getState().equals(NetworkInfo.State.CONNECTED)) {
-                    return true;
-                }
-            }
-            return false;
-        } else {
-            if (connectivityManager != null) {
-                // noinspection deprecation
-                NetworkInfo[] info = connectivityManager.getAllNetworkInfo();
-                if (info != null) {
-                    for (NetworkInfo anInfo : info) {
-                        if (anInfo.getState() == NetworkInfo.State.CONNECTED) {
-                            Log.d(getTag(), "NETWORKNAME: " + anInfo.getTypeName());
-                            return true;
-                        }
-                    }
-                }
-            }
-            return false;
-        }
-    }
-
-    public static String getPreferApn(Context context) {
-        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        Network[] networks = cm.getAllNetworks();
-        NetworkInfo ni;
-        for (Network nw : networks) {
-            ni = cm.getNetworkInfo(nw);
-            if (ni.getType() == ConnectivityManager.TYPE_MOBILE && ni.getState().equals(NetworkInfo.State.CONNECTED)) {
-                return ni.getExtraInfo();
-            }
-        }
-        return null;
-    }
-
 }

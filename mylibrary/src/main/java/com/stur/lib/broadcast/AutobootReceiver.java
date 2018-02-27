@@ -13,7 +13,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 
-import com.stur.lib.StConstant;
+import com.stur.lib.constant.StConstant;
 import com.stur.lib.Log;
 
 public class AutobootReceiver extends BroadcastReceiver {

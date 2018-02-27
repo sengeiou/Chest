@@ -7,6 +7,11 @@
     <string name="tab_2">测试</string>
     <string name="tab_3">我的</string>
     
+    <string name="exit_toast">再按一次退出程序</string>
+    <string name="confirm">确定</string>
+    <string name="g_image_loader_uri">g_image_loader_uri</string>
+    <string name="g_convert_view">g_convert_view</string>
+    
     <!--Stream Encoder used-->
     <string name="btn_capture">Publish</string>
     <string name="btn_stop">Stop</string>

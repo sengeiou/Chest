@@ -24,7 +24,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.stur.lib.StConstant;
+import com.stur.lib.constant.StConstant;
 import com.stur.lib.R;
 import com.stur.lib.web.SrsHttpFlv;
 

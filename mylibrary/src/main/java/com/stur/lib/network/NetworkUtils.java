@@ -1,5 +1,14 @@
 package com.stur.lib.network;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkInfo;
+import android.os.Build;
+
+import com.stur.lib.Log;
+import com.stur.lib.Utils;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -23,14 +32,6 @@ import java.util.regex.Pattern;
 
 //import org.apache.http.conn.util.InetAddressUtils;
 
-import com.stur.lib.Log;
-import com.stur.lib.Utils;
-import com.stur.lib.network.ClientScanResult;
-
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-
 public class NetworkUtils {
     private final static int INADDRSZ = 4;
 
@@ -41,6 +42,64 @@ public class NetworkUtils {
                 return clazzName.substring(clazzName.lastIndexOf('.')+1, clazzName.lastIndexOf('$'));
             }
         }.getClassName();
+    }
+
+    /*
+    * <uses-permission
+    * android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+    * return ssid if wifi connected, or preferapn if cellular data enabled
+    */
+    public static String getSsidOrPreferApn(Context context) {
+        ConnectivityManager conManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo ni = conManager.getActiveNetworkInfo();
+        String apn = ni.getExtraInfo();// 获取网络接入点，这里一般为cmwap和cmnet
+        return apn;
+    }
+
+    /**
+     * Checking for all possible internet providers
+     **/
+    public static boolean isInternetConnected(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Network[] networks = connectivityManager.getAllNetworks();
+            NetworkInfo networkInfo;
+            for (Network mNetwork : networks) {
+                networkInfo = connectivityManager.getNetworkInfo(mNetwork);
+                if (networkInfo.getState().equals(NetworkInfo.State.CONNECTED)) {
+                    return true;
+                }
+            }
+            return false;
+        } else {
+            if (connectivityManager != null) {
+                // noinspection deprecation
+                NetworkInfo[] info = connectivityManager.getAllNetworkInfo();
+                if (info != null) {
+                    for (NetworkInfo anInfo : info) {
+                        if (anInfo.getState() == NetworkInfo.State.CONNECTED) {
+                            Log.d(getTag(), "NETWORKNAME: " + anInfo.getTypeName());
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+    }
+
+    public static String getPreferApn(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        Network[] networks = cm.getAllNetworks();
+        NetworkInfo ni;
+        for (Network nw : networks) {
+            ni = cm.getNetworkInfo(nw);
+            if (ni.getType() == ConnectivityManager.TYPE_MOBILE && ni.getState().equals(NetworkInfo.State.CONNECTED)) {
+                return ni.getExtraInfo();
+            }
+        }
+        return null;
     }
 
     /**
@@ -321,7 +380,7 @@ public class NetworkUtils {
     /**
      * 把int->ip地址
      *
-     * @param ipInt
+     * @param ip Int
      * @return String
      */
     public static String intToIp(int ip) {

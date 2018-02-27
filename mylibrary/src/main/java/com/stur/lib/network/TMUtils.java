@@ -6,8 +6,8 @@ import com.stur.lib.Log;
 
 import java.lang.reflect.Method;
 
-import static com.stur.lib.StConstant.SIM_ID_1;
-import static com.stur.lib.StConstant.SIM_ID_2;
+import static com.stur.lib.constant.StConstant.SIM_ID_1;
+import static com.stur.lib.constant.StConstant.SIM_ID_2;
 
 public class TMUtils {
     public static String getTag() {

@@ -36,26 +36,23 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.READ_LOGS"/>
 
-
-
     <application
         android:networkSecurityConfig="@xml/network_security_config"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@android:style/Animation.Activity" >
+        android:theme="@style/AppTheme.FullScreen" >
         <activity
             android:name=".ChestActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme" >
+            android:theme="@style/AppTheme.FullScreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity
-            android:name="com.tab.view.TabMainActivity"/>
+        <activity android:name="com.tab.view.TabMainActivity"/>
         <activity android:name="com.tab.view.demo1.FirstActivity" />
         <activity android:name="com.tab.view.demo2.SecondActivity" />
         <activity android:name="com.tab.view.demo3.ThirdActivity" />
@@ -64,11 +61,8 @@
         <activity android:name="com.xxmassdeveloper.mpchartexample.PieChartActivity" />
 
         <!-- used for lib activity -->
-        <activity
-            android:name="com.stur.lib.activity.WiFiActivity"/>
-        <activity
-            android:name="com.stur.activity.WelcomeActivity"
-            android:theme="@style/AppTheme.FullScreen" />
+        <activity android:name="com.stur.lib.activity.WiFiActivity"/>
+        <activity android:name="com.stur.activity.WelcomeActivity"/>
         <activity
             android:name="com.stur.lib.activity.DiffuseActivity"
             android:theme="@style/AppTheme.FullScreen" />
@@ -78,12 +72,8 @@
         <activity
             android:name="com.stur.lib.activity.FilesTransferActivity"
             android:theme="@style/AppTheme.FullScreen" />
-        <activity
-            android:name="com.stur.lib.activity.FilesViewActivity"
-            android:theme="@style/AppTheme.FullScreen" />
-        <activity
-            android:name="com.stur.lib.activity.QRCodeActivity"
-            android:theme="@style/AppTheme.FullScreen" />
+        <activity android:name="com.stur.lib.activity.FilesViewActivity" />
+        <activity android:name="com.stur.lib.activity.QRCodeActivity" />
         <activity
             android:name="com.stur.lib.activity.WebServerActivity"
             android:theme="@style/AppTheme.FullScreen" />

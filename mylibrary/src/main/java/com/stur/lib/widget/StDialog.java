@@ -3,6 +3,7 @@ package com.stur.lib.widget;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +35,21 @@ public class StDialog {
             normalDialog.setNegativeButton(neg, neglisen);
         }
         normalDialog.show();
+    }
+
+    public static void selectActivity(final Context context, String pos, String neg, final Class posAct, final Class netAct) {
+        new AlertDialog.Builder(context).setMessage("Selecting:")
+                .setPositiveButton(pos, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        context.startActivity(new Intent(context, posAct));
+                    }
+                }).setNegativeButton(neg, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                context.startActivity(new Intent(context, netAct));
+            }
+        }).create().show();
     }
 
     /* 3个按钮的对话框

@@ -1,4 +1,4 @@
-package com.stur.lib;
+package com.stur.lib.constant;
 
 public class StConstant {
     public static final boolean TEST_TAG = true;

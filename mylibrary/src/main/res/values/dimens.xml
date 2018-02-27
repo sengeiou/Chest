@@ -46,4 +46,13 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="text_button_width">80dp</dimen>
     <dimen name="dp_8">8dp</dimen> 
+
+    <dimen name="title_bar_height">48dp</dimen>
+
+    <dimen name="icon_size">24dp</dimen>
+    <dimen name="font_icon_size">6sp</dimen>
+    <dimen name="small_pic_width">120dp</dimen>
+    <dimen name="small_pic_height">120dp</dimen>
+    <dimen name="large_pic_width">300dp</dimen>
+    <dimen name="large_pic_height">300dp</dimen>
 </resources>

@@ -12,7 +12,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.stur.lib.StConstant;
+import com.stur.lib.constant.StConstant;
 import com.stur.lib.R;
 import com.stur.lib.SharedPreferenceUtils;
 import com.stur.lib.Utils;

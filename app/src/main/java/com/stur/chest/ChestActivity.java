@@ -1,7 +1,10 @@
 package com.stur.chest;
 
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,25 +14,24 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.stur.chest.ChestService.MyBinder;
 import com.stur.lib.Log;
-import com.stur.lib.StConstant;
 import com.stur.lib.Utils;
-import com.stur.lib.activity.ActivityBase;
+import com.stur.lib.activity.FragmentActivityBase;
+import com.stur.lib.config.ConfigBase;
+import com.stur.lib.constant.StConstant;
 import com.stur.lib.web.NanoHttpdServer;
 import com.tab.view.demo3.FragmentAdapter;
 import com.tencent.bugly.crashreport.CrashReport;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
-public class ChestActivity extends ActivityBase {
+public class ChestActivity extends FragmentActivityBase {
+    private BroadcastReceiver mBroadcastReceiver;
     private Button mBtnDemo;
     private TextView mTvOutput;
     private ImageView mQRCodeImg;
@@ -50,9 +52,12 @@ public class ChestActivity extends ActivityBase {
             }
         };
 
-        //第三个参数为SDK调试模式开关，打开后输出详细Bugly SDK的Log，每一条Crash都会被立即上报，自定义日志将会在Logcat中输出
-        //建议在测试阶段设置为true，发布时设置为false
-        CrashReport.initCrashReport(getApplicationContext(), StConstant.BUGLY_APP_ID, true);
+        //TODO: add another static place to init bugly
+        if (ConfigBase.getBuglyEnabled()) {
+            //第三个参数为SDK调试模式开关，打开后输出详细Bugly SDK的Log，每一条Crash都会被立即上报，自定义日志将会在Logcat中输出
+            //建议在测试阶段设置为true，发布时设置为false
+            CrashReport.initCrashReport(getApplicationContext(), StConstant.BUGLY_APP_ID, true);
+        }
     }
 
     @Override
@@ -74,7 +79,6 @@ public class ChestActivity extends ActivityBase {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
     protected void handleIntent(Intent intent) {
         // TODO Auto-generated method stub
         String action = intent.getAction();
@@ -83,34 +87,6 @@ public class ChestActivity extends ActivityBase {
             String str = intent.getStringExtra(Utils.INTENT_DISPLAY_EXTRA);
             mTvOutput.setText(str);
         }
-    }
-
-    public void onDemoClick(View view) throws IOException
-    {
-        Log.d(this, "onCommTestButtonClick!");
-        Toast.makeText(this, "Button clicked!", Toast.LENGTH_SHORT).show();
-
-        //mTv_output.setText(getProperity(Constant.PROPERTY_OPERATORS_MODE));
-
-        //拉起某个界面
-        /*Intent intent = new Intent(this,
-                WiFiActivity.class);
-        startActivity(intent);*/
-
-        //拉起某个 服务
-        /*Intent startIntent = new Intent(this, ChestService.class);
-        startService(startIntent);*/
-
-        //开启ping
-        //WifiUtils.startPing();
-
-        //从arp缓存中获取某个mac地址对应的IP地址
-        /*ArrayList<ClientScanResult> csrList = WifiUtils.getClientList(false, 0);
-        for (ClientScanResult csr : csrList) {
-            if(csr.getMac().equals("fc:25:3f:c2:3b:0a")) {
-                mTv_output.setText(csr.getAddress());
-            }
-        }*/
     }
 
     private ServiceConnection mConnection = new ServiceConnection() {
@@ -137,7 +113,27 @@ public class ChestActivity extends ActivityBase {
     protected void onDestroy() {
         // TODO Auto-generated method stub
         super.onDestroy();
+        unregisterReceiver(mBroadcastReceiver);
         Log.d(this, "onDestroy");
+    }
+
+    @Override
+    protected void initListener() {
+        mBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                handleIntent(intent);
+            }
+        };
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Utils.INTENT_DISPLAY);
+        filter.addAction(Utils.INTENT_TEST);
+        registerReceiver(mBroadcastReceiver, filter);// 注册Broadcast Receiver
+    }
+
+    @Override
+    protected void initData() {
+
     }
 
     protected void initViewPager() {

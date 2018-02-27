@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
-import com.stur.lib.StConstant;
+import com.stur.lib.constant.StConstant;
 import com.stur.lib.R;
 import com.stur.lib.SharedPreferenceUtils;
 import com.stur.lib.Utils;

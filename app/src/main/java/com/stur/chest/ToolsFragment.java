@@ -22,10 +22,10 @@ import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.stur.lib.AdbUtils;
 import com.stur.lib.Log;
-import com.stur.lib.StConstant;
 import com.stur.lib.SystemPropertiesProxy;
 import com.stur.lib.Utils;
 import com.stur.lib.config.ConfigBase;
+import com.stur.lib.constant.StConstant;
 import com.stur.lib.network.WakeOnLan;
 import com.stur.lib.network.WifiUtils;
 import com.stur.lib.os.PackageUtils;
@@ -134,17 +134,6 @@ public class ToolsFragment extends Fragment {
             }
         });
 
-        mBtnTest = (Button)view.findViewById(R.id.btn_test);
-        mBtnTest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //this is test field
-                //BluetoothUtils.getBondedDevices();
-                //CrashReport.testJavaCrash();
-                //mTvOutput.setText(PackageUtils.getSign(getContext(), "com.qualcomm.uimremoteclient"));
-            }
-        });
-
         mBtnCert = (Button)view.findViewById(R.id.btn_cert);
         mBtnCert.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -153,6 +142,35 @@ public class ToolsFragment extends Fragment {
                 if (pkg != null && pkg.length() > 0) {
                     mTvOutput.setText(PackageUtils.getSign(getContext(), pkg));
                 }
+            }
+        });
+
+        mBtnTest = (Button)view.findViewById(R.id.btn_test);
+        mBtnTest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //this is test field
+                //BluetoothUtils.getBondedDevices();
+                //CrashReport.testJavaCrash();
+                //mTvOutput.setText(PackageUtils.getSign(getContext(), "com.qualcomm.uimremoteclient"));
+
+                //拉起某个界面
+                //Intent intent = new Intent(this, WiFiActivity.class);
+                //startActivity(intent);
+
+                //拉起某个 服务
+                //Intent startIntent = new Intent(this, ChestService.class);
+                //startService(startIntent);
+
+                //开启ping
+                //WifiUtils.startPing();
+
+                //从arp缓存中获取某个mac地址对应的IP地址
+                //ArrayList<ClientScanResult> csrList = WifiUtils.getClientList(false, 0);
+                //for (ClientScanResult csr : csrList) {
+                //if(csr.getMac().equals("fc:25:3f:c2:3b:0a")) {
+                //mTv_output.setText(csr.getAddress()); }
+                //}
             }
         });
 

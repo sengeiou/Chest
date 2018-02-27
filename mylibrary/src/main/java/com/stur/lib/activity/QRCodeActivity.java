@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.stur.lib.StConstant;
+import com.stur.lib.constant.StConstant;
 import com.stur.lib.R;
 import com.stur.lib.QRCode;
 

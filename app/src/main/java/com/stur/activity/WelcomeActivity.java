@@ -12,7 +12,7 @@ public class WelcomeActivity extends Activity {
     Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
-            if (com.stur.lib.StConstant.EVENT_WELCOM_DELAY == msg.what) {
+            if (com.stur.lib.constant.StConstant.EVENT_WELCOM_DELAY == msg.what) {
                     //startActivity(new Intent(WelcomeActivity.this, ChestActivity.class));
                     finish();
                 }
@@ -23,7 +23,7 @@ public class WelcomeActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-        mHandler.sendEmptyMessageDelayed(com.stur.lib.StConstant.EVENT_WELCOM_DELAY, DELAY_LONG);
+        mHandler.sendEmptyMessageDelayed(com.stur.lib.constant.StConstant.EVENT_WELCOM_DELAY, DELAY_LONG);
     }
 
     @Override

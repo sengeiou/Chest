@@ -1,0 +1,24 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="AppTheme.FullScreen" parent="AppTheme">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="AppTheme.TitleBarStyle" parent="AppTheme">
+        <item name="android:background">@android:color/white</item>
+        <item name="android:textSize">@dimen/font_title_size</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="AppTheme.ImageItemStyle" parent="AppTheme">
+        <item name="android:scaleType">centerCrop</item>
+        <item name="android:layout_width">@dimen/large_pic_width</item>
+        <item name="android:layout_height">@dimen/large_pic_height</item>
+    </style>
+</resources>

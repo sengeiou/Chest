@@ -16,4 +16,13 @@ public class ConfigBase {
     //Splash View
     public static final boolean SPLASH_ONLY_ONCE = false;
     public static final boolean SPLASH_ENTRANCE_SHOW_DEFAULT = true;
+
+    //Bugly switch
+    public static boolean BUGLY_ENABLED = false;
+    public static boolean getBuglyEnabled() {
+        return BUGLY_ENABLED;
+    }
+    public static void setBuglyEnabled(boolean enabled) {
+        //TODO: this switch should be perserved with sp
+    }
 }

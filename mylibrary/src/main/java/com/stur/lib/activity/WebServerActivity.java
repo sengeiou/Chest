@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.widget.TextView;
 
-import com.stur.lib.StConstant;
+import com.stur.lib.constant.StConstant;
 import com.stur.lib.R;
 import com.stur.lib.network.WifiUtils;
 import com.stur.lib.web.NanoHttpdServer;
@@ -37,6 +37,26 @@ public class WebServerActivity extends ActivityBase {
     protected void onDestroy() {
         httpServer.stop();
         super.onDestroy();
+    }
+
+    @Override
+    protected void beforeInitView() {
+
+    }
+
+    @Override
+    protected void initView() {
+
+    }
+
+    @Override
+    protected void initListener() {
+
+    }
+
+    @Override
+    protected void initData() {
+
     }
 
 }

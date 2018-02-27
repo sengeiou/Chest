@@ -10,11 +10,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.stur.lib.Log;
-import com.stur.lib.StConstant;
+import com.stur.lib.constant.StConstant;
 import com.stur.lib.SystemPropertiesProxy;
 import com.stur.lib.bt.StBluetoothActivity;
 
-import static com.stur.lib.StConstant.DEFAULT_ACTIVITY;
+import static com.stur.lib.constant.StConstant.DEFAULT_ACTIVITY;
 
 public class TestFragment extends Fragment {
     private Button mBtnBluetooth;

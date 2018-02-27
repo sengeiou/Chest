@@ -23,7 +23,7 @@ import android.provider.Settings;
 import android.widget.Toast;
 
 import com.stur.lib.Log;
-import com.stur.lib.StConstant;
+import com.stur.lib.constant.StConstant;
 
 import java.util.ArrayList;
 import java.util.List;
