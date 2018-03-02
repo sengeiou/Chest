@@ -26,9 +26,16 @@ import java.util.Map;
 
 public class FileUtils {
     /**
+     * 完整目录
+     */
+    public static final String PATH_ROOT = "/";
+    public static final String PATH_CAMERA = "/sdcard/DCIM/Camera";
+
+    /**
      * 数据目录
      */
-    public static String DATA_PATH = "stur";
+    public static final String DATA_PATH_STUR = "stur";
+    public static final String DATA_PATH_IVVI = "ivvi";
 
     /**
      * 图片目录
@@ -60,23 +67,23 @@ public class FileUtils {
     }
 
     /**
-     * 获取SD卡的根目录
-     *
-     * @return
+     * 返回内置SD卡路径
      */
     public static String getSDRoot() {
-        File sdDir = null;
-        boolean sdCardExist = Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED); // 判断sd卡是否存在
-        if (sdCardExist) {
-            sdDir = Environment.getExternalStorageDirectory();// 获取跟目录
-            return sdDir.getAbsolutePath();
+        // 判断是否挂载了SD卡
+        String root = null;
+        String storageState = Environment.getExternalStorageState();
+        if (storageState.equals(Environment.MEDIA_MOUNTED)) {
+            root = Environment.getExternalStorageDirectory().getAbsolutePath();
+        } else {
+            Log.e(getTag(), "no SDCard founded");
         }
-        return null;
+        return root;
     }
 
     /**
      * 获取手机外置SD卡的根目录,非机身自带的SD卡，一般为空
-     *
+     * 如果是需要访问内置SD卡，请使用@getWorkPath 或者 @getSDRoot
      * @return
      */
     public static String getExternalSDRoot() {
@@ -87,29 +94,49 @@ public class FileUtils {
     }
 
     /**
-     * return /sdcard/stur/ if sdcard dir exist,
-     * or return /data/user/0/com.stur.chest/files/stur/
+     * 返回内置SD卡或data分区下某目录的完整工作路径（推荐使用）
+     * 如果有SD卡，返回/sdcard/dir/，否则返回/data/user/0/pakage_name/files/dir/
      * @param context can be null if externalStorage is mounted
-     * @return
+     * @dir 工作目录名，如果传入为null则默认为stur
+     * @return 返回完整工作路径
      */
-    public static String getDataPath(Context context) {
+    public static String getWorkPath(Context context, String dir) {
         // 判断是否挂载了SD卡
-        String dataPath = null;
+        if (dir == null) {
+            dir = DATA_PATH_STUR;
+        }
+        String path = null;
         String storageState = Environment.getExternalStorageState();
         if (storageState.equals(Environment.MEDIA_MOUNTED)) {
-            dataPath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + DATA_PATH
+            path = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + dir
                     + File.separator;
         } else {
             File basePath = context.getFilesDir();
             if (basePath == null) {
                 basePath = context.getCacheDir();
             }
-            dataPath = basePath.getAbsolutePath() + File.separator + DATA_PATH + File.separator;
+            path = basePath.getAbsolutePath() + File.separator + dir + File.separator;
         }
-        File file = new File(dataPath);
+        File file = new File(path);
         if (!file.exists()) {
             file.mkdirs();
         }
+        return path;
+    }
+
+    /**
+     * 返回data分区下某目录的完整路径
+     * @param context can be null if externalStorage is mounted
+     * @dir 工作目录名
+     * @return 返回完成工作路径，如果有SD卡，返回/sdcard/stur/，否则返回/data/user/0/com.stur.chest/files/stur/
+     */
+    public static String getDataPath(Context context) {
+        String dataPath = null;
+        File basePath = context.getFilesDir();
+        if (basePath == null) {
+            basePath = context.getCacheDir();
+        }
+        dataPath = basePath.getAbsolutePath();
         return dataPath;
     }
 
@@ -847,7 +874,7 @@ public class FileUtils {
         SUCCESS, EXITS, ERROR
     }
 
-    /*
+    /**
     * read file from assets/filename and write it to
     * /sdcard/stur/image/filename
     */

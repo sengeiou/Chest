@@ -3,9 +3,6 @@ package com.stur.lib.constant;
 public class StConstant {
     public static final boolean TEST_TAG = true;
 
-    //腾讯bugly上注册的appid，用于异常统计
-    public static final String BUGLY_APP_ID = "2eb19fb274";
-
     /* UI */
     public static final String FILE_NAME="splash";
     public static final int APP_LIST_GRIDE_ROW = 2;
@@ -22,13 +19,10 @@ public class StConstant {
 
     /* Web Server */
     public static final int DEFAULT_WEB_SERVER_PORT = 8088;
-    public static final String REQUEST_ROOT = "/";
-    public static final String IVVI_PATH = "/IVVI/";
     public static final String CONTROLLING_APK = "Controlling.apk";
     public static final String QRCODE_CONTENT = DEFAULT_SERVER + ":" + DEFAULT_WEB_SERVER_PORT;
 
     /* MultiMedia */
-    public static final String CAMERA_DIR = "/sdcard/DCIM/Camera";
 
     public static final String ROLE_DEFINITION = "persist.ivvi.role_definition";
     public static final String ROLE_SERVER     = "server";
@@ -46,7 +40,7 @@ public class StConstant {
     /*SystemProperty*/
     static final String PROPERTY_OPERATORS_MODE = "persist.yulong.operators.mode";
     public static final String PROP_ACTIVITY_NAME = "persist.stur.activity";
-    public static final String DEFAULT_ACTIVITY = "com.stur.lib.bt.StBluetoothActivity";
+    public static final String DEFAULT_ACTIVITY = "com.stur.lib.activity.WebServerActivity";
     //com.tab.view.TabMainActivity
     //com.stur.lib.bt.StBluetoothActivity
 
@@ -77,7 +71,6 @@ public class StConstant {
     /* ControlledService Message */
     public static final int EVENT_IND_EXAMPLE            = 0;
 
-    public static final int EVENT_WELCOM_DELAY           = 50;
     public static final int EVENT_TEST                   = 500;
 
     public static final int REQUEST_CODE_WIFI_SCAN = 1;

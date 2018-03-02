@@ -1,43 +1,55 @@
 package com.stur.activity;
 
-import android.app.Activity;
-import android.os.Bundle;
+import android.content.Intent;
 import android.os.Handler;
-import android.os.Message;
 
+import com.stur.chest.activity.ChestActivity;
 import com.stur.chest.R;
+import com.stur.lib.activity.ActivityBase;
 
-public class WelcomeActivity extends Activity {
-    protected static final int DELAY_LONG = 1000;
-    Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            if (com.stur.lib.constant.StConstant.EVENT_WELCOM_DELAY == msg.what) {
-                    //startActivity(new Intent(WelcomeActivity.this, ChestActivity.class));
-                    finish();
-                }
-            }
-        };
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_welcome);
-        mHandler.sendEmptyMessageDelayed(com.stur.lib.constant.StConstant.EVENT_WELCOM_DELAY, DELAY_LONG);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
+public class WelcomeActivity extends ActivityBase {
+    protected static final int WELCOME_TIME = 2500;
+    protected boolean mIsDestroyed = false;
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mIsDestroyed = true;
+    }
+
+    @Override
+    protected void beforeInitView() {
+        setContentView(R.layout.activity_welcome);
+    }
+
+    @Override
+    protected void initView() {
+
+    }
+
+    @Override
+    protected void initListener() {
+        finishAfterDelayed(WELCOME_TIME);
+    }
+
+    @Override
+    protected void initData() {
+    }
+
+    private void finishAfterDelayed(int delay) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (mIsDestroyed) {
+                    return;
+                }
+
+                Intent i = new Intent(WelcomeActivity.this, ChestActivity.class);
+                startActivity(i);
+                finish();
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            }
+
+        }, delay);
     }
 }

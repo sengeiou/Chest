@@ -23,6 +23,7 @@ public class AdbUtils {
     * PC use adb connect a.b.c.d:-1 to close wifiadb
     * if usbadb cannot used anymore after these steps, it will be resumed after restarting usb debug
     * Noticed: SystemPropertiesProxy.set is only granted for system/root uid, or you can write it persistently to system/build.prop
+    * if write system/build.prop failed, dont forget "adb disable-verity" with the latest adb version
     */
     public static void enableWifiAdb(Context context, String port) throws IOException {
         port = port != null ? port : WIFI_ADB_DEFAULT_PORT;

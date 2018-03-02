@@ -45,4 +45,5 @@ dependencies {
     // gson
     compile 'com.google.code.gson:gson:2.5'
     compile files('libs/gcache-1.0.3.jar')
+    compile 'com.tencent.bugly:crashreport:latest.release'
 }

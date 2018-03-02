@@ -12,15 +12,14 @@ import android.media.MediaCodecList;
 import android.media.MediaFormat;
 import android.media.MediaRecorder;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SurfaceHolder;
 
-import com.stur.lib.constant.StConstant;
 import com.stur.lib.R;
 import com.stur.lib.Utils;
+import com.stur.lib.file.FileUtils;
 import com.stur.lib.web.NanoHttpdServer;
 import com.stur.lib.web.SrsHttpFlv;
 
@@ -96,7 +95,7 @@ public class MediaDecoderActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        httpServer = new NanoHttpdServer(this, new File(Environment.getExternalStorageDirectory() + StConstant.IVVI_PATH));
+        httpServer = new NanoHttpdServer(this, new File(FileUtils.getWorkPath(this, FileUtils.DATA_PATH_IVVI)));
         try {
             httpServer.start();
         } catch (IOException e) {

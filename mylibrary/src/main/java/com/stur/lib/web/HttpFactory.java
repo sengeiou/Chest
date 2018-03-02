@@ -9,12 +9,12 @@ import com.stur.lib.web.impl.AsyncHttpImpl;
  * Created by Administrator on 2016/3/4.
  */
 public class HttpFactory {
-    private static ContextBase mContext = null;
+    private static ContextBase sContext = null;
     private static HttpService mHttpService = null;
     private static HttpEngine mHttpEngine = HttpEngine.ASYNC_HTTP;
 
     public static void register(ContextBase context) {
-        mContext = context;
+        sContext = context;
     }
 
     public static void setHttpEngine(HttpEngine httpEngine) {
@@ -27,7 +27,7 @@ public class HttpFactory {
             // 通过Volley进行实现
             switch (mHttpEngine) {
                 case ASYNC_HTTP:
-                    mHttpService = new AsyncHttpImpl(mContext);
+                    mHttpService = new AsyncHttpImpl(sContext);
                     break;
                 default:
                     throw new RuntimeException("Unknown engine: " + mHttpEngine);

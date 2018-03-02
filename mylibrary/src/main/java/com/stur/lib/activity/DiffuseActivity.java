@@ -1,11 +1,11 @@
 package com.stur.lib.activity;
 
-import com.stur.lib.R;
-import com.stur.lib.widget.DiffuseView;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+
+import com.stur.lib.R;
+import com.stur.lib.view.DiffuseView;
 
 public class DiffuseActivity extends Activity {
     private DiffuseView mDiffuseView;

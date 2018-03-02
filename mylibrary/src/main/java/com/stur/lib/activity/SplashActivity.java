@@ -1,47 +1,37 @@
 package com.stur.lib.activity;
 
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 
-import com.stur.lib.constant.StConstant;
 import com.stur.lib.R;
 import com.stur.lib.SharedPreferenceUtils;
 import com.stur.lib.Utils;
 import com.stur.lib.config.ConfigBase;
-import com.stur.lib.widget.BlankFragment;
-import com.stur.lib.widget.CircleIndicator;
+import com.stur.lib.constant.StConstant;
+import com.stur.lib.view.BlankFragment;
+import com.stur.lib.view.CircleIndicator;
 
 import java.util.HashMap;
 import java.util.Map;
 
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends ActivityBase {
     private ViewPager mViewPager;
     private CircleIndicator mCircleIndicator;
-    private boolean mEntranceShow = ConfigBase.SPLASH_ENTRANCE_SHOW_DEFAULT;
+    private boolean mEntranceShow = ConfigBase.sSplashEntranceShowDefault;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void beforeInitView() {
         setContentView(R.layout.activity_splash);
-        if (ignoreSplash()) return;
-
-        initView();
     }
 
-    private boolean ignoreSplash() {
-        if(ConfigBase.SPLASH_ONLY_ONCE && SharedPreferenceUtils.contatins(this, StConstant.FILE_NAME, Utils.getAppVersionCode(this) + "")){
-            /*Intent intent=new Intent(SplashActivity.this,SelectDeivce.class);
-            startActivity(intent);*/
-            this.finish();
-            return true;
+    @Override
+    protected void initView() {
+        if (ignoreSplash()) {
+            return;
         }
-        return false;
-    }
 
-    private void initView() {
         mViewPager= (ViewPager) findViewById(R.id.viewpager);
         mCircleIndicator= (CircleIndicator) findViewById(R.id.circle_indicator);
         mViewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
@@ -64,6 +54,26 @@ public class SplashActivity extends AppCompatActivity {
             }
         });
         mCircleIndicator.setViewPager(mViewPager);
+    }
+
+    @Override
+    protected void initListener() {
+
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+    private boolean ignoreSplash() {
+        if(ConfigBase.sSplashOnlyOnce && SharedPreferenceUtils.contatins(this, StConstant.FILE_NAME, Utils.getAppVersionCode(this) + "")){
+            /*Intent intent=new Intent(SplashActivity.this,SelectDeivce.class);
+            startActivity(intent);*/
+            this.finish();
+            return true;
+        }
+        return false;
     }
 
     public void setEntraceShow(boolean isShow) {

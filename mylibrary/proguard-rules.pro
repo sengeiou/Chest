@@ -24,3 +24,7 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 -dontwarn org.apache.http.**
+
+#applied for tencent bugly
+-dontwarn com.tencent.bugly.**
+-keep public class com.tencent.bugly.**{*;}

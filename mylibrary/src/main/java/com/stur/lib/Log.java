@@ -14,12 +14,19 @@ public class Log {
      */
 
     // Generic tag for all In Call logging
-    public static final String TAG = ConfigBase.LOG_TAG;
+    public static String TAG = ConfigBase.sLogTag;
 
-    public static final boolean FORCE_DEBUG = ConfigBase.FORCE_DEBUG;
-    public static final boolean DEBUG = FORCE_DEBUG || android.util.Log.isLoggable(TAG, android.util.Log.DEBUG);
-    public static final boolean VERBOSE = FORCE_DEBUG || android.util.Log.isLoggable(TAG, android.util.Log.VERBOSE);
-    public static final String TAG_DELIMETER = " : ";
+    public static boolean FORCE_DEBUG = ConfigBase.sForceDebug;
+    public static boolean DEBUG = FORCE_DEBUG || android.util.Log.isLoggable(TAG, android.util.Log.DEBUG);
+    public static boolean VERBOSE = FORCE_DEBUG || android.util.Log.isLoggable(TAG, android.util.Log.VERBOSE);
+    public static String TAG_DELIMETER = " : ";
+
+    public static void update(String tag, boolean forceDebug) {
+        TAG = tag;
+        FORCE_DEBUG = forceDebug;
+        DEBUG = FORCE_DEBUG || android.util.Log.isLoggable(TAG, android.util.Log.DEBUG);
+        VERBOSE = FORCE_DEBUG || android.util.Log.isLoggable(TAG, android.util.Log.VERBOSE);
+    }
 
     public static void d(String tag, String msg) {
         if (DEBUG) {

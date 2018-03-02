@@ -5,7 +5,8 @@
     android:orientation="vertical"
     android:divider="@drawable/separator"
     android:showDividers="middle"
-    tools:context="com.stur.chest.ChestActivity" >
+    tools:context="com.stur.chest.ChestActivity"
+    android:keepScreenOn="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -97,6 +98,15 @@
                 android:layout_marginLeft="20dp"
                 android:background="@drawable/shape1"
                 android:text="Cert"
+                android:textSize="@dimen/font_lev1_content_size"/>
+
+            <Button
+                android:id="@+id/btn_share_me"
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/shape1"
+                android:text="share me"
                 android:textSize="@dimen/font_lev1_content_size"/>
 
             <Button
