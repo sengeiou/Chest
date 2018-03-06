@@ -2,8 +2,11 @@ package com.stur.lib.web;
 
 import android.content.Context;
 
+import com.stur.lib.GsonUtils;
 import com.stur.lib.Log;
 import com.stur.lib.constant.StConstant;
+import com.stur.lib.dto.UserAccountDTO;
+import com.stur.lib.exception.ParameterException;
 import com.stur.lib.file.FileUtils;
 import com.stur.lib.network.WifiUtils;
 
@@ -80,12 +83,22 @@ public class NanoHttpdServer extends SimpleWebServer {
         return new Response(builder.toString());
     }
 
+    //测试网络接口及GsonUtil的用法
     public Response responseContent() {
-        StringBuilder builder = new StringBuilder();
-        builder.append("<!DOCTYPE html><html><body>");
-        builder.append("Sorry, Can't Found apk at " + url + " !");
-        builder.append("</body></html>\n");
-        return new Response(builder.toString());
+        UserAccountDTO uat = new UserAccountDTO();
+        try {
+            uat.setId("1");
+            uat.setName("stur");
+            uat.setEmail("272334751@qq.com");
+            uat.setAddress_id("1");
+            uat.setStatus("200");
+            uat.setLogin_ip("192.168.1.100");
+            uat.setCreate_at("20180304");
+            uat.setToken("1");
+        } catch (ParameterException e) {
+            e.printStackTrace();
+        }
+        return new Response(GsonUtils.toJson(uat));
     }
 
 }

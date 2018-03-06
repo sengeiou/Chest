@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.stur.lib.Log;
 import com.stur.lib.constant.StConstant;
+import com.stur.lib.constant.StMessageID;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,7 +83,7 @@ public class WiFiP2PAdmin {
                         WifiP2pManager.EXTRA_WIFI_P2P_INFO);
                 if (networkInfo.isConnected()) {
                     Log.d(this, "***************Connected******************");
-                    Message.obtain(mServiceHandler, StConstant.EVENT_P2P_CONNECTED, null).sendToTarget();
+                    Message.obtain(mServiceHandler, StMessageID.EVENT_P2P_CONNECTED, null).sendToTarget();
                     //mP2PConnectedRegistrants.notifyRegistrants();
                 } else if (mLastGroupFormed != true) {
                     //start a search when we are disconnected
@@ -336,7 +337,7 @@ public class WiFiP2PAdmin {
                 new ActionListener() {
                     public void onSuccess() {
                         Log.d(this, "connectToPeer success");
-                        Message.obtain(mServiceHandler, StConstant.EVENT_P2P_CONNECTED, null).sendToTarget();
+                        Message.obtain(mServiceHandler, StMessageID.EVENT_P2P_CONNECTED, null).sendToTarget();
                     }
 
                     //ERROR = 0; P2P_UNSUPPORTED = 1; BUSY = 2;  NO_SERVICE_REQUESTS = 3;

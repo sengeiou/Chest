@@ -20,19 +20,28 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.google.gson.reflect.TypeToken;
 import com.stur.chest.R;
+import com.stur.chest.dto.UserAccountDTO;
+import com.stur.chest.utils.ApiUtils;
 import com.stur.lib.AdbUtils;
 import com.stur.lib.Log;
 import com.stur.lib.SystemPropertiesProxy;
 import com.stur.lib.UIHelper;
 import com.stur.lib.Utils;
 import com.stur.lib.config.ConfigManager;
-import com.stur.lib.constant.StConstant;
+import com.stur.lib.constant.StActivityName;
 import com.stur.lib.network.WakeOnLan;
 import com.stur.lib.network.WifiUtils;
 import com.stur.lib.os.PackageUtils;
+import com.stur.lib.web.HttpFactory;
+import com.stur.lib.web.api.HttpResponseListener;
+import com.stur.lib.web.request.HttpMethod;
+import com.stur.lib.web.request.HttpRequest;
+import com.stur.lib.web.response.HttpResponse;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class ToolsFragment extends Fragment {
@@ -171,6 +180,11 @@ public class ToolsFragment extends Fragment {
                 //if(csr.getMac().equals("fc:25:3f:c2:3b:0a")) {
                 //mTv_output.setText(csr.getAddress()); }
                 //}
+
+                //testHttpRequest();
+
+
+
             }
         });
 
@@ -278,7 +292,23 @@ public class ToolsFragment extends Fragment {
         StringBuilder sb = new StringBuilder();
         sb.append("setprop " + AdbUtils.WIFI_ADB_PORT_PROP + " " + AdbUtils.WIFI_ADB_DEFAULT_PORT + "\n");
         sb.append("adb connect " + WifiUtils.getIp(getActivity()) + ":" + AdbUtils.WIFI_ADB_DEFAULT_PORT + "\n");
-        sb.append("setprop  " + StConstant.PROP_ACTIVITY_NAME + "com.stur.lib.activity.SplashActivity" + "\n");
+        sb.append("setprop  " + StActivityName.PROP_ACTIVITY_NAME + "com.stur.lib.activity.SplashActivity" + "\n");
         mTvOutput.setText(sb);
+    }
+
+    private void testHttpRequest() {
+        HttpRequest httpRequest = new HttpRequest("http://10.66.128.123:8088/test", HttpMethod.POST);
+        httpRequest.addParams(ApiUtils.KEY_TOKEN, "123456");
+        HttpFactory.getHttpService().sendRequest(httpRequest, new HttpResponseListener() {
+            @Override
+            public void onSuccess(HttpResponse response) {
+                Log.d(this, "[response]" + response.toString());
+                Type type = new TypeToken<UserAccountDTO>() {
+                }.getType();
+                UserAccountDTO uat = response.convert(type);
+                String email = uat.getEmail();
+                UIHelper.toastMessageMiddle(getContext(), "email = " + email);
+            }
+        });
     }
 }

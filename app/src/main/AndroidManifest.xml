@@ -86,8 +86,10 @@
         <activity android:name="com.stur.lib.bt.StBluetoothActivity"/>
         <activity android:name="com.stur.lib.bt.StChatActivity" />
         <activity android:name="com.stur.lib.bt.StDeviceActivity" />
+        <activity android:name="com.stur.chest.activity.ClientActivity" />
+        <activity android:name="com.stur.chest.activity.ServerActivity" />
 
-        <service android:name="com.stur.chest.ChestService" />
+        <service android:name="com.stur.chest.service.ChestService" />
     </application>
 
 </manifest>

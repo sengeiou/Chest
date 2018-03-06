@@ -100,7 +100,7 @@ public abstract class FragmentActivityBase extends ActivityBase
     public void onPageScrolled(int position, float positionOffset,
                                int positionOffsetPixels) {
         offset = (screen1_3 - cursorImg.getLayoutParams().width) / 2;
-        Log.d(this, "onPageScrolled: " + position + "--" + positionOffset + "--"+ positionOffsetPixels);
+        Log.v(this, "onPageScrolled: " + position + "--" + positionOffset + "--"+ positionOffsetPixels);
         final float scale = getResources().getDisplayMetrics().density;
         if (position == 0) {// 0<->1
             lp.leftMargin = (int) (positionOffsetPixels / 3) + offset;

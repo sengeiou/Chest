@@ -1,25 +1,28 @@
 package com.stur.chest.fragment;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.stur.chest.R;
+import com.stur.chest.activity.ClientActivity;
+import com.stur.chest.activity.ServerActivity;
 import com.stur.lib.Log;
 import com.stur.lib.SystemPropertiesProxy;
+import com.stur.lib.UIHelper;
 import com.stur.lib.bt.StBluetoothActivity;
+import com.stur.lib.constant.StActivityName;
 import com.stur.lib.constant.StConstant;
 
-import static com.stur.lib.constant.StConstant.DEFAULT_ACTIVITY;
+import static com.stur.lib.constant.StActivityName.DEFAULT_ACTIVITY;
 
 public class TestFragment extends Fragment {
-    private Button mBtnBluetooth;
-    private Button mBtnUserClick;
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -40,8 +43,7 @@ public class TestFragment extends Fragment {
     }
 
     private void initView(View view) {
-        mBtnBluetooth = (Button)view.findViewById(R.id.btn_bluetooth);
-        mBtnBluetooth.setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.btn_bluetooth).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getContext(), StBluetoothActivity.class);
@@ -49,17 +51,23 @@ public class TestFragment extends Fragment {
             }
         });
 
-        mBtnUserClick = (Button)view.findViewById(R.id.btn_user_click);
-        mBtnUserClick.setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.btn_user_click).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startTestActivity();
             }
         });
+
+        view.findViewById(R.id.btn_select_role).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectRole();
+            }
+        });
     }
 
     public void startTestActivity() {
-        String clsName = SystemPropertiesProxy.get(getActivity(), StConstant.PROP_ACTIVITY_NAME, DEFAULT_ACTIVITY);
+        String clsName = SystemPropertiesProxy.get(getActivity(), StActivityName.PROP_ACTIVITY_NAME, DEFAULT_ACTIVITY);
         if (clsName != null && clsName.length() > 0) {
             try {
                 Class cls = Class.forName(clsName);
@@ -99,5 +107,32 @@ public class TestFragment extends Fragment {
 
         //TCPClient tc = TCPClient.init(this, "www.baidu.com", "80");
         //tc.start();
+    }
+
+    private void selectRole() {
+        if (StConstant.isRoleServer(getContext())) {
+            UIHelper.toastMessage(getContext(), "server started");
+        } else if (StConstant.isRoleClient(getContext())){
+            UIHelper.toastMessage(getContext(), "client started");
+        } else if (StConstant.isRoleNone(getContext())) {
+            new AlertDialog.Builder(getContext())
+                    .setMessage("please select role")
+                    .setPositiveButton("Client", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface arg0, int arg1) {
+                            startActivity(new Intent(getContext(), ClientActivity.class));
+                        }
+                    })
+                    .setNegativeButton("Server", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface arg0, int arg1) {
+                            startActivity(new Intent(getContext(), ServerActivity.class));
+                        }
+                    })
+                    .create()
+                    .show();
+        } else {
+            Log.e(getContext(), "something is wrong when read role");
+        }
     }
 }

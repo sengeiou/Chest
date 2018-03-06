@@ -1,11 +1,11 @@
 package com.stur.tcp.vote;
 
-import java.io.OutputStream;
-import java.net.Socket;
-
 import com.stur.async.protocol.VoteMsg;
 import com.stur.async.protocol.VoteMsgBinCoder;
 import com.stur.async.protocol.VoteMsgCoder;
+
+import java.io.OutputStream;
+import java.net.Socket;
 
 public class VoteClientTCP {
 
