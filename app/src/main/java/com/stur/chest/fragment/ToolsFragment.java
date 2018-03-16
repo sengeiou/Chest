@@ -115,6 +115,14 @@ public class ToolsFragment extends Fragment {
             }
         });
 
+        view.findViewById(R.id.btn_log_offline).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
+
         view.findViewById(R.id.btn_log_level).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

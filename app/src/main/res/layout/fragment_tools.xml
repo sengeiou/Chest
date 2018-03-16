@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:divider="@drawable/separator"
     android:showDividers="middle"
-    tools:context="com.stur.chest.ChestActivity"
+    tools:context="com.stur.chest.activity.ChestActivity"
     android:keepScreenOn="true">
 
     <LinearLayout
@@ -80,6 +80,15 @@
                 android:layout_marginLeft="20dp"
                 android:background="@drawable/shape1"
                 android:text="wifi adb"
+                android:textSize="@dimen/font_lev1_content_size"/>
+
+            <Button
+                android:id="@+id/btn_log_offline"
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/shape1"
+                android:text="Log Offline"
                 android:textSize="@dimen/font_lev1_content_size"/>
 
             <Button
