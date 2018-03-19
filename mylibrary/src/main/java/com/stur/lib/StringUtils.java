@@ -190,4 +190,72 @@ public class StringUtils {
         }
         return builder.substring(0, builder.length() - 1);
     }
+
+    /**
+     * 根据给定的编码方式进行编码。如果调用的是不带参数的getBytes()方法，则使用默认的编码方式
+     */
+    public static byte[] strToByteArray(String str) {
+        if (str == null) {
+            return null;
+        }
+        byte[] byteArray = str.getBytes();
+        return byteArray;
+    }
+
+    public static String byteArrayToStr(byte[] byteArray) {
+        if (byteArray == null) {
+            return null;
+        }
+        String str = new String(byteArray);
+        return str;
+    }
+
+    /**
+     * byte[]转十六进制String
+     * 十六进制String，就是字符串里面的字符都是十六进制形式
+     * 因为一个byte是八位，可以用两个十六进制位来表示
+     * 因此，byte数组中的每个元素可以转换为两个十六进制形式的char
+     * 所以最终的HexString的长度是byte数组长度的两倍
+     * 之所以要将byte数值和0xFF按位与，是因为我们为了方便后面的无符号移位操作
+     * （无符号右移运算符>>>只对32位和64位的值有意义），要将byte数据转换为int类型，
+     * 而如果直接转换就会出现问题。因为java里面二进制是以补码形式存在的，
+     * 如果直接转换，位扩展会产生问题，如值为-1的byte存储的二进制形式为其补码11111111，
+     * 而转换为int后为11111111111111111111111111111111，直接使用该值结果就不对了。
+     * 而0xFF默认是int类型，即0x000000FF，一个byte值跟0xFF相与会先将那个byte值转化成int类型运算，
+     * 这样，相与的结果中高的24个比特就总会被清0，后面的运算才会正确。
+     * @param byteArray
+     * @return
+     */
+    public static String byteArrayToHexStr(byte[] byteArray) {
+        if (byteArray == null){
+            return null;
+        }
+        char[] hexArray = "0123456789ABCDEF".toCharArray();
+        char[] hexChars = new char[byteArray.length * 2];
+        for (int j = 0; j < byteArray.length; j++) {
+            int v = byteArray[j] & 0xFF;
+            hexChars[j * 2] = hexArray[v >>> 4];
+            hexChars[j * 2 + 1] = hexArray[v & 0x0F];
+        }
+        return new String(hexChars);
+    }
+
+    /**
+     * 十六进制String转byte[]
+     */
+    public static byte[] hexStrToByteArray(String str)
+    {
+        if (str == null) {
+            return null;
+        }
+        if (str.length() == 0) {
+            return new byte[0];
+        }
+        byte[] byteArray = new byte[str.length() / 2];
+        for (int i = 0; i < byteArray.length; i++){
+            String subStr = str.substring(2 * i, 2 * i + 2);
+            byteArray[i] = ((byte)Integer.parseInt(subStr, 16));
+        }
+        return byteArray;
+    }
 }

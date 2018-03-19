@@ -31,6 +31,8 @@ import com.stur.lib.UIHelper;
 import com.stur.lib.Utils;
 import com.stur.lib.config.ConfigManager;
 import com.stur.lib.constant.StActivityName;
+import com.stur.lib.constant.StCommand;
+import com.stur.lib.file.FileUtils;
 import com.stur.lib.network.WakeOnLan;
 import com.stur.lib.network.WifiUtils;
 import com.stur.lib.os.PackageUtils;
@@ -43,6 +45,9 @@ import com.stur.lib.web.response.HttpResponse;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+
+import static com.stur.lib.Utils.execCommand;
+
 
 public class ToolsFragment extends Fragment {
     private Button mBtnCmdExc;
@@ -77,7 +82,7 @@ public class ToolsFragment extends Fragment {
                 Log.d(this, "onCmdExcClick E: " + cmd);
                 if (cmd != null && cmd.length() > 0) {
                     try {
-                        mOutput += Utils.execCommand(cmd);
+                        mOutput += execCommand(cmd);
                     } catch (Exception e) {
                         Log.e(getActivity(), e.toString());
                     } finally {
@@ -118,10 +123,17 @@ public class ToolsFragment extends Fragment {
         view.findViewById(R.id.btn_log_offline).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                FileUtils.deleteOfflineLogs();
+                PackageUtils.startOfflineLogActivity(getContext());
+                try {
+                    //清理缓存未报错，但始终未清理成功，adb可以清理成功，可能是需要root权限。
+                    String ret = Utils.execCommand(StCommand.CLEAR_LOG_CACHE);
+                    Log.d(this, "clear log cache return: " + ret);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
-
 
         view.findViewById(R.id.btn_log_level).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,7 +171,13 @@ public class ToolsFragment extends Fragment {
         view.findViewById(R.id.btn_share_me).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                UIHelper.toastMessageMiddle(getContext(), "hello");
+                String tmpPath = FileUtils.getWorkPath(getContext(),null) + "chest.apk";
+                try {
+                    FileUtils.copyFile(getContext(), getContext().getPackageResourcePath(), tmpPath);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                FileUtils.shareFile(getContext(), tmpPath);
             }
         });
 
@@ -190,9 +208,6 @@ public class ToolsFragment extends Fragment {
                 //}
 
                 //testHttpRequest();
-
-
-
             }
         });
 

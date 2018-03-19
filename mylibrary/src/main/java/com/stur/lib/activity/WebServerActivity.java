@@ -13,11 +13,11 @@ import java.io.IOException;
 
 public class WebServerActivity extends ActivityBase {
     private TextView mTipsTextView;
-    private NanoHttpdServer httpServer;
+    private NanoHttpdServer mHttpServer;
 
     @Override
     protected void onDestroy() {
-        httpServer.stop();
+        mHttpServer.stop();
         super.onDestroy();
     }
 
@@ -44,9 +44,9 @@ public class WebServerActivity extends ActivityBase {
 
     @Override
     protected void initData() {
-        httpServer = new NanoHttpdServer(this, new File(FileUtils.getWorkPath(this, null)));
+        mHttpServer = new NanoHttpdServer(this, new File(FileUtils.getWorkPath(this, null)));
         try {
-            httpServer.start();
+            mHttpServer.start();
         } catch (IOException e) {
             e.printStackTrace();
             mTipsTextView.setText(mTipsTextView.getText() + e.getMessage());

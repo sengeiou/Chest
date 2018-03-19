@@ -1,14 +1,20 @@
 package com.stur.lib.file;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
+import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
 
 import com.stur.lib.Log;
 import com.stur.lib.StringUtils;
+import com.stur.lib.constant.StConstant;
+import com.stur.lib.os.OsUtils;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -30,6 +36,9 @@ public class FileUtils {
      */
     public static final String PATH_ROOT = "/";
     public static final String PATH_CAMERA = "/sdcard/DCIM/Camera";
+    //离线log开启的情况下不能直接删除log文件，否则LogService没法写入到之前的文件，Log无法打印，除非再次关闭并开启log开关
+    public static final String PATH_LOG_QC = "/sdcard/log/";
+    public static final String PATH_LOG_MTK = "/storage/emulated/0/mtklog/";
 
     /**
      * 数据目录
@@ -145,7 +154,6 @@ public class FileUtils {
     * on the next calling. new File only for allocate, createNewFile is create
     * empty file on the disk
     */
-
     public static File getIncreasedSaveFile(String fileNamePath) {
         File file = new File(fileNamePath);
         int n;
@@ -198,7 +206,6 @@ public class FileUtils {
 
     /**
      * 创建文件
-     *
      * @param folderPath
      * @param fileName
      * @return
@@ -212,11 +219,9 @@ public class FileUtils {
     }
 
     /**
-     * 创建临时文件
-     *
+     * 在sdcard/Android/data/<package>/cache/目录下，创建临时文件
      * @param context
      * @param type
-     *            .jpg
      * @return
      */
     public static File createTempFile(Context context, String type) {
@@ -254,7 +259,6 @@ public class FileUtils {
 
     /**
      * 写文本文件 在Android系统中，文件保存在 /data/data/PACKAGE_NAME/files 目录下
-     *
      * @param context
      * @param fileName
      * @param content
@@ -275,7 +279,6 @@ public class FileUtils {
 
     /**
      * 读取文本文件
-     *
      * @param context
      * @param fileName
      * @return
@@ -310,11 +313,12 @@ public class FileUtils {
 
     /**
      * 向手机写图片
-     *
      * @param buffer
-     * @param folder
+     * @param folder 根目录为/sdcard/，这里只填目录名即可，无需完整路径
      * @param fileName
      * @return
+     * 注意要在manifest中配置权限，以及申请动态权限 READ_EXTERNAL_STORAGE
+     * <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
      */
     public static boolean writeFile(byte[] buffer, String folder, String fileName) {
         boolean writeSucc = false;
@@ -354,7 +358,6 @@ public class FileUtils {
 
     /**
      * 根据文件绝对路径获取文件名
-     *
      * @param filePath
      * @return
      */
@@ -366,7 +369,6 @@ public class FileUtils {
 
     /**
      * 根据文件的绝对路径获取文件名但不包含扩展名
-     *
      * @param filePath
      * @return
      */
@@ -380,7 +382,6 @@ public class FileUtils {
 
     /**
      * 获取文件扩展名
-     *
      * @param fileName
      * @return
      */
@@ -394,7 +395,6 @@ public class FileUtils {
 
     /**
      * 获取文件大小
-     *
      * @param filePath
      * @return
      */
@@ -410,9 +410,7 @@ public class FileUtils {
 
     /**
      * 获取文件大小
-     *
-     * @param size
-     *            字节
+     * @param size 字节
      * @return
      */
     public static String getFileSize(long size) {
@@ -429,7 +427,6 @@ public class FileUtils {
 
     /**
      * 转换文件大小
-     *
      * @param fileS
      * @return B/KB/MB/GB
      */
@@ -450,7 +447,6 @@ public class FileUtils {
 
     /**
      * 获取目录文件大小
-     *
      * @param dir
      * @return
      */
@@ -476,7 +472,6 @@ public class FileUtils {
 
     /**
      * InputStream to bytes
-     *
      * @param in
      * @return
      * @throws java.io.IOException
@@ -494,7 +489,6 @@ public class FileUtils {
 
     /**
      * 检查文件是否存在
-     *
      * @param filename
      * @return
      */
@@ -507,7 +501,6 @@ public class FileUtils {
 
     /**
      * 检查文件是否存在
-     *
      * @param file
      * @return
      */
@@ -520,7 +513,6 @@ public class FileUtils {
 
     /**
      * 计算SD卡的剩余空间
-     *
      * @return 返回-1，说明没有安装sd卡
      */
     public static long getFreeDiskSpace() {
@@ -544,7 +536,6 @@ public class FileUtils {
 
     /**
      * 新建目录
-     *
      * @param directoryName
      * @return
      */
@@ -562,7 +553,6 @@ public class FileUtils {
 
     /**
      * 检查是否安装SD卡
-     *
      * @return
      */
     public static boolean checkSaveLocationExists() {
@@ -577,7 +567,6 @@ public class FileUtils {
 
     /**
      * 检查是否安装外置的SD卡
-     *
      * @return
      */
     public static boolean checkExternalSDExists() {
@@ -588,9 +577,7 @@ public class FileUtils {
 
     /**
      * 删除文件夹或者文件
-     *
-     * @param folderPath
-     *            String 文件夹路径或者文件的绝对路径 如：/mnt/sdcard/def_ids/1.png
+     * @param folderPath 文件夹路径或者文件的绝对路径 如：/mnt/sdcard/def_ids/1.png
      */
     public static void deleteDirectory(String folderPath) {
         try {
@@ -608,9 +595,7 @@ public class FileUtils {
 
     /**
      * 删除文件夹里面的所有文件
-     *
-     * @param path
-     *            String 文件夹路径或者文件的绝对路径 如：/mnt/sdcard/def_ids/1.png
+     * @param path 文件夹路径或者文件的绝对路径 如：/mnt/sdcard/def_ids/1.png
      */
     public static void deleteAllFile(String path) {
         // 在内存开辟一个文件空间，但是没有创建
@@ -644,7 +629,6 @@ public class FileUtils {
 
     /**
      * 删除文件
-     *
      * @param fileName
      * @return
      */
@@ -677,7 +661,6 @@ public class FileUtils {
      * 删除空目录
      * <p/>
      * 返回 0代表成功 ,1 代表没有删除权限, 2代表不是空目录,3 代表未知错误
-     *
      * @return
      */
     public static int deleteBlankPath(String path) {
@@ -694,9 +677,24 @@ public class FileUtils {
         return 3;
     }
 
+    public static boolean deleteOfflineLogs() {
+        boolean status = false;
+        try {
+            if (OsUtils.isHardWareVendorQualcomm()) {
+                deleteAllFile(PATH_LOG_QC);
+            } else if (OsUtils.isHardWareVendorMediaTek()) {
+                deleteAllFile(PATH_LOG_MTK);
+            }
+            status = true;
+        } catch (SecurityException se) {
+            se.printStackTrace();
+            status = false;
+        }
+        return status;
+    }
+
     /**
      * 重命名
-     *
      * @param oldName
      * @param newName
      * @return
@@ -708,7 +706,6 @@ public class FileUtils {
 
     /**
      * 删除文件
-     *
      * @param filePath
      */
     public static boolean deleteFileWithPath(String filePath) {
@@ -725,7 +722,6 @@ public class FileUtils {
 
     /**
      * 清空一个文件夹
-     *
      * @param filePath
      */
     public static void clearFileWithPath(String filePath) {
@@ -744,7 +740,6 @@ public class FileUtils {
 
     /**
      * 列出root目录下所有子目录
-     *
      * @param root
      * @return 绝对路径
      */
@@ -766,7 +761,6 @@ public class FileUtils {
 
     /**
      * 获取一个文件夹下的所有文件
-     *
      * @param root
      * @return
      */
@@ -776,11 +770,13 @@ public class FileUtils {
         File path = new File(root);
         checker.checkRead(root);
         File[] files = path.listFiles();
-        for (File f : files) {
-            if (f.isFile())
-                allDir.add(f);
-            else
-                listPath(f.getAbsolutePath());
+        if (files != null) {
+            for (File f : files) {
+                if (f.isFile())
+                    allDir.add(f);
+                else
+                    listPath(f.getAbsolutePath());
+            }
         }
         return allDir;
     }
@@ -808,7 +804,6 @@ public class FileUtils {
 
     /**
      * 创建目录
-     *
      * @param newPath
      */
     public static PathStatus createPath(String newPath) {
@@ -825,7 +820,6 @@ public class FileUtils {
 
     /**
      * 截取路径名
-     *
      * @return
      */
     public static String getPathName(String absolutePath) {
@@ -836,7 +830,6 @@ public class FileUtils {
 
     /**
      * 获取应用程序缓存文件夹下的指定目录
-     *
      * @param context
      * @param dir
      * @return
@@ -853,7 +846,6 @@ public class FileUtils {
 
     /**
      * 获取目录文件个数
-     *
      * @param dir
      * @return
      */
@@ -915,26 +907,31 @@ public class FileUtils {
         return f.getAbsolutePath();
     }
 
-    /*
+    /**
      * read files from assets/oldPath and copy them to newPath
+     * @param context
+     * @param srcPath 源文件夹或文件路径，但仅限于assets目录下存放的原始资源文件
+     * @param dstPath
+     * @return
+     * @throws IOException
      */
-    public static boolean CopyFiles(Context context, String oldPath, String newPath) throws IOException {
+    public static boolean copyFiles(Context context, String srcPath, String dstPath) throws IOException {
         boolean isCopy = true;
         AssetManager mAssetManger = context.getAssets();
-        String[] fileNames = mAssetManger.list(oldPath);// 获取assets目录下的所有文件及有文件的目录名
+        String[] fileNames = mAssetManger.list(srcPath);// 获取assets目录下的所有文件及有文件的目录名
 
         if (fileNames.length > 0) {// 如果是目录,如果是具体文件则长度为0
-            File file = new File(newPath);
+            File file = new File(dstPath);
             file.mkdirs();// 如果文件夹不存在，则递归
             for (String fileName : fileNames) {
-                if (oldPath == "") // assets中的oldPath是相对路径，不能够以“/”开头
-                    CopyFiles(context, fileName, newPath + "/" + fileName);
+                if (srcPath == "") // assets中的oldPath是相对路径，不能够以“/”开头
+                    copyFiles(context, fileName, dstPath + "/" + fileName);
                 else
-                    CopyFiles(context, oldPath + "/" + fileName, newPath + "/" + fileName);
+                    copyFiles(context, srcPath + "/" + fileName, dstPath + "/" + fileName);
             }
         } else {// 如果是文件
-            InputStream is = mAssetManger.open(oldPath);
-            FileOutputStream fos = new FileOutputStream(new File(newPath));
+            InputStream is = mAssetManger.open(srcPath);
+            FileOutputStream fos = new FileOutputStream(new File(dstPath));
             byte[] buffer = new byte[1024];
             int byteCount = 0;
             while ((byteCount = is.read(buffer)) != -1) {// 循环从输入流读取 buffer字节
@@ -948,8 +945,27 @@ public class FileUtils {
     }
 
     /**
+     * 拷贝一个文件到指定的目录
+     * @param context
+     * @param srcPath 源文件全路径（包括文件名），不限于assets目录，仅单个文件
+     * @param dstPath 目的文件全路径（包括文件名）
+     */
+    public static void copyFile(Context context, String srcPath, String dstPath) throws IOException {
+        FileInputStream fis = new FileInputStream(srcPath);
+        FileOutputStream fos = new FileOutputStream(dstPath);
+
+        byte[] buffer = new byte[1024];
+        int byteCount = 0;
+            while ((byteCount = fis.read(buffer)) != -1) {// 循环从输入流读取 buffer字节
+                fos.write(buffer, 0, byteCount);// 将读取的输入流写入到输出流
+            }
+            fos.flush();// 刷新缓冲区
+            fis.close();
+            fos.close();
+    }
+
+    /**
      * 读取assets目录的字符文件
-     *
      * @param context
      * @param filename
      * @return
@@ -980,7 +996,6 @@ public class FileUtils {
 
     /**
      * 是否存在SD卡
-     *
      * @return
      */
     public static boolean isExsitSDCard() {
@@ -993,7 +1008,6 @@ public class FileUtils {
 
     /**
      * 取得空闲SD卡空间大小
-     *
      * @return MB
      */
     public static long getAvailaleSize() {
@@ -1009,7 +1023,6 @@ public class FileUtils {
 
     /**
      * 获取程序图片目录
-     *
      * @return
      */
     public static String getImagePath(Context context) {
@@ -1023,7 +1036,6 @@ public class FileUtils {
 
     /**
      * 获取程序图片缓存目录 不可见图片 ImageLoader
-     *
      * @return
      */
     public static String getImageCachePath(Context context) {
@@ -1037,7 +1049,6 @@ public class FileUtils {
 
     /**
      * 获取程序图片目录
-     *
      * @return
      */
     public static String getLogPath(Context context) {
@@ -1051,7 +1062,6 @@ public class FileUtils {
 
     /**
      * 获取程序临时目录
-     *
      * @return
      */
     public static String getTempPath(Context context) {
@@ -1065,7 +1075,6 @@ public class FileUtils {
 
     /**
      * 获取目录的所有大小
-     *
      * @return
      */
     public static long getAppDataSize(Context context) {
@@ -1094,11 +1103,9 @@ public class FileUtils {
 
     /**
      * 保存Bitmap到sdcard
-     *
      * @param b
      */
     public static void saveBitmap(Context context, Bitmap b) {
-
         String path = getDataPath(context);
         long dataTake = System.currentTimeMillis();
         String jpegName = path + "/" + dataTake + ".jpg";
@@ -1115,6 +1122,31 @@ public class FileUtils {
             Log.i(getTag(), "saveBitmap: failed");
             e.printStackTrace();
         }
+    }
 
+    /**
+     * 调用系统的分享接口将文件分享出去，Android N之后需要借助FileProvider生成Uri再暴露出去
+     * @param context
+     * @param path 文件的全路径（包括文件名）
+     */
+    public static void shareFile(Context context, String path) {
+        File f = new File(path);
+        //调用android分享窗口
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_SEND);
+        Uri fileUri;
+        // 判断版本大于等于7.0
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            // 第二个参数即是在清单文件中配置的authorities
+            fileUri = FileProvider.getUriForFile(context, StConstant.FILE_PROVIDER_AUTH, f);
+            // 给目标应用一个临时授权
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        } else {
+            fileUri = Uri.fromFile(f);
+        }
+        intent.setType("*/*");
+        intent.putExtra(Intent.EXTRA_STREAM, fileUri);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 }

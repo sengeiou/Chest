@@ -28,6 +28,9 @@ public class StConstant {
 
     /* MultiMedia */
 
+    /* File */
+    public static final String FILE_PROVIDER_AUTH = "com.stur.chest.fileprovider";
+
     public static final String ROLE_DEFINITION = "persist.stur.role_definition";
     public static final String ROLE_SERVER     = "server";
     public static final String ROLE_CLIENT     = "client";
@@ -54,15 +57,7 @@ public class StConstant {
     //public static final int WIFI_RM_STA_P2P     = 3;
 
 
-
-
     public static final int REQUEST_CODE_WIFI_SCAN = 1;
-
-    public enum ViewState {
-        UNKNOWN,
-        CREATED,
-        DESTROED;
-    }
 
     public static void setRoleDefinition(String str) {
         sRoleDef = str;

@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
-import com.stur.lib.PackageUtils;
+import com.stur.lib.os.PackageUtils;
 import com.stur.lib.app.AppManager;
 import com.stur.lib.app.ContextBase;
 import com.stur.lib.app.IContext;

@@ -95,6 +95,10 @@ public class TCPClient {
                 byte [] receiveBuf=new byte[StConstant.BUFSIZE];
 
                 while(true) {
+                    //一般的做法是while循环，从is中读取byte流，如果读满之后read会停止阻塞，返回读取的长度
+                    //while循环体中负责把buffer中读满的内容保存下来，因为下一个循环会重新覆盖buffer
+                    //注意如果已知接收的内容大于buffer长度，在保存时要注意只保存读取的长度，因为buffer中长度以后的内容不会被自动清零
+                    //直至读取到流末尾，或者对端关闭流导致抛出异常，返回-1
                     while((bytesRcvd = is.read(receiveBuf)) != -1){
                         String str = new String(receiveBuf, "US-ASCII");
                         Log.d(this, bytesRcvd + "bytes received: " + str);

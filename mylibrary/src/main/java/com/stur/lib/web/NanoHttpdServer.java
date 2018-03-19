@@ -10,13 +10,22 @@ import com.stur.lib.exception.ParameterException;
 import com.stur.lib.file.FileUtils;
 import com.stur.lib.network.WifiUtils;
 
-import java.io.File;
-import java.util.List;
+import org.nanohttpd.protocols.http.IHTTPSession;
+import org.nanohttpd.protocols.http.response.Response;
+import org.nanohttpd.webserver.SimpleWebServer;
 
-import fi.iki.elonen.SimpleWebServer;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 
 /**
  * Created by guanxuejin on 2016/2/14.
+ * 这里用的是org.nanohttpd的库来实现，可以设置超时时间等
+ * https://github.com/NanoHttpd/nanohttpd
  */
 public class NanoHttpdServer extends SimpleWebServer {
 
@@ -31,6 +40,15 @@ public class NanoHttpdServer extends SimpleWebServer {
         Log.d(this, "NanoHttpdServer");
     }
 
+    /**
+     * @param session HttpSession是java里Session概念的实现，
+     *                简单来说一个Session就是一次httpClient->httpServer的连接，
+     *                当连接close后session就结束了，如果没结束则session会一直存在。
+     *                这点从这里的代码也能看到：如果socket不close或者exec没有抛出异常
+     *                （异常有可能是client段断开连接）session会一直执行exec方法
+     *                读取socket数据流的前8192个字节，因为http协议中头部最长为8192
+     * @return
+     */
     @Override
     public Response serve(IHTTPSession session) {
         String uri = session.getUri();
@@ -44,7 +62,31 @@ public class NanoHttpdServer extends SimpleWebServer {
         if (action.endsWith(".jpg") || action.endsWith("mp4") || action.endsWith("apk") || action.endsWith("html")) {
             return super.serve(session);
         } else if (action.endsWith("test")) {  //测试内容，通过 192.168.1.100:8088/test 访问
-            return responseContent();
+            return responseContent(session);
+        } else if (action.endsWith("card/apdu")) {  //调试使用
+            Map<String, String> map = new HashMap<String, String>();
+            try {
+                List<String> obj1 = new ArrayList<String>();
+                obj1.add("obj1.1");
+                obj1.add("obj1.2");
+                List<String> obj2 = new ArrayList<String>();
+                obj2.add("obj2.1");
+                obj2.add("obj2.2");
+                Map<String, List<String>> gxj = new HashMap<String, List<String>>();
+                gxj.put("key1", obj1);
+                gxj.put("key2", obj2);
+                Log.d(this, "parseBodyFixedLength begin");
+                session.parseBodyFixedLength();
+                Map<String, List<String>> list = session.getParameters();
+                Log.d(this, "parseBodyFixedLength complete");
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ResponseException e) {
+                e.printStackTrace();
+            }
+            map = session.getParms();
+            String ret = map.get("card_id");
+            return null;
         } else {
             String filePath = "";
             String root = FileUtils.getWorkPath(null, FileUtils.DATA_PATH_STUR);
@@ -70,7 +112,7 @@ public class NanoHttpdServer extends SimpleWebServer {
         String content = "<!DOCTYPE html><html><head><script language=\"JavaScript\">" +
                 "self.location='" + fileName +
                 "'; </script> <title>Waiting</title></head><body></body></html>";
-        Response response = new Response(content);
+        Response response = Response.newFixedLengthResponse(content);
         return response;
     }
 
@@ -80,25 +122,31 @@ public class NanoHttpdServer extends SimpleWebServer {
         builder.append("<!DOCTYPE html><html><body>");
         builder.append("Sorry, Can't Found apk at " + url + " !");
         builder.append("</body></html>\n");
-        return new Response(builder.toString());
+        return Response.newFixedLengthResponse(builder.toString());
     }
 
     //测试网络接口及GsonUtil的用法
-    public Response responseContent() {
+    public Response responseContent(IHTTPSession session) {
+        //如果需要解析POST请求中的body，需要先parseBody，再getParms或者getQueryParameterString
+        Map<String, String> map = new HashMap<String, String>();
+        try {
+            session.parseBody(map);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ResponseException e) {
+            e.printStackTrace();
+        }
+        map = session.getParms();
+        final String json = map.get("test");
+
+        //发送json
         UserAccountDTO uat = new UserAccountDTO();
         try {
             uat.setId("1");
-            uat.setName("stur");
-            uat.setEmail("272334751@qq.com");
-            uat.setAddress_id("1");
-            uat.setStatus("200");
-            uat.setLogin_ip("192.168.1.100");
-            uat.setCreate_at("20180304");
-            uat.setToken("1");
         } catch (ParameterException e) {
             e.printStackTrace();
         }
-        return new Response(GsonUtils.toJson(uat));
+        return Response.newFixedLengthResponse(GsonUtils.toJson(uat));
     }
 
 }

@@ -6,15 +6,15 @@
 
 package com.stur.lib.broadcast;
 
-import android.app.ActivityManager;
-import android.app.ActivityManager.RunningServiceInfo;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 
-import com.stur.lib.constant.StConstant;
 import com.stur.lib.Log;
+import com.stur.lib.constant.StConstant;
+
+import static com.stur.lib.os.OsUtils.isServiceRunning;
 
 public class AutobootReceiver extends BroadcastReceiver {
 
@@ -28,7 +28,7 @@ public class AutobootReceiver extends BroadcastReceiver {
         }*/
         String intentAction = intent.getAction();
         if (Intent.ACTION_BOOT_COMPLETED.equals(intentAction)) {
-            if (!isServiceRunning(context) && StConstant.isRoleServer()) {
+            if (!isServiceRunning(context, mClassName, 200) && StConstant.isRoleServer()) {
                 Log.d(this, "Starting " + mClassName + " : " + intentAction + " received. ");
                 startService(context);
             } else {
@@ -48,16 +48,5 @@ public class AutobootReceiver extends BroadcastReceiver {
         } else {
             Log.e(this, mClassName + " service Started Successfully");
         }
-    }
-
-    private boolean isServiceRunning(Context context) {
-        ActivityManager manager =
-              (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            if (mClassName.equals(service.service.getClassName())) {
-                return true;
-            }
-        }
-        return false;
     }
 }

@@ -4,8 +4,6 @@ package com.stur.lib.web;
  * Created by Administrator on 2016/3/4.
  */
 public class HttpConstants {
-    public static final String TAG = "G_HTTP";
-
     /**
      * 请求超时时间
      */
