@@ -31,6 +31,24 @@ public class PackageUtils {
         }.getClassName();
     }
 
+    public static int getAppVersionCode(Context context) {
+        if (context != null) {
+            PackageManager pm = context.getPackageManager();
+            if (pm != null) {
+                PackageInfo pi;
+                try {
+                    pi = pm.getPackageInfo(context.getPackageName(), 0);
+                    if (pi != null) {
+                        return pi.versionCode;
+                    }
+                } catch (PackageManager.NameNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return -1;
+    }
+
     public static int getAppUid(Context context, String pkt) throws NameNotFoundException {
         PackageManager pm = context.getPackageManager();
         ApplicationInfo ai = pm.getApplicationInfo(pkt, PackageManager.GET_ACTIVITIES);
@@ -140,6 +158,24 @@ public class PackageUtils {
             for (int j = 0; j < i; j++)
                 return MD5.getMessageDigest(arrayOfSignature[j].toByteArray());
         }
+    }
+
+    /*
+    * @param context the caller context
+    * @param pkt the whole packet path name
+    * @param cls the whole class path name
+    */
+    public static void startActivity(Context context, String pkt, String cls, boolean isMainAcivity) {
+        Intent intent;
+        if (isMainAcivity) {
+            intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        } else {
+            intent = new Intent();
+        }
+        ComponentName cn = new ComponentName(pkt, cls);
+        intent.setComponent(cn);
+        context.startActivity(intent);
     }
 
     public static void startOfflineLogActivity(Context context) {

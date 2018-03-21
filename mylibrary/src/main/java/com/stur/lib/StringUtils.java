@@ -12,11 +12,12 @@ import java.util.regex.Pattern;
  * Created by 80375140 on 2017/3/31.
  */
 public class StringUtils {
-    private static final String TAG = StringUtils.class.getName();
-
     public static final String VERSION_SEPERATOR = ".";
-    private final static Pattern emailer = Pattern
+    private final static Pattern EMAILER = Pattern
             .compile("\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*");
+    //MAC地址的格式输入时方便起见无需“-”，只校验字母范围和长度
+    private final static Pattern MACER = Pattern
+            .compile("[A-Fa-f0-9]{12}");
 
     /**
      *
@@ -65,18 +66,22 @@ public class StringUtils {
     }
 
     /**
-     *
      * @param email
      * @return
      */
     public static boolean isEmail(String email) {
         if (email == null || email.trim().length() == 0)
             return false;
-        return emailer.matcher(email).matches();
+        return EMAILER.matcher(email).matches();
+    }
+
+    public static boolean isMacAddr(String mac) {
+        if (mac == null || mac.trim().length() == 0)
+            return false;
+        return MACER.matcher(mac).matches();
     }
 
     /**
-     *
      * @param phoneNumber
      * @return
      */

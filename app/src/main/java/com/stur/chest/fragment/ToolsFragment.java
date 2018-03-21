@@ -26,6 +26,8 @@ import com.stur.chest.dto.UserAccountDTO;
 import com.stur.chest.utils.ApiUtils;
 import com.stur.lib.AdbUtils;
 import com.stur.lib.Log;
+import com.stur.lib.SharedPreferenceUtils;
+import com.stur.lib.StringUtils;
 import com.stur.lib.SystemPropertiesProxy;
 import com.stur.lib.UIHelper;
 import com.stur.lib.Utils;
@@ -115,8 +117,21 @@ public class ToolsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Log.d(this, "onPCWakeup");
-                WakeOnLan.start("408D5CC1DB5B");
-                mTvOutput.setText("408D5CC1DB5B");
+                String mac = mEtInput.getText().toString();
+                if(StringUtils.isMacAddr(mac)) {
+                    SharedPreferenceUtils.putString(SharedPreferenceUtils.KEY_MAC_ADDR, mac);
+                    UIHelper.toastMessageMiddle(getContext(), "new mac addr is saved");
+                } else {
+                    String oldMac = SharedPreferenceUtils.getString(SharedPreferenceUtils.KEY_MAC_ADDR);
+                    if (StringUtils.isMacAddr(oldMac)) {
+                        mac = oldMac;
+                    } else {
+                        UIHelper.toastMessageMiddle(getContext(), "no mac addr is found");
+                        return;
+                    }
+                }
+                WakeOnLan.start(mac);
+                mTvOutput.setText("wake on lan at: " + mac);
             }
         });
 
@@ -139,7 +154,7 @@ public class ToolsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 String prop = "log.tag." + ConfigManager.getInstance().getAppName();
-                String[] llArr = {"V", "D", "I", "W", "E", "A"};
+                String[] llArr = Log.LOG_LEVEL_ARR;
                 String logLevel = SystemPropertiesProxy.get(getActivity(), prop, "V");
                 String nextLogLevel = "D";
                 for (int i = 0; i < llArr.length; i++) {
@@ -151,12 +166,13 @@ public class ToolsFragment extends Fragment {
                         break;
                     }
                 }
-
                 mTvOutput.setText("log.tag." + ConfigManager.getInstance().getAppName() + ": " + nextLogLevel);
-                SystemPropertiesProxy.set(getActivity(), prop, nextLogLevel);
+                //非ROM应用这里写系统属性不会成功，功能失效
+                SystemPropertiesProxy.set(getContext(), prop, nextLogLevel);
             }
         });
 
+        //查看应用的签名证书，输入框中输入已安装应用的包名
         view.findViewById(R.id.btn_cert).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -166,7 +182,6 @@ public class ToolsFragment extends Fragment {
                 }
             }
         });
-
 
         view.findViewById(R.id.btn_share_me).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -316,6 +331,7 @@ public class ToolsFragment extends Fragment {
         sb.append("setprop " + AdbUtils.WIFI_ADB_PORT_PROP + " " + AdbUtils.WIFI_ADB_DEFAULT_PORT + "\n");
         sb.append("adb connect " + WifiUtils.getIp(getActivity()) + ":" + AdbUtils.WIFI_ADB_DEFAULT_PORT + "\n");
         sb.append("setprop  " + StActivityName.PROP_ACTIVITY_NAME + "com.stur.lib.activity.SplashActivity" + "\n");
+        sb.append("mac addr: " + SharedPreferenceUtils.getString(SharedPreferenceUtils.KEY_MAC_ADDR));
         mTvOutput.setText(sb);
     }
 

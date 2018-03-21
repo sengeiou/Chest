@@ -6,6 +6,7 @@ import android.content.res.Resources;
 
 import com.stur.lib.Log;
 import com.stur.lib.SharedPreferenceUtils;
+import com.stur.lib.SystemPropertiesProxy;
 import com.stur.lib.db.CacheManager;
 import com.stur.lib.time.TimerUtils;
 import com.stur.lib.web.GImageLoader;
@@ -41,6 +42,7 @@ public class ContextBase extends Application {
         instance = this;
 
         SharedPreferenceUtils.register(this);
+        SystemPropertiesProxy.register(this);
         HttpFactory.register(this);
         CacheManager.register(this);
         GImageLoader.getInstance().init(this);

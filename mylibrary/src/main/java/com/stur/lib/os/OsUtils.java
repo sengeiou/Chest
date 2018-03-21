@@ -2,11 +2,17 @@ package com.stur.lib.os;
 
 import android.app.ActivityManager;
 import android.content.Context;
+import android.os.Binder;
 
 import com.stur.lib.Log;
+import com.stur.lib.Utils;
+import com.stur.lib.constant.StSystem;
 
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by guanxuejin on 2018/2/9.
@@ -17,7 +23,7 @@ public class OsUtils {
         return new Object() {
             public String getClassName() {
                 String clazzName = this.getClass().getName();
-                return clazzName.substring(clazzName.lastIndexOf('.')+1, clazzName.lastIndexOf('$'));
+                return clazzName.substring(clazzName.lastIndexOf('.') + 1, clazzName.lastIndexOf('$'));
             }
         }.getClassName();
     }
@@ -32,9 +38,10 @@ public class OsUtils {
     /**
      * ActivityManager还有一方法getRecentTasks(maxNum, flags)可判断最近的任务
      * ActivityManager不能获取运行中的BroadcastReceiver和ContentProvider
+     *
      * @param context
      * @param ServiceName
-     * @param maxNum 查询的最大服务个数，需要设大一些，C5出厂开机143个服务，建议设200，极限可设Integer.MAX_VALUE
+     * @param maxNum      查询的最大服务个数，需要设大一些，C5出厂开机143个服务，建议设200，极限可设Integer.MAX_VALUE
      * @return
      */
     public static boolean isServiceRunning(Context context, String ServiceName, int maxNum) {
@@ -60,13 +67,15 @@ public class OsUtils {
 
     /**
      * 应用程序运行命令获取 Root权限，设备必须已破解(获得ROOT权限)
+     * 一般情况下会在执行su时抛权限异常
+     *
      * @return 应用程序是/否获取Root权限
      */
     public static boolean upgradeRootPermission(String pkgCodePath) {
         Process process = null;
         DataOutputStream os = null;
         try {
-            String cmd="chmod 777 " + pkgCodePath;
+            String cmd = "chmod 777 " + pkgCodePath;
             process = Runtime.getRuntime().exec("su"); //切换到root帐号
             os = new DataOutputStream(process.getOutputStream());
             os.writeBytes(cmd + "\n");
@@ -103,5 +112,69 @@ public class OsUtils {
             return true;
         }
         return false;
+    }
+
+    /**
+     * 获取手机型号
+     * @return
+     */
+    public static String getTypeInfo() {
+        return android.os.Build.MODEL; // 手机型号
+    }
+
+    /**
+     * 获取手机系统版本
+     * @return
+     */
+    public static String getOsVersion() {
+        return android.os.Build.VERSION.RELEASE;
+    }
+
+    public static int getCallingPid() {
+        return Binder.getCallingPid();
+    }
+
+    public static boolean writeCpuGovernor(String governor) {
+        DataOutputStream os = null;
+        String command = "echo " + governor + " > " + StSystem.PATH_CPU_FREQ + "/scaling_governor";
+        Log.i(getTag(), "command: " + command);
+        try {
+            Utils.execCommandAsSu(command);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public static String readCurCpuGovernor() {
+        String governor = null;
+        DataInputStream is = null;
+        try {
+            Process process = Runtime.getRuntime().exec("cat " + StSystem.PATH_CPU_FREQ  + "/scaling_governor");
+            is = new DataInputStream(process.getInputStream());
+            governor = is.readLine();
+        } catch (IOException e) {
+            Log.i(getTag(), "readCurCpuGovernor: read CPU Governor failed!");
+            return null;
+        }
+        return governor;
+    }
+
+    public static List<String> readCpuGovernors() {
+        List<String> governors = new ArrayList<String>();
+        DataInputStream is = null;
+        try {
+            Process process = Runtime.getRuntime().exec("cat " + StSystem.PATH_CPU_FREQ  + "/scaling_available_governors");
+            is = new DataInputStream(process.getInputStream());
+            String line = is.readLine();
+
+            String[] strs = line.split(" ");
+            for (int i = 0; i < strs.length; i++)
+                governors.add(strs[i]);
+        } catch (IOException e) {
+            Log.i(getTag(), "readCpuGovernors: read CPU Governors failed!");
+        }
+        return governors;
     }
 }

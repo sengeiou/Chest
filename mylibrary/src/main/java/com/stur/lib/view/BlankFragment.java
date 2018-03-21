@@ -14,10 +14,10 @@ import android.widget.RelativeLayout;
 
 import com.stur.lib.R;
 import com.stur.lib.SharedPreferenceUtils;
-import com.stur.lib.Utils;
 import com.stur.lib.activity.WebServerActivity;
 import com.stur.lib.config.ConfigBase;
 import com.stur.lib.constant.StConstant;
+import com.stur.lib.os.PackageUtils;
 
 
 public class BlankFragment extends Fragment {
@@ -84,7 +84,7 @@ public class BlankFragment extends Fragment {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int versionCode=Utils.getAppVersionCode(getActivity());
+                    int versionCode= PackageUtils.getAppVersionCode(getActivity());
                     SharedPreferenceUtils.set(getActivity(),StConstant.FILE_NAME,versionCode+"",true);
                     Intent intent=new Intent(getActivity(),WebServerActivity.class);
                     startActivity(intent);

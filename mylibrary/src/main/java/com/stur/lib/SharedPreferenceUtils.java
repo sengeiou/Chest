@@ -32,6 +32,10 @@ import java.io.ObjectOutputStream;
  */
 public class SharedPreferenceUtils {
 
+    public static final String KEY_MAC_ADDR = "mac_addr";
+
+    private static ContextBase sContext = null;
+
     public static String getTag() {
         return new Object() {
             public String getClassName() {
@@ -41,7 +45,7 @@ public class SharedPreferenceUtils {
         }.getClassName();
     }
 
-    private static ContextBase sContext = null;
+
     /**
      * 注册之后在一些不方便获取context的地方就可以直接调用不带context参数的方法
      * 不注册的话必须使用默认带context的方法

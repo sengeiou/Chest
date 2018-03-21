@@ -2,6 +2,8 @@ package com.stur.lib;
 
 import android.content.Context;
 
+import com.stur.lib.os.PackageUtils;
+
 import java.io.IOException;
 
 public class AdbUtils {
@@ -35,10 +37,10 @@ public class AdbUtils {
         //Utils.execCommand("stop adbd");
         //Utils.execCommand("start adbd");
         if (WIFI_ADB_DEFAULT_PORT.equals(SystemPropertiesProxy.get(context, AdbUtils.WIFI_ADB_PORT_PROP))) {
-        	Utils.startActivity(context, "com.android.settings", "com.android.settings.DevelopmentSettings", false);
-        	Utils.makeToast(context, "plz reenable usb debug");
+        	PackageUtils.startActivity(context, "com.android.settings", "com.android.settings.DevelopmentSettings", false);
+        	UIHelper.toastMessageMiddle(context, "plz reenable usb debug");
 		} else {
-			Utils.makeToast(context, AdbUtils.WIFI_ADB_PORT_PROP + ": " + SystemPropertiesProxy.get(context, AdbUtils.WIFI_ADB_PORT_PROP));
+            UIHelper.toastMessageMiddle(context, AdbUtils.WIFI_ADB_PORT_PROP + ": " + SystemPropertiesProxy.get(context, AdbUtils.WIFI_ADB_PORT_PROP));
 		}
     }
 }

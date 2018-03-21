@@ -77,7 +77,6 @@ public class ConfigManager {
     }
 
     private void initBugly(String appId) {
-        //TODO: add another static place to init bugly
         if (getBuglyEnabled()) {
             String id = ConfigBase.APP_ID_BUGLY;
             if (appId != null && appId.length() > 0) {

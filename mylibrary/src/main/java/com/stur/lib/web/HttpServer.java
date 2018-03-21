@@ -3,8 +3,8 @@ package com.stur.lib.web;
 import android.content.Context;
 
 import com.stur.lib.Log;
-import com.stur.lib.Utils;
 import com.stur.lib.network.NetworkUtils;
+import com.stur.lib.network.TMUtils;
 import com.stur.lib.network.WifiUtils;
 
 import org.apache.http.ConnectionClosedException;
@@ -85,7 +85,7 @@ public class HttpServer {
                 param.append(params.get("cookie"));
             }
             param.append("&imei=");
-            param.append(Utils.getImeiInfo(mContext));
+            param.append(TMUtils.getImeiInfo(mContext));
             param.append("&visitor_ip=");
             param.append(ipAddress);
             param.append("&local_ip=");

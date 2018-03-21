@@ -10,4 +10,6 @@ public class Constant {
     public static final boolean FORCE_DEBUG = true;
     public static final boolean BUGLY_ENABLE = true;
     public static final String APP_ID_BUGLY = "a9e665bcce";
+    //开发阶段很多场景与实际使用场景不一致，开发阶段开启，功能稳定后关闭
+    public static final boolean DEBUGGABLE = true;
 }

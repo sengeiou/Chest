@@ -10,8 +10,8 @@ import android.os.IBinder;
 import android.widget.Toast;
 
 import com.stur.lib.Log;
-import com.stur.lib.Utils;
 import com.stur.lib.network.NetworkUtils;
+import com.stur.lib.network.TMUtils;
 import com.stur.lib.network.WifiUtils;
 import com.stur.lib.web.HttpServer;
 
@@ -85,7 +85,7 @@ public class SocketService extends Service {
         //拼接参数
         StringBuilder param = new StringBuilder();
         param.append("imei=");
-        param.append(Utils.getImeiInfo(this));
+        param.append(TMUtils.getImeiInfo(this));
         param.append("&hs_ip=");
         param.append(NetworkUtils.getLocalIpAddress()+":"+port);
         param.append("&route_mac=");

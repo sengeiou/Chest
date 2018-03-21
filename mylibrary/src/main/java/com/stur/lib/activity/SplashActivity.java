@@ -6,9 +6,9 @@ import android.support.v4.view.ViewPager;
 
 import com.stur.lib.R;
 import com.stur.lib.SharedPreferenceUtils;
-import com.stur.lib.Utils;
 import com.stur.lib.config.ConfigBase;
 import com.stur.lib.constant.StConstant;
+import com.stur.lib.os.PackageUtils;
 import com.stur.lib.view.BlankFragment;
 import com.stur.lib.view.CircleIndicator;
 
@@ -67,7 +67,7 @@ public class SplashActivity extends ActivityBase {
     }
 
     private boolean ignoreSplash() {
-        if(ConfigBase.sSplashOnlyOnce && SharedPreferenceUtils.contatins(this, StConstant.FILE_NAME, Utils.getAppVersionCode(this) + "")){
+        if(ConfigBase.sSplashOnlyOnce && SharedPreferenceUtils.contatins(this, StConstant.FILE_NAME, PackageUtils.getAppVersionCode(this) + "")){
             /*Intent intent=new Intent(SplashActivity.this,SelectDeivce.class);
             startActivity(intent);*/
             this.finish();

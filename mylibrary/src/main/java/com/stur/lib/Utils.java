@@ -1,31 +1,21 @@
 package com.stur.lib;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.InetAddress;
-import java.util.Calendar;
-import java.util.TimeZone;
-
-import com.stur.lib.Log;
-
-import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Point;
-import android.os.Binder;
-import android.telephony.TelephonyManager;
-import android.text.TextUtils;
 import android.view.Display;
 import android.view.WindowManager;
-import android.widget.Toast;
+
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Calendar;
+import java.util.TimeZone;
+
+import static android.R.attr.process;
+import static com.tencent.bugly.crashreport.crash.c.e;
 
 public class Utils {
     /* Broadcast Definition */
@@ -43,32 +33,13 @@ public class Utils {
     }
 
     /*
-    * @param context the caller context
-    *
-    * @param pkt the whole packet path name
-    *
-    * @param cls the whole class path name
-    */
-    public static void startActivity(Context context, String pkt, String cls, boolean isMainAcivity) {
-        Intent intent;
-        if (isMainAcivity) {
-            intent = new Intent(Intent.ACTION_MAIN);
-            intent.addCategory(Intent.CATEGORY_LAUNCHER);
-        } else {
-            intent = new Intent();
-        }
-        ComponentName cn = new ComponentName(pkt, cls);
-        intent.setComponent(cn);
-        context.startActivity(intent);
-    }
-
-    /*
     * 执行shell命令
     */
     public static String execCommand(String command) throws IOException {
         Runtime runtime = Runtime.getRuntime();
         try {
             Process proc = runtime.exec(command);
+            Log.i(getTag(), "execCommand: pid = " + proc);
             if (proc.waitFor() != 0) { // block until subprocess exit
                 /*
                 * "OS error code   1:  Operation not permitted"
@@ -88,11 +59,55 @@ public class Utils {
 
             Log.d(getTag(), stringBuffer.toString());
             return stringBuffer.toString();
-
         } catch (InterruptedException e) {
             Log.d(getTag(), e.toString());
             return null;
         } catch (Exception e) {
+            Log.d(getTag(), e.toString());
+            return e.toString();
+        }
+    }
+
+    /**
+     * 以root用户执行command指令
+     * 在Android较高版本中已经失效
+     * @param command
+     * @return
+     * @throws IOException
+     */
+    public static String execCommandAsSu(String command) throws IOException {
+        DataOutputStream os = null;
+        try {
+            Process process = Runtime.getRuntime().exec("su");
+            Log.i(getTag(), "execCommandAsSu: pid = " + process);
+            os = new DataOutputStream(process.getOutputStream());
+            os.writeBytes(command + "\n");
+            os.writeBytes("exit\n");
+            os.flush();
+            if (process.waitFor() != 0) { // block until subprocess exit
+                /*
+                * "OS error code   1:  Operation not permitted"
+                * "OS error code   2:  No such file or directory"
+                * "OS error code   3:  No such process"
+                * "OS error code   4:  Interrupted system call"
+                * "OS error code   5:  Input/output error" ......
+                */
+                Log.d(getTag(), "exit value = " + process.exitValue());
+            }
+            BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            StringBuffer stringBuffer = new StringBuffer();
+            String line = null;
+            while ((line = in.readLine()) != null) {
+                stringBuffer.append(line + "-");
+            }
+            Log.d(getTag(), stringBuffer.toString());
+            return stringBuffer.toString();
+        } catch (InterruptedException e) {
+            Log.d(getTag(), e.toString());
+            return null;
+        } catch (IOException e) {
+            return e.toString();
+        }catch (Exception e) {
             Log.d(getTag(), e.toString());
             return e.toString();
         }
@@ -103,73 +118,6 @@ public class Utils {
         it.setAction(INTENT_DISPLAY);
         it.putExtra(INTENT_DISPLAY_EXTRA, str);
         context.sendBroadcast(it);
-    }
-
-    public static void makeToast(Context context, String str) {
-        Toast.makeText(context, str, Toast.LENGTH_SHORT).show();
-    }
-
-    public static String getImeiInfo(Context context) {
-        try {
-            TelephonyManager mTm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-            return mTm.getDeviceId();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "";
-        }
-
-    }
-
-    public static String getImsiInfo(Context context) {
-        try {
-            String imsi = "";
-            TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-            if (telephonyManager != null) {
-                imsi = telephonyManager.getSubscriberId();
-            }
-            if (TextUtils.isEmpty(imsi)) {
-                imsi = "UNKNOWN";
-            }
-            return imsi;
-        } catch (Exception e) {
-            return "";
-        }
-    }
-
-    /**
-     * 获取手机型号
-     *
-     * @return
-     */
-    public static String getTypeInfo() {
-        return android.os.Build.MODEL; // 手机型号
-    }
-
-    /**
-     * 获取手机系统版本
-     *
-     * @return
-     */
-    public static String getOsVersion() {
-        return android.os.Build.VERSION.RELEASE;
-    }
-
-    public static int getAppVersionCode(Context context) {
-        if (context != null) {
-            PackageManager pm = context.getPackageManager();
-            if (pm != null) {
-                PackageInfo pi;
-                try {
-                    pi = pm.getPackageInfo(context.getPackageName(), 0);
-                    if (pi != null) {
-                        return pi.versionCode;
-                    }
-                } catch (PackageManager.NameNotFoundException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return -1;
     }
 
     public static Point getScreenRealSize(Context ctx) {
@@ -191,10 +139,6 @@ public class Utils {
                 return clazzName.substring(0, clazzName.lastIndexOf('$'));
             }
         }.getClassName();
-    }
-
-    public static int getCallingPid() {
-        return Binder.getCallingPid();
     }
 
     /**

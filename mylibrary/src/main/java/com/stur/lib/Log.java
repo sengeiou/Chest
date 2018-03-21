@@ -12,6 +12,7 @@ public class Log {
      * D: setprop log.tag.Chest D
      * I: setprop log.tag.Chest I
      */
+    public static final String[] LOG_LEVEL_ARR = {"V", "D", "I", "W", "E", "A"};
 
     // Generic tag for all In Call logging
     public static String TAG = ConfigBase.sLogTag;

@@ -1,6 +1,8 @@
 package com.stur.lib.network;
 
 import android.content.Context;
+import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 
 import com.stur.lib.Log;
 
@@ -63,5 +65,31 @@ public class TMUtils {
             return false;
         }*/
         return true;
+    }
+
+    public static String getImeiInfo(Context context) {
+        try {
+            TelephonyManager mTm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+            return mTm.getDeviceId();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
+    public static String getImsiInfo(Context context) {
+        try {
+            String imsi = "";
+            TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+            if (telephonyManager != null) {
+                imsi = telephonyManager.getSubscriberId();
+            }
+            if (TextUtils.isEmpty(imsi)) {
+                imsi = "UNKNOWN";
+            }
+            return imsi;
+        } catch (Exception e) {
+            return "";
+        }
     }
 }
