@@ -1,0 +1,14 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <style name="ListContentIndicator">
+        <item name="android:visibility">gone</item>    
+    </style>
+
+    <style name="ListItemTitle" >
+        <item name="android:textSize">18sp</item>
+        
+    </style>
+    <style name="ListItemSummary" >
+        <item name="android:textSize">12sp</item>
+        
+    </style>
+</resources>

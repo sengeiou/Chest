@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.stur.activity.BetterListDemoActivity;
 import com.stur.chest.R;
 import com.stur.chest.activity.ClientActivity;
 import com.stur.chest.activity.ServerActivity;
@@ -43,18 +44,17 @@ public class TestFragment extends Fragment {
     }
 
     private void initView(View view) {
-        view.findViewById(R.id.btn_bluetooth).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), StBluetoothActivity.class);
-                startActivity(intent);
-            }
-        });
-
         view.findViewById(R.id.btn_user_click).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startTestActivity();
+            }
+        });
+
+        view.findViewById(R.id.btn_bluetooth).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(TestFragment.this.getContext(), StBluetoothActivity.class));
             }
         });
 
@@ -64,6 +64,15 @@ public class TestFragment extends Fragment {
                 selectRole();
             }
         });
+
+        view.findViewById(R.id.btn_better_list_frgmt).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(TestFragment.this.getContext(), BetterListDemoActivity.class));
+            }
+        });
+
+
     }
 
     public void startTestActivity() {

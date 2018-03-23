@@ -96,6 +96,10 @@
         <!-- item name="windowActionBar">false</item-->
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
+        <item name="listPreferredItemPaddingLeft">6dp</item>
+        <item name="listPreferredItemPaddingRight">6dp</item>
+        <item name="listHeaderTextColor">@color/colorPrimaryDark</item>
+        <item name="iconSize">24dp</item>
     </style>
 
     <style name="AppTheme.SearchEditView" parent="AppTheme">

@@ -88,6 +88,9 @@
         <activity android:name="com.stur.lib.bt.StDeviceActivity" />
         <activity android:name="com.stur.chest.activity.ClientActivity" />
         <activity android:name="com.stur.chest.activity.ServerActivity" />
+        <activity android:name="com.stur.activity.BetterListDemoActivity" />
+        <activity android:name="com.stur.activity.ListContentDemoActivity" />
+
 
         <service android:name="com.stur.chest.service.ChestService" />
 

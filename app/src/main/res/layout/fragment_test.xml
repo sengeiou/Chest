@@ -6,21 +6,27 @@
     tools:context="com.stur.chest.activity.ChestActivity" >
 
     <Button
-        android:id="@+id/btn_bluetooth"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Bluetooth"/>
-
-    <Button
         android:id="@+id/btn_user_click"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="persist.stur.activity" />
 
     <Button
+        android:id="@+id/btn_bluetooth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Bluetooth"/>
+
+    <Button
         android:id="@+id/btn_select_role"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="select the role" />
+
+    <Button
+        android:id="@+id/btn_better_list_frgmt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="better list fragment" />
 
 </LinearLayout>

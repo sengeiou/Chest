@@ -10,6 +10,6 @@ public class Constant {
     public static final boolean FORCE_DEBUG = true;
     public static final boolean BUGLY_ENABLE = true;
     public static final String APP_ID_BUGLY = "a9e665bcce";
-    //¿ª·¢½×¶ÎºÜ¶à³¡¾°ÓëÊµ¼ÊÊ¹ÓÃ³¡¾°²»Ò»ÖÂ£¬¿ª·¢½×¶Î¿ªÆô£¬¹¦ÄÜÎÈ¶¨ºó¹Ø±Õ
+    //å¼€å‘é˜¶æ®µå¾ˆå¤šåœºæ™¯ä¸å®é™…ä½¿ç”¨åœºæ™¯ä¸ä¸€è‡´ï¼Œå¼€å‘é˜¶æ®µå¼€å¯ï¼ŒåŠŸèƒ½ç¨³å®šåå…³é—­
     public static final boolean DEBUGGABLE = true;
 }
