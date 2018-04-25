@@ -9,6 +9,7 @@ import com.stur.lib.SharedPreferenceUtils;
 import com.stur.lib.SystemPropertiesProxy;
 import com.stur.lib.db.CacheManager;
 import com.stur.lib.time.TimerUtils;
+import com.stur.lib.uicc.IccidParser;
 import com.stur.lib.web.GImageLoader;
 import com.stur.lib.web.HttpFactory;
 
@@ -46,6 +47,7 @@ public class ContextBase extends Application {
         HttpFactory.register(this);
         CacheManager.register(this);
         GImageLoader.getInstance().init(this);
+        IccidParser.getInstance().init(this);
 
     }
 

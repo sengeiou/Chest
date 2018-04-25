@@ -20,6 +20,7 @@ public class ChestApp extends ContextBase {
         /*
          * 这里的初始化如果不传参数，则使用默认配置，建议新应用在这里把相关参数填完整，涉及到log_tag等功能
          * 如果app需要使用Bugly，则在初始化ConfigManager时需要传入自己的appId，否则默认使用Chest的AppId
+         * 因为APP_NAME是在自己的应用里面配置，所以这个init不能放到mylibrary下的ContextBase中处理
          */
         //ConfigManager.getInstance().init(this);
         ConfigManager.getInstance().init(this, Constant.APP_NAME, Constant.LOG_TAG, Constant.FORCE_DEBUG,

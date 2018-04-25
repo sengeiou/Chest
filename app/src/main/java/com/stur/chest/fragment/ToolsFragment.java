@@ -38,6 +38,7 @@ import com.stur.lib.file.FileUtils;
 import com.stur.lib.network.WakeOnLan;
 import com.stur.lib.network.WifiUtils;
 import com.stur.lib.os.PackageUtils;
+import com.stur.lib.uicc.IccidParser;
 import com.stur.lib.web.HttpFactory;
 import com.stur.lib.web.api.HttpResponseListener;
 import com.stur.lib.web.request.HttpMethod;
@@ -223,6 +224,9 @@ public class ToolsFragment extends Fragment {
                 //}
 
                 //testHttpRequest();
+
+                String ret = IccidParser.getInstance().getCarrier("898603");
+
             }
         });
 

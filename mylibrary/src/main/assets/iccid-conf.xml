@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<iccidOverrides version="1">
+    <iccidOverride iccid="898600"  carrier="CM" />
+    <iccidOverride iccid="898601"  carrier="CU" />
+    <iccidOverride iccid="898602"  carrier="CM" />
+    <iccidOverride iccid="898603"  carrier="CT" />
+    <iccidOverride iccid="898606"  carrier="CT" />
+    <iccidOverride iccid="898607"  carrier="CM" />
+    <iccidOverride iccid="898611"  carrier="CT" />
+    <iccidOverride iccid="894900"  carrier="CU" />
+    <iccidOverride iccid="895253"  carrier="CT" />
+    <iccidOverride iccid="89860D"  carrier="CM" />
+    <iccidOverride iccid="89860F"  carrier="CM" />
+    <iccidOverride iccid="986800"  carrier="CM" />
+    <iccidOverride iccid="986810"  carrier="CU" />
+    <iccidOverride iccid="986820"  carrier="CM" />
+    <iccidOverride iccid="986830"  carrier="CT" />
+    <iccidOverride iccid="986860"  carrier="CT" />
+    <iccidOverride iccid="986870"  carrier="CM" />
+    <iccidOverride iccid="986811"  carrier="CT" />
+    <iccidOverride iccid="989400"  carrier="CU" />
+    <iccidOverride iccid="982535"  carrier="CT" />
+    <iccidOverride iccid="9868D0"  carrier="CM" />
+    <iccidOverride iccid="9868F0"  carrier="CM" />
+</iccidOverrides>
