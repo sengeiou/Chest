@@ -110,7 +110,7 @@ public class TMUtils {
             return deviceId;
         }
         deviceId = telephonyManager.getDeviceId(1);
-        Log.e(TAG, "getMeidInfo for slot1 " +  deviceId);
+        Log.d(getTag(), "getMeidInfo for slot1 " +  deviceId);
         if (deviceId != null && !TextUtils.isEmpty(deviceId) && deviceId.length() == 14) {
             return deviceId;
         }
