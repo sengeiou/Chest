@@ -92,4 +92,28 @@ public class TMUtils {
             return "";
         }
     }
+
+    /**
+     * 试图获取MEID
+     * 原生是没有提供单独获取MEID的方法的，getDeviceId是根据当前插卡情况来动态返回IMEI还是MEID的
+     * 所以这里分别按照原生的方法获取两张卡的deviceId，然后根据长度判断是否MEID
+     * 这样也不一定能获取到，比如插两张G网卡的情况下就获取不到了
+     * @param context
+     * @return
+     */
+    public static String getMeidInfo(Context context) {
+        String deviceId = "";
+        TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        deviceId = telephonyManager.getDeviceId(0);
+        Log.d(getTag(), "getMeidInfo for slot0 " +  deviceId);
+        if (deviceId != null && !TextUtils.isEmpty(deviceId) && deviceId.length() == 14) {
+            return deviceId;
+        }
+        deviceId = telephonyManager.getDeviceId(1);
+        Log.e(TAG, "getMeidInfo for slot1 " +  deviceId);
+        if (deviceId != null && !TextUtils.isEmpty(deviceId) && deviceId.length() == 14) {
+            return deviceId;
+        }
+        return "";
+    }
 }
