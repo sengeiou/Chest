@@ -226,7 +226,7 @@ public class ToolsFragment extends Fragment {
                 //testHttpRequest();
 
                 //String ret = IccidParser.getInstance().getCarrier("898603");
-                TMUtils.getMeidInfo(getActivity());
+                TMUtils.callPhone(getContext(), "10010", 1);
 
             }
         });

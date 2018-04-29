@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static android.Manifest.permission.READ_PHONE_STATE;
+
 
 public abstract class ActivityBase extends AppCompatActivity implements IContext {
 
@@ -93,6 +95,7 @@ public abstract class ActivityBase extends AppCompatActivity implements IContext
                 perms.put(Manifest.permission.READ_EXTERNAL_STORAGE, PackageManager.PERMISSION_GRANTED);
                 perms.put(Manifest.permission.RECORD_AUDIO, PackageManager.PERMISSION_GRANTED);
                 perms.put(Manifest.permission.WRITE_SECURE_SETTINGS, PackageManager.PERMISSION_GRANTED);
+                perms.put(READ_PHONE_STATE, PackageManager.PERMISSION_GRANTED);
 
                 // Fill with results
                 for (int i = 0; i < permissions.length; i++)
@@ -103,7 +106,8 @@ public abstract class ActivityBase extends AppCompatActivity implements IContext
                         && perms.get(Manifest.permission.WRITE_CONTACTS) == PackageManager.PERMISSION_GRANTED
                         && perms.get(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
                         && perms.get(Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED
-                        && perms.get(Manifest.permission.WRITE_SECURE_SETTINGS) == PackageManager.PERMISSION_GRANTED) {
+                        && perms.get(Manifest.permission.WRITE_SECURE_SETTINGS) == PackageManager.PERMISSION_GRANTED
+                        && perms.get(READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
                     // All Permissions Granted
                 } else {
                     // Permission Denied
@@ -154,6 +158,8 @@ public abstract class ActivityBase extends AppCompatActivity implements IContext
             permissionsNeeded.add("Read Sdcard");
         if (!addPermission(permissionsList, Manifest.permission.RECORD_AUDIO))
             permissionsNeeded.add("Record Audio");
+        if (!addPermission(permissionsList, Manifest.permission.READ_PHONE_STATE))
+            permissionsNeeded.add("Read Phone State");
         if (PackageUtils.AID_SYSTEM == PackageUtils.getMyUid()
                 && !addPermission(permissionsList, Manifest.permission.WRITE_SECURE_SETTINGS))
             permissionsNeeded.add("Write Secure Settings");

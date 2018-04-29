@@ -1,12 +1,22 @@
 package com.stur.lib.network;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
+import android.telecom.PhoneAccountHandle;
+import android.telecom.TelecomManager;
+import android.telephony.SubscriptionInfo;
+import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 
 import com.stur.lib.Log;
+import com.stur.lib.ReflectUtil;
 
 import java.lang.reflect.Method;
+import java.util.List;
 
 import static com.stur.lib.constant.StConstant.SIM_ID_1;
 import static com.stur.lib.constant.StConstant.SIM_ID_2;
@@ -115,5 +125,53 @@ public class TMUtils {
             return deviceId;
         }
         return "";
+    }
+
+    /**
+     * 指定sim卡拨打电话
+     *
+     * @param phoneNumber
+     * @param slotId      0:卡1  1:卡2
+     */
+    public static void callPhone(Context context, String phoneNumber, int slotId) {
+        PhoneAccountHandle phoneAccountHandle = getPhoneAccountHandle(context, slotId);
+        Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + phoneNumber));
+        intent.putExtra(TelecomManager.EXTRA_PHONE_ACCOUNT_HANDLE, phoneAccountHandle);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+
+    /**
+     * 这一块首先获取手机中所有sim卡 PhoneAccountHandle
+     * 每一个 PhoneAccountHandle 表示一个sim卡,
+     * 然后根据 slotId 判断所指定的sim卡并返回此 PhoneAccountHandle (这里5.1 和 6.0需要区分对待)
+     */
+    @TargetApi(Build.VERSION_CODES.M)
+    public static PhoneAccountHandle getPhoneAccountHandle(Context context, int slotId) {
+        TelecomManager tm = (TelecomManager) context.getSystemService(Context.TELECOM_SERVICE);
+        //PhoneAccountHandle api>5.1
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+            List<PhoneAccountHandle> handles = (List<PhoneAccountHandle>) ReflectUtil.invoke(tm, "getCallCapablePhoneAccounts");
+            SubscriptionManager sm = SubscriptionManager.from(context);
+            if (handles != null) {
+                for (PhoneAccountHandle handle : handles) {
+                    SubscriptionInfo info = sm.getActiveSubscriptionInfoForSimSlotIndex(slotId);
+                    if (info != null) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+                            if (TextUtils.equals(info.getSubscriptionId() + "", handle.getId())) {
+                                Log.d(getTag(), "getPhoneAccountHandle for slot" + slotId + " " + handle);
+                                return handle;
+                            }
+                        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            if (TextUtils.equals(info.getIccId(), handle.getId())) {
+                                Log.d(getTag(), "getPhoneAccountHandle for slot" + slotId + " " + handle);
+                                return handle;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return null;
     }
 }
