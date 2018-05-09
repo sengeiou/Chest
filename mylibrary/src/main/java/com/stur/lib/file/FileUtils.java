@@ -596,6 +596,7 @@ public class FileUtils {
     /**
      * 删除文件夹里面的所有文件
      * @param path 文件夹路径或者文件的绝对路径 如：/mnt/sdcard/def_ids/1.png
+     * 删除非本应用程序工作空间的目录时会因为file.list()= null而捕获NPE
      */
     public static void deleteAllFile(String path) {
         // 在内存开辟一个文件空间，但是没有创建

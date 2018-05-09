@@ -8,12 +8,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
-import com.stur.lib.os.PackageUtils;
+import com.stur.lib.R;
 import com.stur.lib.app.AppManager;
 import com.stur.lib.app.ContextBase;
 import com.stur.lib.app.IContext;
 import com.stur.lib.constant.StConstant;
 import com.stur.lib.os.BusProvider;
+import com.stur.lib.os.PackageUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -166,8 +167,8 @@ public abstract class ActivityBase extends AppCompatActivity implements IContext
 
         if (permissionsList.size() > 0) {
             if (permissionsNeeded.size() > 0) {
-                // Need Rationale
-                String message = "You need to grant access to " + permissionsNeeded.get(0);
+                // Need Rationa
+                String message = getString(R.string.grant_access) + permissionsNeeded.get(0);
                 for (int i = 1; i < permissionsNeeded.size(); i++) {
                     message = message + ", " + permissionsNeeded.get(i);
                 }

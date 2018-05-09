@@ -13,7 +13,6 @@ import android.text.TextUtils;
 
 import com.stur.lib.Log;
 import com.stur.lib.constant.StActivityName;
-import com.stur.lib.constant.StConstant;
 
 public class PackageUtils {
     public static final int AID_ROOT        = 0;  /* traditional unix root user */
@@ -191,5 +190,29 @@ public class PackageUtils {
         intent.setComponent(componentName);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
+    }
+
+    /*
+     * prerogative method to initiate clearing user data for a system package
+     * new a IPackageDataObserver.Stub to handled failed issue if needed
+     * @param context the caller context
+     * @param packageName the package name to be cleared
+     */
+    public static void initiateClearUserData(Context context, String packageName) {
+        // Invoke uninstall or clear user data based on sysPackage
+        Log.i(getTag(), "Clearing user data for package : " + packageName);
+        ActivityManager am = (ActivityManager)context.getSystemService(Context.ACTIVITY_SERVICE);
+        //依赖framework.jar，暂时屏蔽
+        /*boolean res = am.clearApplicationUserData(packageName, new IPackageDataObserver.Stub() {
+            public void onRemoveCompleted(final String pkt, final boolean succeeded) {
+                //判断succeeded，如果清除失败在这里处理
+                boolean sudd = succeeded;
+            }
+        });
+        if (!res) {
+            // Clearing data failed for some obscure reason. Just log error for now
+            Log.e(getTag(), "Couldnt clear application user data for package:"+packageName);
+        } else {
+        }*/
     }
 }

@@ -17,7 +17,27 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+            signingConfig signingConfigs.debug
+        }
     }
+    signingConfigs {
+        //used for urovo userdebug
+        debug {
+            keyAlias 'urovo_userdebug'
+            keyPassword '123456'
+            storeFile file('../libs-keystores/urovo_userdebug.jks')
+            storePassword '123456'
+        }
+        //used for ivvi userdebug
+        /*debug {
+            keyAlias 'platform'
+            keyPassword 'android'
+            storeFile file('../libs-keystores/platform_debug.jks')
+            storePassword 'android'
+        }*/
+    }
+    
 }
 
 dependencies {
@@ -25,3 +45,5 @@ dependencies {
 
     compile project(':mylibrary')
 }
+
+
