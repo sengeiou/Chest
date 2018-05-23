@@ -1,5 +1,7 @@
 package com.stur.chest.fragment;
 
+import android.app.ActivityManager;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -230,6 +232,28 @@ public class ToolsFragment extends Fragment {
                 //FileUtils.deleteDirectory("data/user/0/com.android.providers.contacts");
 
                 //PackageUtils.initiateClearUserData(getContext(), "com.android.providers.contacts");
+
+                ActivityManager am = (ActivityManager)getContext().getSystemService(Context.ACTIVITY_SERVICE);
+                String []pkgName = {"com.android.providers.contacts", "com.android.providers.telephony"};
+                for (String pkg : pkgName) {
+                    boolean res = am.clearApplicationUserData(pkg, null);
+                    if (!res) {
+                        Log.d(this + "Settings--jorway", "Fail to delete data: " + pkg);
+                        if ("com.android.providers.contacts".equals(pkg)) {
+                            UIHelper.toastMessage(getContext(), pkg + " delete failed!");
+                        } else if ("com.android.providers.telephony".equals(pkg)) {
+                            UIHelper.toastMessageMiddle(getContext(), pkg + " delete failed!");
+                        }
+                    } else {
+                        Log.d(this + "Settings--jorway", "Success to delete data: " + pkg);
+                        if ("com.android.providers.contacts".equals(pkg)) {
+                            UIHelper.toastMessage(getContext(), pkg + " delete success!");
+                        } else if ("com.android.providers.telephony".equals(pkg)) {
+                            UIHelper.toastMessageMiddle(getContext(), pkg + " delete success!");
+                        }
+
+                    }
+                }
             }
         });
 

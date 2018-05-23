@@ -40,7 +40,5 @@
 	    android:scrollingCache="false" 
 	    android:divider="#ffc6c6c6" 
 	    android:layout_weight="1.0" 
-	    android:layout_above = "@id/edit_bottombar"
-	    android:layout_below="@id/container"
-	    />
+	    android:layout_above = "@id/edit_bottombar" />
 </RelativeLayout>

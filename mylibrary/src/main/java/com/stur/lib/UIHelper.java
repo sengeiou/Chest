@@ -5,6 +5,7 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.support.annotation.StringRes;
+import android.view.Gravity;
 import android.widget.Toast;
 
 import com.stur.lib.network.NetworkUtils;
@@ -50,8 +51,6 @@ public class UIHelper {
 
     /**
      * 弹出Toast消息
-     * Modified at 2016-01-15：暂时将toast改为统一在底部弹出
-     *
      * @param charSequence
      */
     public static void toastMessageMiddle(Context context, CharSequence charSequence) {
@@ -60,14 +59,12 @@ public class UIHelper {
         } else {
             TOAST_MIDDLE.setText(charSequence);
         }
-        //TOAST_MIDDLE.setGravity(Gravity.CENTER, 0, 0);
+        TOAST_MIDDLE.setGravity(Gravity.CENTER, 0, 0);
         TOAST_MIDDLE.show();
     }
 
     /**
      * 弹出Toast消息
-     * Modified at 2016-01-15：暂时将toast改为统一在底部弹出
-     *
      */
     public static void toastMessageMiddle(Context context, @StringRes int msgStrId) {
         if (TOAST_MIDDLE == null) {
@@ -75,7 +72,7 @@ public class UIHelper {
         } else {
             TOAST_MIDDLE.setText(msgStrId);
         }
-        //TOAST_MIDDLE.setGravity(Gravity.CENTER, 0, 0);
+        TOAST_MIDDLE.setGravity(Gravity.CENTER, 0, 0);
         TOAST_MIDDLE.show();
     }
 

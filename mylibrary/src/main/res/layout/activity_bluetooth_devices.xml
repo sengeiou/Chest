@@ -30,7 +30,5 @@
 	    android:scrollingCache="false" 
 	    android:divider="#ffc6c6c6" 
 	    android:layout_weight="1.0" 
-	    android:layout_above = "@id/bt_bottombar"
-	    android:layout_below="@id/devices"
-	    />
+	    android:layout_above = "@id/bt_bottombar" />
 </RelativeLayout>

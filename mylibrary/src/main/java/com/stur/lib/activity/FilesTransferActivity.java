@@ -113,7 +113,7 @@ public class FilesTransferActivity extends Activity {
         System.exit(0);
     }
     public String GetIpAddress() {
-        WifiManager wifiManager = (WifiManager) getSystemService(WIFI_SERVICE);
+        WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
         WifiInfo wifiInfo = wifiManager.getConnectionInfo();
         int i = wifiInfo.getIpAddress();
         return (i & 0xFF) + "." +
