@@ -29,6 +29,9 @@
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
 
 
     <application
@@ -105,6 +108,9 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
+
+        <meta-data android:value="5afe88f4a40fa37693000092" android:name="UMENG_APPKEY"/>
+        <meta-data android:value="PrivateInstall" android:name="UMENG_CHANNEL"/>
     </application>
 
 </manifest>

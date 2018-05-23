@@ -25,6 +25,7 @@ public class ChestApp extends ContextBase {
         //ConfigManager.getInstance().init(this);
         ConfigManager.getInstance().init(this, Constant.APP_NAME, Constant.LOG_TAG, Constant.FORCE_DEBUG,
                 Constant.BUGLY_ENABLE, Constant.APP_ID_BUGLY);
+        ConfigManager.getInstance().setUmengEnabled(true);
 
         //ChestController.getInstance().init(this);
     }

@@ -34,7 +34,24 @@ public class ConfigManager {
     //该初始化函数使用所有配置默认值进行初始化
     public void init(Context context) {
         mContext = context;
-        initBugly(null);
+    }
+
+    /**
+     * 这里只配置appName、LogTag、forceDebug参数，其他的参数需要init之后单独配置
+     * @param context
+     * @param appName
+     * @param logTag
+     * @param forceDebug 启用后，打印log时无视log.tag.Chest等属性控制，一律打印
+     */
+    public void init(Context context, String appName, String logTag,
+                     boolean forceDebug) {
+        mContext = context;
+
+        setAppName(appName);
+
+        setLogTag(logTag);
+        setForceDebug(forceDebug);
+        Log.update(getLogTag(), getForceDebug());
     }
 
     //如果app需要使用Bugly，则在初始化ConfigManager时需要传入自己的appId，否则默认使用Chest的AppId
@@ -90,12 +107,23 @@ public class ConfigManager {
 
     //用户设置的开关值会保存在sp中，如果没有，则读取ConfigBase中的默认值
     public boolean getBuglyEnabled() {
-        return SharedPreferenceUtils.getBoolean(mContext, ConfigBase.SP_KEY_BUGLY_ENABLED, ConfigBase.sBuglyEnabled);
+        return SharedPreferenceUtils.getBoolean(mContext, ConfigBase.SP_FILE_CONFIG_BASE, ConfigBase.SP_KEY_BUGLY_ENABLED, ConfigBase.sBuglyEnabled);
     }
 
     public void setBuglyEnabled(boolean enabled) {
         if (enabled != getBuglyEnabled()) {
-            SharedPreferenceUtils.putBoolean(mContext, ConfigBase.SP_KEY_BUGLY_ENABLED, enabled);
+            SharedPreferenceUtils.putBoolean(mContext, ConfigBase.SP_FILE_CONFIG_BASE, ConfigBase.SP_KEY_BUGLY_ENABLED, enabled);
+            UIHelper.toastMessage(mContext, mContext.getString(R.string.restart_for_take_effect));
+        }
+    }
+
+    public boolean getUmengEnabled() {
+        return SharedPreferenceUtils.getBoolean(mContext, ConfigBase.SP_FILE_CONFIG_BASE, ConfigBase.SP_KEY_UMENG_ENABLED, ConfigBase.sUmengEnabled);
+    }
+
+    public void setUmengEnabled(boolean enabled) {
+        if (enabled != getUmengEnabled()) {
+            SharedPreferenceUtils.putBoolean(mContext, ConfigBase.SP_FILE_CONFIG_BASE, ConfigBase.SP_KEY_UMENG_ENABLED, enabled);
             UIHelper.toastMessage(mContext, mContext.getString(R.string.restart_for_take_effect));
         }
     }

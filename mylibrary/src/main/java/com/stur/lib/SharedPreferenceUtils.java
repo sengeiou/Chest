@@ -120,6 +120,10 @@ public class SharedPreferenceUtils {
     }
 
     public static void save(String fileKey, String key, Object saveObject) {
+        if (sContext == null) {
+            Log.e(getTag(), "sContext == null, register() should be called previously!");
+            return;
+        }
         SharedPreferences sharedPreferences = sContext.getSharedPreferences(fileKey, Activity.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         String string = Object2String(saveObject);
@@ -148,6 +152,10 @@ public class SharedPreferenceUtils {
     }
 
     public static Object get(String fileKey, String key) {
+        if (sContext == null) {
+            Log.e(getTag(), "sContext == null, register() should be called previously!");
+            return null;
+        }
         SharedPreferences sharedPreferences = sContext.getSharedPreferences(fileKey, Activity.MODE_PRIVATE);
         String string = sharedPreferences.getString(key, null);
         if (string != null) {
@@ -158,6 +166,14 @@ public class SharedPreferenceUtils {
         }
     }
 
+    /**
+     * 写入boolean型pref配置到指定的pref文件
+     * @param context
+     * @param fileName
+     * @param key
+     * @param value
+     * @return
+     */
     public static boolean set(Context context, String fileName, String key, boolean value) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(fileName, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -165,7 +181,19 @@ public class SharedPreferenceUtils {
         return editor.commit();
     }
 
+    /**
+     * 写入boolean型pref配置到指定的pref文件
+     * 注意：这个接口的调用前提是之前已经register()过了
+     * @param fileName
+     * @param key
+     * @param value
+     * @return  返回是否设置成功
+     */
     public static boolean set(String fileName, String key, boolean value) {
+        if (sContext == null) {
+            Log.e(getTag(), "sContext == null, register() should be called previously!");
+            return false;
+        }
         SharedPreferences sharedPreferences = sContext.getSharedPreferences(fileName, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(key, value);
@@ -178,39 +206,74 @@ public class SharedPreferenceUtils {
     }
 
     public static boolean contatins(String fileName, String key) {
+        if (sContext == null) {
+            Log.e(getTag(), "sContext == null, register() should be called previously!");
+            return false;
+        }
         SharedPreferences sharedPreferences = sContext.getSharedPreferences(fileName, Context.MODE_PRIVATE);
         return sharedPreferences.contains(key);
     }
 
     /**
-     * 获取Preference设置
+     * 从默认pref文件中获取Preference设置，比如 com.stur.chest_preferences.xml
      */
     protected static SharedPreferences getSharedPreferences(Context context) {
         if (context == null) {
             Log.e(getTag(), "context is null)");
+            return null;
         }
         return PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     /**
+     * 获取指定的pref文件
+     * @param context
+     * @param fileName
+     * @param mode
+     * 私有模式: Context.MODE_PRIVATE 的值是 0;
+     *     ①只能被创建这个文件的当前应用访问
+     *     ②若文件不存在会创建文件；若创建的文件已存在则会覆盖掉原来的文件
+     * 追加模式: Context.MODE_APPEND 的值是 32768;
+     *     ①只能被创建这个文件的当前应用访问
+     *     ②若文件不存在会创建文件；若文件存在则在文件的末尾进行追加内容
+     * 可读模式: Context.MODE_WORLD_READABLE的值是1;
+     *     ①创建出来的文件可以被其他应用所读取
+     * 可写模式: Context.MODE_WORLD_WRITEABLE的值是2
+     *    ①允许其他应用对其进行写入。
+     * @return
+     */
+    protected static SharedPreferences getSharedPreferences(Context context, String fileName,int mode) {
+        if (context == null) {
+            Log.e(getTag(), "context is null)");
+            return null;
+        }
+        return context.getSharedPreferences(fileName, mode);
+    }
+
+
+    /**
      * 写入配置信息，需要最后面进行 commit()
      *
      * @param key
      * @param value
-     * @return
+     * @return 返回是否写入成功
      */
-    public static void putString(Context context, String key, String value) {
+    public static boolean putString(Context context, String key, String value) {
         SharedPreferences sharedPref = getSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(key, value);
-        editor.commit();
+        return editor.commit();
     }
 
-    public static void putString(String key, String value) {
+    public static boolean putString(String key, String value) {
+        if (sContext == null) {
+            Log.e(getTag(), "sContext == null, register() should be called previously!");
+            return false;
+        }
         SharedPreferences sharedPref = getSharedPreferences(sContext);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(key, value);
-        editor.commit();
+        return editor.commit();
     }
 
     /**
@@ -220,18 +283,22 @@ public class SharedPreferenceUtils {
      * @param value
      * @return
      */
-    public static void putInt(Context context, String key, int value) {
+    public static boolean putInt(Context context, String key, int value) {
         SharedPreferences sharedPref = getSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putInt(key, value);
-        editor.commit();
+        return editor.commit();
     }
 
-    public static void putInt(String key, int value) {
+    public static boolean putInt(String key, int value) {
+        if (sContext == null) {
+            Log.e(getTag(), "sContext == null, register() should be called previously!");
+            return false;
+        }
         SharedPreferences sharedPref = getSharedPreferences(sContext);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putInt(key, value);
-        editor.commit();
+        return editor.commit();
     }
 
     /**
@@ -241,18 +308,22 @@ public class SharedPreferenceUtils {
      * @param value
      * @return
      */
-    public static void putLong(Context context, String key, long value) {
+    public static boolean putLong(Context context, String key, long value) {
         SharedPreferences sharedPref = getSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putLong(key, value);
-        editor.commit();
+        return editor.commit();
     }
 
-    public static void putLong(String key, long value) {
+    public static boolean putLong(String key, long value) {
+        if (sContext == null) {
+            Log.e(getTag(), "sContext == null, register() should be called previously!");
+            return false;
+        }
         SharedPreferences sharedPref = getSharedPreferences(sContext);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putLong(key, value);
-        editor.commit();
+        return editor.commit();
     }
 
     /**
@@ -262,23 +333,44 @@ public class SharedPreferenceUtils {
      * @param value
      * @return
      */
-    public static void putBoolean(Context context, String key, boolean value) {
-        SharedPreferences sharedPref = getSharedPreferences(context);
-        SharedPreferences.Editor editor = sharedPref.edit();
+    public static boolean putBoolean(Context context, String key, boolean value) {
+        SharedPreferences sp = getSharedPreferences(context);
+        SharedPreferences.Editor editor = sp.edit();
         editor.putBoolean(key, value);
-        editor.commit();
+        return editor.commit();
     }
 
-    public static void putBoolean(String key, boolean value) {
-        SharedPreferences sharedPref = getSharedPreferences(sContext);
-        SharedPreferences.Editor editor = sharedPref.edit();
+    public static boolean putBoolean(String key, boolean value) {
+        if (sContext == null) {
+            Log.e(getTag(), "sContext == null, register() should be called previously!");
+            return false;
+        }
+        SharedPreferences sp = getSharedPreferences(sContext);
+        SharedPreferences.Editor editor = sp.edit();
         editor.putBoolean(key, value);
-        editor.commit();
+        return editor.commit();
+    }
+
+    public static boolean putBoolean(Context context, String fileName, String key, boolean value) {
+        SharedPreferences sp = getSharedPreferences(context, fileName, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putBoolean(key, value);
+        return editor.commit();
+    }
+
+    public static boolean putBoolean(String fileName, String key, boolean value) {
+        if (sContext == null) {
+            Log.e(getTag(), "sContext == null, register() should be called previously!");
+            return false;
+        }
+        SharedPreferences sp = getSharedPreferences(sContext, fileName, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putBoolean(key, value);
+        return editor.commit();
     }
 
     /**
      * 读取配置信息
-     *
      * @param key
      * @return
      */
@@ -287,7 +379,33 @@ public class SharedPreferenceUtils {
     }
 
     public static boolean getBoolean(String key, boolean def) {
+        if (sContext == null) {
+            Log.e(getTag(), "sContext == null, register() should be called previously!");
+            return def;
+        }
         return getSharedPreferences(sContext).getBoolean(key, def);
+    }
+
+    /**
+     * 从指定的pref文件中读取boolean型配置，默认Context.MODE_PRIVATE
+     * @param context
+     * @param fileName
+     * @param key
+     * @param def  默认值
+     * @return
+     */
+    public static boolean getBoolean(Context context, String fileName, String key, boolean def) {
+        SharedPreferences sp = getSharedPreferences(context, fileName, Context.MODE_PRIVATE);
+        return sp.getBoolean(key, def);
+    }
+
+    public static boolean getBoolean(String fileName, String key, boolean def) {
+        if (sContext == null) {
+            Log.e(getTag(), "sContext == null, register() should be called previously!");
+            return def;
+        }
+        SharedPreferences sp = getSharedPreferences(sContext, fileName, Context.MODE_PRIVATE);
+        return sp.getBoolean(key, def);
     }
 
     /**
@@ -301,6 +419,10 @@ public class SharedPreferenceUtils {
     }
 
     public static String getString(String key) {
+        if (sContext == null) {
+            Log.e(getTag(), "sContext == null, register() should be called previously!");
+            return null;
+        }
         return getSharedPreferences(sContext).getString(key, null);
     }
 
@@ -315,6 +437,10 @@ public class SharedPreferenceUtils {
     }
 
     public static int getInt(String key) {
+        if (sContext == null) {
+            Log.e(getTag(), "sContext == null, register() should be called previously!");
+            return -1;
+        }
         return getSharedPreferences(sContext).getInt(key, 0);
     }
 
@@ -329,6 +455,10 @@ public class SharedPreferenceUtils {
     }
 
     public static long getLong(String key) {
+        if (sContext == null) {
+            Log.e(getTag(), "sContext == null, register() should be called previously!");
+            return -1;
+        }
         return getSharedPreferences(sContext).getLong(key, 0L);
     }
 
@@ -343,6 +473,10 @@ public class SharedPreferenceUtils {
     }
 
     public static boolean containsKey(String key) {
+        if (sContext == null) {
+            Log.e(getTag(), "sContext == null, register() should be called previously!");
+            return false;
+        }
         return getSharedPreferences(sContext).contains(key);
     }
 
@@ -351,39 +485,47 @@ public class SharedPreferenceUtils {
      *
      * @param keys
      */
-    public static void remove(Context context, String... keys) {
+    public static boolean remove(Context context, String... keys) {
         SharedPreferences sharedPref = getSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPref.edit();
         for (String key : keys) {
             editor.remove(key);
         }
-        editor.commit();
+        return editor.commit();
     }
 
-    public static void remove(String... keys) {
+    public static boolean remove(String... keys) {
+        if (sContext == null) {
+            Log.e(getTag(), "sContext == null, register() should be called previously!");
+            return false;
+        }
         SharedPreferences sharedPref = getSharedPreferences(sContext);
         SharedPreferences.Editor editor = sharedPref.edit();
         for (String key : keys) {
             editor.remove(key);
         }
-        editor.commit();
+        return editor.commit();
     }
 
     /**
      * 清除所有配置文件
      */
-    public static void clearAll(Context context) {
+    public static boolean clearAll(Context context) {
         SharedPreferences sharedPref = getSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.clear();
-        editor.commit();
+        return editor.commit();
     }
 
-    public static void clearAll() {
+    public static boolean clearAll() {
+        if (sContext == null) {
+            Log.e(getTag(), "sContext == null, register() should be called previously!");
+            return false;
+        }
         SharedPreferences sharedPref = getSharedPreferences(sContext);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.clear();
-        editor.commit();
+        return editor.commit();
     }
 }
 

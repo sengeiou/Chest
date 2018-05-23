@@ -28,3 +28,18 @@
 #applied for tencent bugly
 -dontwarn com.tencent.bugly.**
 -keep public class com.tencent.bugly.**{*;}
+
+#applied for umeng
+-keepclassmembers class * {
+   public <init> (org.json.JSONObject);
+}
+-keep public class com.stur.lib.R$*{
+    public static final int *;
+}
+-keepclassmembers enum * {
+    public static **[] values();
+    public static ** valueOf(java.lang.String);
+}
+
+
+

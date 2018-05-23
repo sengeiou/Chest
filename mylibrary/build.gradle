@@ -49,6 +49,7 @@ dependencies {
     compile 'com.google.code.gson:gson:2.5'
     compile files('../libs-keystores/gcache-1.0.3.jar')
     compile 'com.tencent.bugly:crashreport:latest.release'
+    compile 'com.umeng.analytics:analytics:latest.integration'
 }
 
 preBuild {

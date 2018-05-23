@@ -12,7 +12,9 @@ public class ConfigBase {
     //android:process="com.android.phone"      configed for activity
 
     /************************************文件路径等常量值**********************************/
+    public static final String SP_FILE_CONFIG_BASE = "config_base";
     public static final String SP_KEY_BUGLY_ENABLED = "bugly_enabled";
+    public static final String SP_KEY_UMENG_ENABLED = "umeng_enabled";
     /**************************************************************************************/
 
 
@@ -22,8 +24,11 @@ public class ConfigBase {
     public static String sLogTag = "Chest";  //静态常量保存
     public static boolean sForceDebug = true;  //静态常量保存
     public static boolean sBuglyEnabled = false;  //Bugly enabled，SP保存
-    //腾讯bugly上注册的appid，用于异常统计，a9e665bcce是Chest的id，后续可能还会接入其它的PaaS
+    public static boolean sUmengEnabled = false;    //友盟的移动统计功能，SP保存
+    //腾讯bugly上为Chest工程注册的appid，用于异常统计，后续可能还会接入其它的PaaS
     public static String APP_ID_BUGLY = "a9e665bcce";
+    //友盟上为Chest工程注册的appId
+    public static String APP_ID_UMENG = "5afe88f4a40fa37693000092";
     /**************************************************************************************/
 
 

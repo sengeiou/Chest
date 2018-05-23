@@ -12,10 +12,11 @@ import com.stur.lib.R;
 import com.stur.lib.app.AppManager;
 import com.stur.lib.app.ContextBase;
 import com.stur.lib.app.IContext;
+import com.stur.lib.config.ConfigManager;
 import com.stur.lib.constant.StConstant;
 import com.stur.lib.os.BusProvider;
 import com.stur.lib.os.PackageUtils;
-
+import com.umeng.analytics.MobclickAgent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +24,11 @@ import java.util.Map;
 
 import static android.Manifest.permission.READ_PHONE_STATE;
 
-
+/**
+ * 本应用中的Activity的基础类，里面集成了一些通用的方法，尽量本应用的所有Activity都继承该类
+ * AppManager中的一些Activity堆栈操作依赖这里的初始数据
+ * 友盟的统计需要在所有Activity的onResume和onPause中添加处理，所以直接加在这里
+ */
 public abstract class ActivityBase extends AppCompatActivity implements IContext {
 
     @Override
@@ -47,6 +52,22 @@ public abstract class ActivityBase extends AppCompatActivity implements IContext
 
         BusProvider.getInstance().unregister(this);
         AppManager.getInstance().removeActivity(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (ConfigManager.getInstance().getUmengEnabled()) {
+            MobclickAgent.onResume(this);
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (ConfigManager.getInstance().getUmengEnabled()) {
+            MobclickAgent.onPause(this);
+        }
     }
 
     //子类重写该函数来setContentView
