@@ -10,6 +10,8 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        //如果添加方法数超标后需要做dex分包处理3-2
+        //这个项目需要加上这个配置，否则出现AS Issue 34
         multiDexEnabled true
     }
 
@@ -50,25 +52,9 @@ android {
 }
 
 dependencies {
+    //如果添加方法数超标后需要做dex分包处理3-1
+    //compile "com.android.support:multidex:1.0.0"
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile project(':mylibrary')
-    provided files('../libs-keystores/framework.jar')
-}
-
-preBuild {
-    doLast {
-        def imlFile = file(project.name + ".iml")
-        println 'Change ' + project.name + '.iml order'
-        try {
-            def parsedXml = (new XmlParser()).parse(imlFile)
-            def jdkNode = parsedXml.component[1].orderEntry.find { it.'@type' == 'jdk' }
-            parsedXml.component[1].remove(jdkNode)
-            def sdkString = "Android API " + android.compileSdkVersion.substring("android-".length()) + " Platform"
-            new Node(parsedXml.component[1], 'orderEntry', ['type': 'jdk', 'jdkName': sdkString, 'jdkType': 'Android SDK'])
-            groovy.xml.XmlUtil.serialize(parsedXml, new FileOutputStream(imlFile))
-        } catch (FileNotFoundException e) {
-            // nop, iml not found
-        }
-    }
 }
 

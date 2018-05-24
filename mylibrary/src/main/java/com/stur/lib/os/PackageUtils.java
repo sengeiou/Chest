@@ -206,7 +206,7 @@ public class PackageUtils {
         /*boolean res = am.clearApplicationUserData(packageName, new IPackageDataObserver.Stub() {
             public void onRemoveCompleted(final String pkt, final boolean succeeded) {
                 //判断succeeded，如果清除失败在这里处理
-                boolean sudd = succeeded;
+                boolean succ = succeeded;
             }
         });
         if (!res) {

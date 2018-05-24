@@ -16,6 +16,7 @@ allprojects {
     repositories {
         jcenter()
     }
+    //Ìí¼ÓframeworkµÄÒÀÀµjar°ü3-2
     gradle.projectsEvaluated {
         tasks.withType(JavaCompile){
             options.compilerArgs.add('-Xbootclasspath/p:./libs-keystores/framework.jar;')

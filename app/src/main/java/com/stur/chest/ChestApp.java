@@ -29,4 +29,11 @@ public class ChestApp extends ContextBase {
 
         //ChestController.getInstance().init(this);
     }
+
+    //如果添加方法数超标后需要做dex分包处理3-3
+    /*@Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }*/
 }

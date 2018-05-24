@@ -27,6 +27,7 @@ android {
 }
 
 dependencies {
+    //添加framework的依赖jar包3-1
     //provided files('../libs-keystores/framework.jar')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
@@ -52,6 +53,7 @@ dependencies {
     compile 'com.umeng.analytics:analytics:latest.integration'
 }
 
+//添加framework的依赖jar包3-3
 preBuild {
     doLast {
         def imlFile = file(project.name + ".iml")
