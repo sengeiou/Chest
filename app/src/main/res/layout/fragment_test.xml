@@ -12,6 +12,12 @@
         android:text="persist.stur.activity" />
 
     <Button
+        android:id="@+id/btn_web_server"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Web Server" />
+
+    <Button
         android:id="@+id/btn_bluetooth"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,5 +34,35 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="better list fragment" />
+
+    <Button
+        android:id="@+id/btn_unlock_adb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="unlock adb" />
+
+    <Button
+        android:id="@+id/btn_unlock_bt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="unlock bt" />
+
+    <Button
+        android:id="@+id/btn_unlock_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="unlock data" />
+
+    <Button
+        android:id="@+id/btn_unlock_wifi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="unlock wifi" />
+
+    <Button
+        android:id="@+id/btn_unlock_gps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="unlock gps" />
 
 </LinearLayout>

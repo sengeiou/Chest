@@ -29,7 +29,7 @@
 -dontwarn com.tencent.bugly.**
 -keep public class com.tencent.bugly.**{*;}
 
-#¼¯³ÉumengµÄÒÆ¶¯Í³¼Æ¹¦ÄÜ5-5
+#é›†æˆumengçš„ç§»åŠ¨ç»Ÿè®¡åŠŸèƒ½5-5
 #applied for umeng
 -keepclassmembers class * {
    public <init> (org.json.JSONObject);
