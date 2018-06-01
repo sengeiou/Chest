@@ -50,6 +50,7 @@ dependencies {
     compile 'com.google.code.gson:gson:2.5'
     compile files('../libs-keystores/gcache-1.0.3.jar')
     compile 'com.tencent.bugly:crashreport:latest.release'
+    //集成umeng的移动统计功能5-1
     compile 'com.umeng.analytics:analytics:latest.integration'
 }
 

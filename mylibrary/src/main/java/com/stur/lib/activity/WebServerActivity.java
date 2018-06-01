@@ -32,8 +32,10 @@ public class WebServerActivity extends ActivityBase {
         String ip = WifiUtils.getIp(this);
         StringBuilder sb = new StringBuilder();
         sb.append("please input in the browser:\n" + ip + ":" + StConstant.DEFAULT_WEB_SERVER_PORT + "\n");
-        sb.append("for examle: " + ip + ":" + StConstant.DEFAULT_WEB_SERVER_PORT + File.separator + "Google.html");
-        //需要保证在/sdcard/stur/目录下有Google.html及其相关文件
+        sb.append("or : " + ip + ":" + StConstant.DEFAULT_WEB_SERVER_PORT + File.separator + "baidu.html" +
+                ", and ensure it has been put in /sdcard/stur/");
+        //需要保证在/sdcard/stur/目录下有baidu.html及其相关文件
+        //请求html文件在IE浏览器中会直接显示，在百度浏览器中会被当成一个文件下载
         mTipsTextView.setText(sb.toString());
     }
 

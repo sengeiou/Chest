@@ -29,6 +29,7 @@
 -dontwarn com.tencent.bugly.**
 -keep public class com.tencent.bugly.**{*;}
 
+#集成umeng的移动统计功能5-5
 #applied for umeng
 -keepclassmembers class * {
    public <init> (org.json.JSONObject);

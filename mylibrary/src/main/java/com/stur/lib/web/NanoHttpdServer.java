@@ -11,7 +11,9 @@ import com.stur.lib.file.FileUtils;
 import com.stur.lib.network.WifiUtils;
 
 import org.nanohttpd.protocols.http.IHTTPSession;
+import org.nanohttpd.protocols.http.NanoHTTPD;
 import org.nanohttpd.protocols.http.response.Response;
+import org.nanohttpd.protocols.http.response.Status;
 import org.nanohttpd.webserver.SimpleWebServer;
 
 import java.io.File;
@@ -59,7 +61,9 @@ public class NanoHttpdServer extends SimpleWebServer {
         }
 
         //通过http下载已知文件格式的走if分支，未知文件格式直接重定向到固定返回内容
-        if (action.endsWith(".jpg") || action.endsWith("mp4") || action.endsWith("apk") || action.endsWith("html")) {
+        if (action.length() == 0) {    //如果直接访问 192.168.1.107:8088 走这个分支
+            return Response.newFixedLengthResponse(Status.OK, NanoHTTPD.MIME_PLAINTEXT, "Welcome to Sturmegezhutz!");
+        } else if (action.endsWith(".jpg") || action.endsWith("mp4") || action.endsWith("apk") || action.endsWith("html")) {
             return super.serve(session);
         } else if (action.endsWith("test")) {  //测试内容，通过 192.168.1.100:8088/test 访问
             return responseContent(session);

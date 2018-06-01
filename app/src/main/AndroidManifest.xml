@@ -30,6 +30,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <!--集成umeng的移动统计功能5-3，添加四个权限：ACCESS_NETWORK_STATE、READ_PHONE_STATE、ACCESS_WIFI_STATE、INTERNET-->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -109,6 +110,7 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
+        <!--集成umeng的移动统计功能5-2-->
         <meta-data android:value="5afe88f4a40fa37693000092" android:name="UMENG_APPKEY"/>
         <meta-data android:value="PrivateInstall" android:name="UMENG_CHANNEL"/>
     </application>

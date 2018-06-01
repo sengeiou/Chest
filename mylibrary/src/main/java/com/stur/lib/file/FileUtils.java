@@ -10,14 +10,19 @@ import android.os.Environment;
 import android.os.StatFs;
 import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
+import android.util.Xml;
 
 import com.stur.lib.Log;
 import com.stur.lib.StringUtils;
 import com.stur.lib.constant.StConstant;
 import com.stur.lib.os.OsUtils;
 
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -25,6 +30,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -1149,5 +1155,91 @@ public class FileUtils {
         intent.putExtra(Intent.EXTRA_STREAM, fileUri);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
+    }
+
+    /**
+     * 将File转换为InputStream
+     * @param path 文件的完整路径含文件名
+     */
+    public static InputStream tranferFileToInputStream(String path) throws IOException {
+        File file = new File(path);
+        InputStream input = new FileInputStream(file);
+        return input;
+    }
+
+    /**
+     * 将File、FileInputStream 转换为byte数组
+     * @param path 文件的完整路径含文件名
+     */
+    public static byte[] tranferFileToByteArray(String path) throws IOException {
+        File file = new File(path);
+        InputStream input = new FileInputStream(file);
+        byte[] byt = new byte[input.available()];
+        input.read(byt);
+        return byt;
+    }
+
+    /**
+     * 将byte数组转换为InputStream
+     * @param byt
+     * @return
+     */
+    public static InputStream transferByteArrayToInputStream(byte[] byt) {
+        InputStream input = new ByteArrayInputStream(byt);
+        return input;
+    }
+
+    /**
+     * 将byte数组转换为File
+     * @param byt
+     * @param path 文件的完整路径，包含文件名
+     * @return
+     */
+    public static void transferByteArrayToFile(byte[] byt, String path) throws IOException {
+        File file = new File(path);
+        OutputStream output = new FileOutputStream(file);
+        BufferedOutputStream bufferedOutput = new BufferedOutputStream(output);
+        bufferedOutput.write(byt);
+    }
+
+    /**
+     * 从一个指定绝对路径中载入xml并解析
+     * 这里以un_settings_conf.xml为例
+     * 如果是从assets中载入xml并解析可以参考IccidParser.loadIccidOverrides()
+     * @param path
+     */
+    public static void loadXml(String path) throws IOException, XmlPullParserException {
+        InputStream is = tranferFileToInputStream(path);
+        XmlPullParser pullParser = Xml.newPullParser();
+        pullParser.setInput(is, "UTF-8");
+        int event = pullParser.getEventType();// 触发第一个事件
+        String iccid = null;
+        String carrier = null;
+        /*while (event != XmlPullParser.END_DOCUMENT) {
+            switch (event) {
+                case XmlPullParser.START_DOCUMENT:
+                    mCarrierIccidMap = new HashMap<String, String>();  //开始读取xml时创建hm对象
+                    break;
+                case XmlPullParser.START_TAG:
+                    if ("iccidOverride".equals(pullParser.getName())) {
+                        iccid = pullParser.getAttributeValue(0);
+                        carrier = pullParser.getAttributeValue(1);
+                        //如果有body内容在下面解析，这个xml没有body，只有attr，所以不继续解析
+                        if ("person".equals(pullParser.getName())) {
+                            String personA = pullParser.nextText();
+                        }
+                        if ("age".equals(pullParser.getName())) {
+                            String ageA = pullParser.nextText();
+                        }
+                    }
+                    break;
+                case XmlPullParser.END_TAG:
+                    if ("iccidOverride".equals(pullParser.getName())) {
+                        mCarrierIccidMap.put(iccid, carrier);
+                    }
+                    break;
+            }
+            event = pullParser.next();
+        }*/
     }
 }

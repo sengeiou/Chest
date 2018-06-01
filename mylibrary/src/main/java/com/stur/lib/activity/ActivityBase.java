@@ -57,13 +57,14 @@ public abstract class ActivityBase extends AppCompatActivity implements IContext
     @Override
     protected void onResume() {
         super.onResume();
+        //集成umeng的移动统计功能5-4，包括onResume和onPause两部分
         if (ConfigManager.getInstance().getUmengEnabled()) {
             MobclickAgent.onResume(this);
         }
     }
 
     @Override
-    public void onPause() {
+    protected void onPause() {
         super.onPause();
         if (ConfigManager.getInstance().getUmengEnabled()) {
             MobclickAgent.onPause(this);
