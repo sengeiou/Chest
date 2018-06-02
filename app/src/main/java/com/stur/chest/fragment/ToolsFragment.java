@@ -84,6 +84,20 @@ public class ToolsFragment extends Fragment {
                 String cmd = mEtInput.getText().toString();
                 Log.d(this, "onCmdExcClick E: " + cmd);
                 if (cmd != null && cmd.length() > 0) {
+
+                    //如果是写入系统属性的命令优先使用SystemPropertiesProxy的接口
+                    //其实效果是一样的，service.adb.tcp.port 的属性一样写入不了，方便打印读取属性的输出而已
+                    if (cmd.contains("setprop")) {
+                        String[] args = cmd.split(" ");
+                        if (args.length == 3) {
+                            SystemPropertiesProxy.set(getContext(), args[1], args[2]);
+                            mTvOutput.setText("getprop " + args[1] + " " + SystemPropertiesProxy.get(getContext(), args[1]));
+                        } else {
+                            mTvOutput.setText("cmd args invalidated!");
+                        }
+                        return;
+                    }
+
                     try {
                         mOutput += execCommand(cmd);
                     } catch (Exception e) {

@@ -32,9 +32,14 @@ public class Utils {
         }.getClassName();
     }
 
-    /*
-    * 执行shell命令
-    */
+    /**
+     * 执行shell命令
+     * 读取系统属性没问题
+     * 设置系统属性有权限限制，比如service打头的service.adb.tcp.port属性就无法设置成功（普通属性可以），当然，用SystemPropertiesProxy也一样不成功
+     * @param command
+     * @return
+     * @throws IOException
+     */
     public static String execCommand(String command) throws IOException {
         Runtime runtime = Runtime.getRuntime();
         try {

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<UNSettingsConf version="1.0">
+    <SimSettingsActivity  visibility="2">
+    	<SimPreference-1 visibility="2">
+    	</SimPreference-1>
+    	
+    	<SimPreference-2 visibility="2">
+    	</SimPreference-2>
+    	
+    	<DataEnabledPref visibility="2"/>
+    	
+    	<DefaultDataSubPref visibility="2"/>
+    	
+    	<DefaultDataNetworkPref visibility="2"/>
+    	
+    	<DefaultCallPref visibility="2"/>
+    </SimSettingsActivity>
+    
+    <YLCallSettingsTileActivity  visibility="2">
+    </YLCallSettingsTileActivity>
+    
+    <BluetoothSettingsActivity  visibility="2">
+    </BluetoothSettingsActivity>
+    
+    <DataUsageSummaryActivity  visibility="2">
+    </DataUsageSummaryActivity>
+    
+    <YLOtherSettingsActivity  visibility="2">
+    </YLOtherSettingsActivity>
+    
+    <ScanSettingsActivity  visibility="2">
+    </ScanSettingsActivity>
+    
+    <DisplaySettingsActivity  visibility="2">
+    </DisplaySettingsActivity>
+    
+    <SoundSettingsActivity  visibility="2">
+    </SoundSettingsActivity>
+    
+    <SecuritySettingsActivity  visibility="2">
+    </SecuritySettingsActivity>
+    
+    <PowerAndStorageActivity  visibility="2">
+    </PowerAndStorageActivity>
+    
+    <PaymentSettingsActivity  visibility="2">
+    </PaymentSettingsActivity>
+    
+    <LocationSettingsActivity  visibility="2">
+    </LocationSettingsActivity>
+    
+    <ZenModeSettingsActivity  visibility="2">
+    </ZenModeSettingsActivity>
+    
+    <AccountSettingsActivity  visibility="2">
+    </AccountSettingsActivity>
+    
+    <DateTimeSettingsActivity  visibility="2">
+    </DateTimeSettingsActivity>
+    
+    <LanguageSettings  visibility="2">
+    </LanguageSettings>
+    
+    <YLOtherSettingsActivity  visibility="2">
+    </YLOtherSettingsActivity>
+    
+    <DevelopmentSettingsActivity  visibility="2">
+    </DevelopmentSettingsActivity>
+    
+    <DeviceInfoSettingsActivity  visibility="2">
+    </DeviceInfoSettingsActivity>
+</UNSettingsConf>

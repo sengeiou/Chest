@@ -10,6 +10,7 @@ import android.os.Environment;
 import android.os.StatFs;
 import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
+import android.util.Pair;
 import android.util.Xml;
 
 import com.stur.lib.Log;
@@ -1204,42 +1205,44 @@ public class FileUtils {
 
     /**
      * 从一个指定绝对路径中载入xml并解析
-     * 这里以un_settings_conf.xml为例
-     * 如果是从assets中载入xml并解析可以参考IccidParser.loadIccidOverrides()
-     * @param path
+     * 这里以un_settings_conf.xml为例，如果是从assets中载入xml并解析可以参考IccidParser.loadIccidOverrides()
+     * 读取xml配置，并将配置结果以 Map<String,List<Pair<String, Integer>>> 的格式存储，
+     * 其中相同父节点的页面名放在同一个List下，并以父节点名String作为key
+     * List中的节点定义：String-子页面名。Integer-配置值：0为不显示，1为显示但是不使能，2为使能
+     * @param path 配置文件路径
      */
-    public static void loadXml(String path) throws IOException, XmlPullParserException {
+    public static final String CONF_START_TAG = "UNSettingsConf";
+    public static Map<String,List<Pair<String, Integer>>> loadConfigXml(String path) throws IOException, XmlPullParserException {
         InputStream is = tranferFileToInputStream(path);
         XmlPullParser pullParser = Xml.newPullParser();
         pullParser.setInput(is, "UTF-8");
         int event = pullParser.getEventType();// 触发第一个事件
-        String iccid = null;
-        String carrier = null;
-        /*while (event != XmlPullParser.END_DOCUMENT) {
+        Map<String,List<Pair<String, Integer>>> confMap = null;
+        String version = "";
+        while (event != XmlPullParser.END_DOCUMENT) {
+            String pageName = "";
+            String visibility = "";
+            String parentPageName = "";
             switch (event) {
                 case XmlPullParser.START_DOCUMENT:
-                    mCarrierIccidMap = new HashMap<String, String>();  //开始读取xml时创建hm对象
+                    confMap = new HashMap<String,List<Pair<String, Integer>>> ();  //开始读取xml时创建hm对象
                     break;
                 case XmlPullParser.START_TAG:
-                    if ("iccidOverride".equals(pullParser.getName())) {
-                        iccid = pullParser.getAttributeValue(0);
-                        carrier = pullParser.getAttributeValue(1);
-                        //如果有body内容在下面解析，这个xml没有body，只有attr，所以不继续解析
-                        if ("person".equals(pullParser.getName())) {
-                            String personA = pullParser.nextText();
-                        }
-                        if ("age".equals(pullParser.getName())) {
-                            String ageA = pullParser.nextText();
-                        }
+                    if (CONF_START_TAG.equals(pullParser.getName())) {
+                        version = pullParser.getAttributeValue(0);  //版本号可能后面用得上
+                        //解析body内容
+                        pageName = pullParser.getName();
+                        visibility = pullParser.getAttributeValue(0);
                     }
                     break;
                 case XmlPullParser.END_TAG:
-                    if ("iccidOverride".equals(pullParser.getName())) {
-                        mCarrierIccidMap.put(iccid, carrier);
+                    if (parentPageName.equals(pullParser.getName())) {
+                        //写入一个节点的配置结果
                     }
                     break;
             }
             event = pullParser.next();
-        }*/
+        }
+        return confMap;
     }
 }
