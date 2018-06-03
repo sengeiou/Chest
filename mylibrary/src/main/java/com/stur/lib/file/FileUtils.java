@@ -1,5 +1,6 @@
 package com.stur.lib.file;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
@@ -32,6 +33,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -1245,4 +1249,253 @@ public class FileUtils {
         }
         return confMap;
     }
+
+    /**
+     * 功能说明：利用递归以及JAVA反射，实现的XML通用解析方法。
+     *     要求1：XML中的节点标签必须与Class 的类名一致，不区分大小写。
+     *     要求2：XML中的节点标签中的子标签必须与Class中的属性名一致，区分大小写，如需要不区分大小写自行更改判断。
+     * 使用说明：以记录学生档案的xml为例，按照如下步骤使用：
+     *     1. 假如待解析的xml格式如下：
+     *         <?xml version="1.0"  encoding="UTF-8"?>
+     *         <root>
+     *             <student id="1"  group="1">
+     *                 <name>zhangsan</name>
+     *                 <sex>male</sex>
+     *                 <userEntity id="5">
+     *                     <name>yyyy</name>
+     *                     <xxx>xxxx</xxx>
+     *                 </userEntity>
+     *             </student>
+     *         </root>
+     *     2. 根据XML文件创建对应的Bean：
+     *         public class Student {private int id;  private String name;...}
+     *         pulbic class UserEntity {...}
+     *     3. 根据业务情况从网络/本地获取XML流: InputStream  in=null；
+     *     4. 如果XML中student节点只会有一个,使用parseData方法: Student student=parseData(in,Student.class,"root");
+     *     5. 如果XML 中 student 节点有多个,使用 parseList方法: List<Student> listData=parseList(in,Student.class,"root");
+     *     6. 注意：属性为List时必须声明其为ArrayList或LinkedList
+     * 函数说明：将XML中的数据转换成<T>类型数据
+     * 如果XML中根目录下一级节点只会有一个,使用parseData方法
+     * 如果XML中根目录下一级节点有多个,使用 parseList方法
+     * @param in XML流数据
+     * @param mClass 将XML中的数据转换成的对象类型
+     * @param root XML中的根节点TagName
+     * @return
+     */
+    @SuppressLint("DefaultLocale")
+    public static <T> T parseData(InputStream in, Class<T> mClass, String root) {
+        T entity = null;
+        if (mClass != null && in != null) {
+            try {
+                XmlPullParser parser = Xml.newPullParser();
+                parser.setInput(in, "UTF-8");
+                int eventType = parser.getEventType();
+                entity = recursionParse(eventType, parser, null, mClass, root);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return entity;
+    }
+
+    /**
+     * 将XML中的数据转换成List<T>数据
+     * 如果XML中根目录下一级节点只会有一个,使用parseData方法
+     * 如果XML中根目录下一级节点有多个,使用 parseList方法
+     * @param in XML流数据
+     * @param mClass 将XML中的数据转换成的对象类型
+     * @param root XML中的根节点TagName
+     * @return
+     */
+    @SuppressLint("DefaultLocale")
+    public static <T> List<T> parseList(InputStream in, Class<T> mClass, String root) {
+        List<T> listData = null;
+        if (mClass != null && in != null) {
+            try {
+                XmlPullParser parser = Xml.newPullParser();
+                parser.setInput(in, "UTF-8");
+                int eventType = parser.getEventType();
+                listData = new ArrayList<T>();
+                recursionParse(eventType, parser, listData, mClass, root);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return listData;
+    }
+
+
+    /**
+     * 递归进行解析XML文件
+     * @param eventType 当前标记类型
+     * @param parser XmlPullParser
+     * @param listData List<T> 集合
+     * @param mClass 将XML中的数据转换成的对象类型
+     * @param root XML中的父节点TagName
+     * @return
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressLint("DefaultLocale")
+    public static <T> T recursionParse(int eventType, XmlPullParser parser, List<T> listData, Class<T> mClass, String root) {
+        T entity = null;
+        Field field = null;
+        String className = "";
+        try {
+            className = mClass.getSimpleName().toLowerCase();
+            while (eventType != XmlPullParser.END_DOCUMENT) {
+                try {
+                    String tagName = parser.getName() == null ? "" : parser.getName();
+                    switch (eventType) {
+                        case XmlPullParser.START_DOCUMENT:
+                            break;
+                        case XmlPullParser.START_TAG:
+                            if (tagName.toLowerCase().equals(className)) {
+                                try {
+                                    entity = mClass.newInstance();
+                                    int count = parser.getAttributeCount();
+                                    for (int i = 0; i < count; i++) {
+                                        String attributeName = parser.getAttributeName(i);
+                                        try {
+                                            field = mClass.getDeclaredField(attributeName);
+                                            setFieldData(entity, field, null, parser.getAttributeValue(i));
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            } else if (!tagName.equals(root)) {
+                                try {
+                                    if (entity != null) {
+                                        field = mClass.getDeclaredField(tagName);
+                                        int type = setFieldData(entity, field, parser, null);
+                                        switch (type) {
+                                            case 0:
+                                                field.set(entity, recursionParse(eventType, parser, null, field.getType(), field.getName()));
+                                                break;
+                                            case 1:
+                                                List tempList = (List) field.getType().newInstance();
+                                                recursionParse(eventType, parser, tempList, getListGenericityType(field), field.getName());
+                                                List oldList = (List) field.get(entity);
+                                                if (oldList != null && tempList != null) {
+                                                    oldList.addAll(tempList);
+                                                } else {
+                                                    oldList = tempList;
+                                                }
+                                                field.set(entity, oldList);
+                                                break;
+                                        }
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            break;
+                        case XmlPullParser.END_TAG:
+                            if (tagName.toLowerCase().equals(className)) {
+                                if (listData != null) {
+                                    listData.add(entity);
+                                }
+                                if (tagName.equals(root)) {
+                                    return entity;
+                                }
+
+                            } else if (tagName.equals(root)) {
+                                return entity;
+                            }
+                            break;
+                        case XmlPullParser.END_DOCUMENT:
+                            break;
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                eventType = parser.next();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return entity;
+    }
+
+    /**
+     * 为 <T> 类型对象属性赋值
+     *
+     * @param entity
+     * @param field
+     * @param parser
+     * @param value
+     * @return
+     */
+    private static <T> int setFieldData(T entity, Field field, XmlPullParser parser, String value) {
+        if (entity != null && field != null) {
+            try {
+                field.setAccessible(true);
+                Class<?> type = field.getType();
+                String typeName = type.getSimpleName();
+                if (type.isPrimitive() || "String".equals(typeName)) {
+                    value = parser == null ? value : parser.nextText();
+                    if ("String".equals(typeName)) {
+                        field.set(entity, value);
+                    } else if ("int".equals(typeName)) {
+                        field.setInt(entity, Integer.parseInt(value));
+                    } else if ("boolean".equals(typeName)) {
+                        boolean isFlag = false;
+                        try {
+                            int booleanInt = Integer.parseInt(value);
+                            if (booleanInt == 1) {
+                                isFlag = true;
+                            }
+                        } catch (Exception e) {
+                            if ("true".equalsIgnoreCase(value)) {
+                                isFlag = true;
+                            }
+                        }
+                        field.setBoolean(entity, isFlag);
+                    } else if ("float".equals(typeName)) {
+                        field.setFloat(entity, Float.parseFloat(value));
+                    } else if ("double".equals(typeName)) {
+                        field.setDouble(entity, Double.parseDouble(value));
+                    }
+                } else {
+                    if ("ArrayList".equals(typeName) || "LinkedList".equals(typeName)) {
+                        return 1;
+                    } else {
+                        return 0;
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * 获取 ArrayList<T> OR LinkedList<T> 泛型类型
+     *
+     * @param field
+     * @return
+     */
+    public static Class<?> getListGenericityType(Field field) {
+        try {
+            Type type = field.getGenericType();
+            if (type instanceof ParameterizedType) {
+                ParameterizedType paramType = (ParameterizedType) type;
+                Type[] actualTypes = paramType.getActualTypeArguments();
+                for (Type aType : actualTypes) {
+                    if (aType instanceof Class) {
+                        return (Class<?>) aType;
+                    }
+                }
+            }
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }
