@@ -70,14 +70,14 @@ public class IccidParser {
                     if ("iccidOverride".equals(pullParser.getName())) {
                         iccid = pullParser.getAttributeValue(0);
                         carrier = pullParser.getAttributeValue(1);
-                        /* 如果有body内容在下面解析，这个xml没有body，只有attr，所以不继续解析
-                        if ("person".equals(pullParser.getName())) {
+                    }
+                    /* 如果有body内容在下面解析，这个xml没有body，只有attr，所以不继续解析
+                        else if ("person".equals(pullParser.getName())) {
                             String personA = pullParser.nextText();
                         }
                         if ("age".equals(pullParser.getName())) {
                             String ageA = pullParser.nextText();
                         }*/
-                    }
                     break;
                 case XmlPullParser.END_TAG:
                     if ("iccidOverride".equals(pullParser.getName())) {

@@ -14,6 +14,7 @@ import android.text.TextUtils;
 import android.util.Pair;
 import android.util.Xml;
 
+import com.stur.lib.IntegerUtil;
 import com.stur.lib.Log;
 import com.stur.lib.StringUtils;
 import com.stur.lib.constant.StConstant;
@@ -1215,8 +1216,8 @@ public class FileUtils {
      * List中的节点定义：String-子页面名。Integer-配置值：0为不显示，1为显示但是不使能，2为使能
      * @param path 配置文件路径
      */
-    public static final String CONF_START_TAG = "UNSettingsConf";
-    public static Map<String,List<Pair<String, Integer>>> loadConfigXml(String path) throws IOException, XmlPullParserException {
+    public static final String UN_SETTINGS_CONF_ROOT = "UNSettingsConf";
+    public static Map<String,List<Pair<String, Integer>>> loadSettingsConfigXml(String path) throws IOException, XmlPullParserException {
         InputStream is = tranferFileToInputStream(path);
         XmlPullParser pullParser = Xml.newPullParser();
         pullParser.setInput(is, "UTF-8");
@@ -1232,7 +1233,7 @@ public class FileUtils {
                     confMap = new HashMap<String,List<Pair<String, Integer>>> ();  //开始读取xml时创建hm对象
                     break;
                 case XmlPullParser.START_TAG:
-                    if (CONF_START_TAG.equals(pullParser.getName())) {
+                    if (UN_SETTINGS_CONF_ROOT.equals(pullParser.getName())) {
                         version = pullParser.getAttributeValue(0);  //版本号可能后面用得上
                         //解析body内容
                         pageName = pullParser.getName();
@@ -1248,6 +1249,69 @@ public class FileUtils {
             event = pullParser.next();
         }
         return confMap;
+    }
+
+    /**
+     * 递归进行解析XML文件
+     * @param eventType 当前标记类型
+     * @param parser XmlPullParser
+     * @param map 传入的map对象，解析的内容会写入map里
+     * @param parentPageName 父页面的名称
+     * @return
+     */
+    public static void recursionParseSettingsConf(int eventType, XmlPullParser parser, Map<String,List<Pair<String, Integer>>> map, String parentPageName) {
+        String visibility = "";
+        String thisPageName = "";
+        try {
+            while (eventType != XmlPullParser.END_DOCUMENT) {  //只要不是文档结束事件就一直循环
+                try {
+                    String tagName = parser.getName() == null ? "" : parser.getName();
+                    thisPageName = tagName;
+                    switch (eventType) {
+                        case XmlPullParser.START_DOCUMENT:  //触发开始文档事件
+                            break;
+                        case XmlPullParser.START_TAG:  //触发开始元素事件
+                            if (tagName.equals(UN_SETTINGS_CONF_ROOT)){
+                                String version = parser.getAttributeValue(0);  //解析版本号，可能后面用得上
+                            } else if (thisPageName.equals(tagName)){  //如果记录的当前页面名称和tag名称一致的话，说明还没有进入body解析部分，这里负责解析属性
+                                int count = parser.getAttributeCount();  //解析属性个数，目前只有visibility一个
+                                for (int i = 0; i < count; i++) {
+                                    visibility = parser.getAttributeName(i);
+                                }
+
+                                //把解析的内容写入map
+                                Pair pair = Pair.create(thisPageName, IntegerUtil.getInt(visibility));
+                                List<Pair<String, Integer>> pairList = map.get(parentPageName);
+                                if (pairList == null) {
+                                    Log.d(getTag(), "it's the first time to put this list to hm!");
+                                    pairList = new ArrayList<Pair<String, Integer>>();
+                                }
+                                pairList.add(pair);
+                                map.put(parentPageName, pairList);
+                            } else {  //如果当前页面名称和tag名称不一致，说明已经进入到了body解析部分开始递归
+                                //只在XmlPullParser.START_TAG分支下进行递归，当前页面作为下一次递归的父页面
+                                recursionParseSettingsConf(eventType, parser, map, thisPageName);
+                            }
+                            break;
+                        case XmlPullParser.END_TAG:  //触发结束元素事件
+                            //如果当前页面名称和tag名称一致，说明这一级的递归任务已经完成了，可以return
+                            if (thisPageName.equals(tagName)) {
+                                Log.d(getTag(), thisPageName + " level of recursion complete");
+                                return;
+                            }
+                            break;
+                        case XmlPullParser.END_DOCUMENT:
+                            break;
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                eventType = parser.next();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return;
     }
 
     /**
