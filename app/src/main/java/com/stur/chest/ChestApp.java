@@ -23,8 +23,8 @@ public class ChestApp extends ContextBase {
          * 因为APP_NAME是在自己的应用里面配置，所以这个init不能放到mylibrary下的ContextBase中处理
          */
         //ConfigManager.getInstance().init(this);
-        ConfigManager.getInstance().init(this, Constant.APP_NAME, Constant.LOG_TAG, Constant.FORCE_DEBUG,
-                Constant.BUGLY_ENABLE, Constant.APP_ID_BUGLY);
+        ConfigManager.getInstance().init(this, Constant.APP_NAME, Constant.LOG_TAG, Constant.FORCE_DEBUG);
+        ConfigManager.getInstance().setBuglyEnabled(Constant.BUGLY_ENABLE, Constant.APP_ID_BUGLY);
         ConfigManager.getInstance().setUmengEnabled(true);
 
         //ChestController.getInstance().init(this);

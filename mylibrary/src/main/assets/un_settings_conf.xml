@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <UNSettingsConf version="1.0">
-    <SimSettingsActivity  visibility="2">
-    	<SimPreference-1 visibility="2">
-    	</SimPreference-1>
+    <SimSettingsActivity visibility="2">
+    	<SimPreference0 visibility="2">
+            <SimEnablePreference visibility="2"/>
+            <SimCardNamePreference visibility="2"/>
+            <SimCardNumberPreference visibility="2"/>
+            <SimDataRoamingPreference visibility="2"/>
+            <SimApnNamePreference visibility="2"/>
+    	</SimPreference0>
     	
-    	<SimPreference-2 visibility="2">
-    	</SimPreference-2>
+    	<SimPreference1 visibility="2">
+            <SimEnablePreference visibility="2"/>
+            <SimCardNamePreference visibility="2"/>
+            <SimCardNumberPreference visibility="2"/>
+            <SimDataRoamingPreference visibility="2"/>
+            <SimApnNamePreference visibility="2"/>
+    	</SimPreference1>
     	
     	<DataEnabledPref visibility="2"/>
     	
@@ -20,54 +30,152 @@
     <YLCallSettingsTileActivity  visibility="2">
     </YLCallSettingsTileActivity>
     
+    <WifiSettingsActivity  visibility="2">
+    </WifiSettingsActivity>
+    
     <BluetoothSettingsActivity  visibility="2">
     </BluetoothSettingsActivity>
     
     <DataUsageSummaryActivity  visibility="2">
     </DataUsageSummaryActivity>
     
-    <YLOtherSettingsActivity  visibility="2">
-    </YLOtherSettingsActivity>
+    <WirelessSettingsActivity  visibility="2">
+    	<AirplaneModePreference visibility="2"/>
+    	<NetSpeedSwitchPreference visibility="2"/>
+    	<NFCPreference visibility="2"/>
+    	<WFCPreference visibility="2"/>
+    	<AndroidBeamPreference visibility="2"/>
+    	<TetherPreference visibility="2">
+    		<UsbTetherPreference visibility="2"/>
+    		<EnableWifiApPreference visibility="2"/>
+    		<wifiApSettingsPreference visibility="2"/>
+    		<BluetoothTetherPreference visibility="2"/>
+    	</TetherPreference>
+    	<VPNPreference visibility="2"/>
+    	<MobileNetworkSettingsPreference visibility="2"/>
+    </WirelessSettingsActivity>
     
     <ScanSettingsActivity  visibility="2">
     </ScanSettingsActivity>
     
     <DisplaySettingsActivity  visibility="2">
+    	<BrightnessSettingsFragment  visibility="2"/>
+    	<ScreenTimeoutListPreference  visibility="2"/>
+    	<WallpaperPreference  visibility="2"/>
+    	<ToggleLockScreenRotationPreference  visibility="2"/>
+    	<FontSizePreference  visibility="2"/>
+    	<ScreenSaverPreference  visibility="2"/>
     </DisplaySettingsActivity>
     
     <SoundSettingsActivity  visibility="2">
+    	<VolumeAdjustmentFragment  visibility="2"/>
+    	<ModeSettingsDropDownPreference  visibility="2"/>
+    	<VibrateWhenRingingPreference  visibility="2"/>
+    	<PhoneRingtonePreference  visibility="2"/>
+    	<SMSRingtonePreference  visibility="2"/>
+    	<NotificationRingtonePreference  visibility="2"/>
+    	<OtherSoundsFragment  visibility="2"/>
+    	<DialingVibrationPreference  visibility="2"/>
+    	<VibrateOnTouchPreference  visibility="2"/>
     </SoundSettingsActivity>
     
     <SecuritySettingsActivity  visibility="2">
+    	<UnlockSetOrChangePreference  visibility="2"/>
+    	<OneHandUnlockPreference  visibility="2"/>
+    	<FingerprintPreference  visibility="2"/>
+    	<SimLockSettingsPreferenceScreen  visibility="2"/>
+    	<ToggleAppInstallationPreference  visibility="2"/>
+    	<AdvanceSecuritySettingsPreferenceScreen  visibility="2"/>
     </SecuritySettingsActivity>
     
     <PowerAndStorageActivity  visibility="2">
+    	<ShowPowerPercentSwitchPreference  visibility="2"/>
+    	<PowerUseDetailsPreferenceScreen  visibility="2"/>
+    	<ChargeModeTextViewPreference  visibility="2"/>
+    	<HighPowerPreference  visibility="2"/>
+    	<ProcessStatsSummaryFragment  visibility="2"/>
+    	<StorageAndUsbPreferenceScreen  visibility="2"/>
     </PowerAndStorageActivity>
     
     <PaymentSettingsActivity  visibility="2">
     </PaymentSettingsActivity>
     
     <LocationSettingsActivity  visibility="2">
+    	<GPSSwitchBar  visibility="2"/>
+    	<LocationModePreference  visibility="2"/>
+    	<RecentLocationRequestsPreferenceCategory  visibility="2"/>
+    	<LocationServicesPreferenceCategory  visibility="2"/>
+    	<AgpsSettingPreference  visibility="2"/>
     </LocationSettingsActivity>
     
     <ZenModeSettingsActivity  visibility="2">
+    	<ZenModePrioritySettingsPreferenceScreen  visibility="2"/>
+    	<VisualInterruptionsSettingsPreferenceScreen  visibility="2"/>
+    	<StartNowSwitchPreference  visibility="2"/>
+    	<StartNowZenModeDropDownPreference  visibility="2"/>
+    	<ZenModeStartTimingSwitchPrefence  visibility="2"/>
+    	<StartTimingDaysRepeatPreference  visibility="2"/>
+    	<StartTimingStartTimePickerPreference  visibility="2"/>
+    	<StartTimingEndTimePickerPreference  visibility="2"/>
+    	<StartTimingZenModeDropDownPreference  visibility="2"/>
     </ZenModeSettingsActivity>
     
     <AccountSettingsActivity  visibility="2">
     </AccountSettingsActivity>
     
     <DateTimeSettingsActivity  visibility="2">
+    	<AutoTimeSwitchPreference  visibility="2"/>
+    	<AutoTimeZoneSwitchPreference  visibility="2"/>
+    	<DateTextViewPreference  visibility="2"/>
+    	<TimeTextViewPreference  visibility="2"/>
+    	<TimeZoneTextViewPreference  visibility="2"/>
+    	<Time24SwitchPreference  visibility="2"/>
     </DateTimeSettingsActivity>
     
-    <LanguageSettings  visibility="2">
-    </LanguageSettings>
+    <InputMethodAndLanguageSettingsActivity  visibility="2">
+    	<LanguagePreferenceScreen  visibility="2"/>
+    	<SpellCheckersPreferenceScreen  visibility="2"/>
+    	<UserDictionaryPreferenceScreen  visibility="2"/>
+    	<VirtualKeyboardFragment  visibility="2"/>
+    	<PhysicalKeyboardFragment  visibility="2"/>
+    	<KeyboardSettingsPreferenceCategory  visibility="2"/>
+    	<CurrentInputMethodPreference  visibility="2"/>
+    	<TtsSettingsPreferenceScreen  visibility="2"/>
+    	<PointerSpeedPreference  visibility="2"/>
+    </InputMethodAndLanguageSettingsActivity>
     
     <YLOtherSettingsActivity  visibility="2">
+    	<BackAndResetPreferenceScreen  visibility="2"/>
+    	<AutoStartupShutdownPreferenceScreen  visibility="2"/>
+    	<AccessibilitySettingsPreferenceScreen  visibility="2"/>
     </YLOtherSettingsActivity>
     
     <DevelopmentSettingsActivity  visibility="2">
     </DevelopmentSettingsActivity>
     
     <DeviceInfoSettingsActivity  visibility="2">
+    	<BuildNumberTextViewPreference  visibility="2"/>
+    	<DeviceModelTextViewPreference  visibility="2"/>
+    	<FirmwareVersionTextViewPreference  visibility="2"/>
+    	<CpuTypeTextViewPreference  visibility="2"/>
+    	<RamTextViewPreference  visibility="2"/>
+    	<InternalStorageTextViewPreference  visibility="2"/>
+    	<MobileResolutionTextViewPreference  visibility="2"/>
+    	<BasebandVersionTextViewPreference  visibility="2"/>
+    	<KernelVersionTextViewPreference  visibility="2"/>
+    	<SNVersionTextViewPreference  visibility="2"/>
+    	<SecurityPatchTextViewPreference  visibility="2"/>
+    	<StatusInfoPreferenceScreen  visibility="2">
+    		<BatteryStatusTextViewPreference  visibility="2"/>
+    		<BatteryLevelTextViewPreference  visibility="2"/>
+    		<SimStatusPreferenceScreen  visibility="2"/>
+    		<ImeiInfoPreferenceScreen  visibility="2"/>
+    		<WifiIpAddressTextViewPreference  visibility="2"/>
+    		<WifiMacAddressTextViewPreference  visibility="2"/>
+    		<BtAddressTextViewPreference  visibility="2"/>
+    		<SerialNumberTextViewPreference  visibility="2"/>
+    		<UpTimeTextViewPreference  visibility="2"/>
+    	</StatusInfoPreferenceScreen>
+    	<LegalInformationPreferenceScreen  visibility="2"/>
     </DeviceInfoSettingsActivity>
 </UNSettingsConf>

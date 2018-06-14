@@ -25,7 +25,7 @@
 #-renamesourcefileattribute SourceFile
 -dontwarn org.apache.http.**
 
-#applied for tencent bugly
+#集成bugly的异常统计功能4-3
 -dontwarn com.tencent.bugly.**
 -keep public class com.tencent.bugly.**{*;}
 

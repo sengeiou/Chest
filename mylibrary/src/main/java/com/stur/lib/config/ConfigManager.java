@@ -99,6 +99,7 @@ public class ConfigManager {
             if (appId != null && appId.length() > 0) {
                 id = appId;
             }
+            //集成bugly的异常统计功能4-4
             //第三个参数为SDK调试模式开关，打开后输出详细Bugly SDK的Log，每一条Crash都会被立即上报，自定义日志将会在Logcat中输出
             //建议在测试阶段设置为true，发布时设置为false
             CrashReport.initCrashReport(mContext, id, true);
@@ -110,10 +111,13 @@ public class ConfigManager {
         return SharedPreferenceUtils.getBoolean(mContext, ConfigBase.SP_FILE_CONFIG_BASE, ConfigBase.SP_KEY_BUGLY_ENABLED, ConfigBase.sBuglyEnabled);
     }
 
-    public void setBuglyEnabled(boolean enabled) {
+    public void setBuglyEnabled(boolean enabled, String appId) {
         if (enabled != getBuglyEnabled()) {
             SharedPreferenceUtils.putBoolean(mContext, ConfigBase.SP_FILE_CONFIG_BASE, ConfigBase.SP_KEY_BUGLY_ENABLED, enabled);
-            UIHelper.toastMessage(mContext, mContext.getString(R.string.restart_for_take_effect));
+            Log.d(this, "setBuglyEnabled " + enabled + ", appId = " + appId);
+            if (enabled) {
+                initBugly(appId);
+            }
         }
     }
 

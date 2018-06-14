@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -26,7 +27,6 @@ import com.stur.chest.dto.UserAccountDTO;
 import com.stur.chest.utils.ApiUtils;
 import com.stur.lib.AdbUtils;
 import com.stur.lib.Log;
-import com.stur.lib.PowerUtils;
 import com.stur.lib.SharedPreferenceUtils;
 import com.stur.lib.StringUtils;
 import com.stur.lib.SystemPropertiesProxy;
@@ -246,8 +246,15 @@ public class ToolsFragment extends Fragment {
 
                 //PackageUtils.initiateClearUserData(getContext(), "com.android.providers.contacts");
 
-                PowerUtils.reboot(getContext());
+                /*try {
+                    loadSettingsConfigXml("/system/etc/un_settings_conf.xml");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (XmlPullParserException e) {
+                    e.printStackTrace();
+                }*/
 
+                Settings.System.putInt(getContext().getContentResolver(),"pointer_screenshotchord", 1);
             }
         });
 
