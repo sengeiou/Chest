@@ -79,7 +79,7 @@ public class ServerActivity extends ActivityBase {
         mMsgTv.setText(mOutput);
     }
 
-    public void onTestClick(View view) {
+    public void onServerClick(View view) {
         try {
             TCPServer.getInstance().send("I am server");
         } catch (IOException e) {

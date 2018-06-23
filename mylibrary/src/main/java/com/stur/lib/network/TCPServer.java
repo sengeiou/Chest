@@ -3,6 +3,7 @@ package com.stur.lib.network;
 import android.content.Context;
 
 import com.stur.lib.Log;
+import com.stur.lib.StringUtils;
 import com.stur.lib.constant.StConstant;
 
 import java.io.BufferedReader;
@@ -137,10 +138,13 @@ public class TCPServer {
             try {
                 is = socket.getInputStream();
                 int bytesRcvd;
-                byte [] receiveBuf=new byte[StConstant.BUFSIZE];
+                byte[] receiveBuf=new byte[StConstant.BUFSIZE];
 
                 while((bytesRcvd = is.read(receiveBuf)) != -1){
-                    String str = new String(receiveBuf, "US-ASCII");
+                    //String str = new String(receiveBuf, "US-ASCII");
+                    byte[] ret = new byte[bytesRcvd];
+                    System.arraycopy(receiveBuf, 0, ret, 0, bytesRcvd);
+                    String str = StringUtils.byteArrayToHexStr(ret);
                     Log.d(this, bytesRcvd + "bytes received: " + str);
                     mListener.onMsgReceived(str);
                 }

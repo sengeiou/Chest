@@ -36,6 +36,12 @@
         android:text="better list fragment" />
 
     <Button
+        android:id="@+id/btn_tcp_server"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TCP Server" />
+
+    <Button
         android:id="@+id/btn_unlock_adb"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

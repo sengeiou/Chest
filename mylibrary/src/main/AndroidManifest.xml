@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.BLUETOOTH"/>
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
-    <!--¼¯³ÉbuglyµÄÒì³£Í³¼Æ¹¦ÄÜ4-2-->
+    <!--é›†æˆbuglyçš„å¼‚å¸¸ç»Ÿè®¡åŠŸèƒ½4-2-->
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>

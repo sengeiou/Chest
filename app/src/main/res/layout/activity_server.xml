@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/btn_test"
         android:text="Server"
-        android:onClick="onTestClick"/>
+        android:onClick="onServerClick"/>
 
     <ScrollView
         android:layout_width="match_parent"
