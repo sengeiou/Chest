@@ -25,7 +25,6 @@ public class TCPClient {
     public TCPClient(Context context, String server, int port, OnTCPListener listener) {
         mServer = server != null && server.length()>0 ? server : StConstant.DEFAULT_SERVER;
         mPort = port > 0 ? port : StConstant.DEFAULT_PORT;
-        //mSocket  = new Socket(mServer, mPort);
         setListener(listener);
     }
 

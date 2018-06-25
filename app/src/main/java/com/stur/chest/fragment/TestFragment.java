@@ -86,6 +86,13 @@ public class TestFragment extends Fragment {
             }
         });
 
+        view.findViewById(R.id.btn_tcp_client).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(TestFragment.this.getContext(), ClientActivity.class));
+            }
+        });
+
         view.findViewById(R.id.btn_tcp_server).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

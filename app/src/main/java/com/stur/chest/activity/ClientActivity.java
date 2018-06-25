@@ -3,12 +3,16 @@ package com.stur.chest.activity;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.stur.chest.R;
+import com.stur.lib.IntegerUtil;
+import com.stur.lib.StringUtils;
+import com.stur.lib.UIHelper;
 import com.stur.lib.activity.ActivityBase;
-import com.stur.lib.constant.StConstant;
 import com.stur.lib.constant.StMessageID;
+import com.stur.lib.exception.ParameterException;
 import com.stur.lib.network.OnTCPListener;
 import com.stur.lib.network.TCPClient;
 
@@ -19,6 +23,8 @@ import java.io.IOException;
  */
 
 public class ClientActivity extends ActivityBase {
+    private EditText mAddrEt;
+    private EditText mInputEt;
     private TextView mMsgTv;
     private String mOutput = "";
     private Handler mHandler;
@@ -30,6 +36,10 @@ public class ClientActivity extends ActivityBase {
 
     @Override
     protected void initView() {
+        mAddrEt = (EditText) findViewById(R.id.et_clt_addr);
+        mAddrEt.setText("192.168.1.14:6666");
+        mInputEt = (EditText) findViewById(R.id.et_clt_input);
+        mInputEt.setText("0A66");
         mMsgTv = (TextView) findViewById(R.id.tv_clt_msg_output);
     }
 
@@ -49,7 +59,11 @@ public class ClientActivity extends ActivityBase {
 
     @Override
     protected void initData() {
-        TCPClient.init(this, StConstant.DEFAULT_SERVER, StConstant.DEFAULT_PORT, new OnTCPListener() {
+
+    }
+
+    protected void connectToServer(String addr, int port) {
+        TCPClient.init(this, addr, port, new OnTCPListener() {
             @Override
             public void onConnectStatusChange(int status) {
 
@@ -79,9 +93,21 @@ public class ClientActivity extends ActivityBase {
         mMsgTv.setText(mOutput);
     }
 
-    public void onTestClick(View view) {
+    public void onConnectClick(View view) throws ParameterException {
+        String addr = mAddrEt.getText().toString();
+        if (addr != null && addr.length() > 0) {
+            String[] arr = addr.split(":");
+            if (StringUtils.isIpAddr(arr[0]) && IntegerUtil.getInt(arr[1]) > 0) {
+                connectToServer(arr[0], IntegerUtil.getInt(arr[1]));
+                return;
+            }
+        }
+        UIHelper.toastMessage(this, "addr is illegal!");
+    }
+
+    public void onSendClick(View view) {
         try {
-            TCPClient.getInstance().send("I am client");
+            TCPClient.getInstance().send(mInputEt.getText().toString());
         } catch (IOException e) {
             e.printStackTrace();
         }

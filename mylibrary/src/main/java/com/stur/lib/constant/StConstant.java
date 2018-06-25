@@ -17,7 +17,7 @@ public class StConstant {
     /* Communication */
     public static final int MAC_ADDR_LENGTH = 12;
     public static final String MAC_ADDR_HOME_PC = "408D5CC1DB5B";
-    public static final String DEFAULT_SERVER = "10.66.128.27";
+    public static final String DEFAULT_SERVER = "192.168.1.10";
     public static final int DEFAULT_PORT = 6666;
     public static final int BUFSIZE = 128;
     public static final int SIM_ID_1 = 0;
