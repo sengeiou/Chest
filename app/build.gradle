@@ -17,12 +17,13 @@ android {
 
     signingConfigs {
         //used for urovo userdebug
-        debug {
+        /*debug {
             keyAlias 'urovo_userdebug'
             keyPassword '123456'
             storeFile file('../libs-keystores/urovo_userdebug.jks')
             storePassword '123456'
-        }
+        }*/
+
         //used for ivvi userdebug
         /*debug {
             keyAlias 'platform'
@@ -30,6 +31,14 @@ android {
             storeFile file('../libs-keystores/platform_debug.jks')
             storePassword 'android'
         }*/
+
+        //used for qcom
+        debug {
+            keyAlias 'qcom_debug'
+            keyPassword '123456'
+            storeFile file('../libs-keystores/qcom_debug.jks')
+            storePassword '123456'
+        }
 
         release {
             keyAlias 'urovo_release'

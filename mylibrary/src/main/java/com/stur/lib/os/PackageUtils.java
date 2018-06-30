@@ -5,6 +5,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.IPackageDataObserver;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -203,7 +204,7 @@ public class PackageUtils {
         Log.i(getTag(), "Clearing user data for package : " + packageName);
         ActivityManager am = (ActivityManager)context.getSystemService(Context.ACTIVITY_SERVICE);
         //依赖framework.jar，暂时屏蔽
-        /*boolean res = am.clearApplicationUserData(packageName, new IPackageDataObserver.Stub() {
+        boolean res = am.clearApplicationUserData(packageName, new IPackageDataObserver.Stub() {
             public void onRemoveCompleted(final String pkt, final boolean succeeded) {
                 //判断succeeded，如果清除失败在这里处理
                 boolean succ = succeeded;
@@ -213,6 +214,6 @@ public class PackageUtils {
             // Clearing data failed for some obscure reason. Just log error for now
             Log.e(getTag(), "Couldnt clear application user data for package:"+packageName);
         } else {
-        }*/
+        }
     }
 }

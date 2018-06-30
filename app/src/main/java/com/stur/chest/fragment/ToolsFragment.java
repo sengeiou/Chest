@@ -4,7 +4,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -30,6 +29,7 @@ import com.stur.lib.Log;
 import com.stur.lib.SharedPreferenceUtils;
 import com.stur.lib.StringUtils;
 import com.stur.lib.SystemPropertiesProxy;
+import com.stur.lib.SystemUIUtils;
 import com.stur.lib.UIHelper;
 import com.stur.lib.Utils;
 import com.stur.lib.config.ConfigManager;
@@ -244,7 +244,7 @@ public class ToolsFragment extends Fragment {
 
                 //FileUtils.deleteDirectory("data/user/0/com.android.providers.contacts");
 
-                //PackageUtils.initiateClearUserData(getContext(), "com.android.providers.contacts");
+                //PackageUtils.initiateClearUserData(getContext(), "com.android.systemui");
 
                 /*try {
                     loadSettingsConfigXml("/system/etc/un_settings_conf.xml");
@@ -254,7 +254,11 @@ public class ToolsFragment extends Fragment {
                     e.printStackTrace();
                 }*/
 
-                Settings.System.putInt(getContext().getContentResolver(),"pointer_screenshotchord", 1);
+                //Settings.System.putInt(getContext().getContentResolver(),"pointer_screenshotchord", 1);
+
+                //SystemUIUtils.sendBroadcastForFlashLight(getContext());
+                SystemUIUtils.setLockNone(getContext());
+                UIHelper.toastMessage(getContext(), "setLockNone");
             }
         });
 
