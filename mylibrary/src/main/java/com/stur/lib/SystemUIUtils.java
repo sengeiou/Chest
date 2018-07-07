@@ -1,8 +1,12 @@
 package com.stur.lib;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.SystemProperties;
+import android.view.Gravity;
+import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.android.internal.widget.LockPatternUtils;
 
@@ -22,6 +26,10 @@ public class SystemUIUtils {
         }.getClassName();
     }
 
+    /**
+     * 开启闪光灯手电筒
+     * @param context
+     */
     public static void sendBroadcastForFlashLight(Context context){
         String isOpen = SystemProperties.get("sys.yulong.flashlight", "0");
         Log.d(getTag(), "sendBroadcastForFlashLight  isOpen = " +isOpen);
@@ -45,5 +53,66 @@ public class SystemUIUtils {
         lpu.clearEncryptionPassword();
         lpu.clearLock(0);
         lpu.setLockScreenDisabled(true,0);
+    }
+
+    /**
+     * 在Keyguard上显示Toast
+     * @param context
+     * @param text
+     * @param duration
+     * @return
+     */
+    public static Toast makeKeyguardToast(Context context, CharSequence text, int duration) {
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.getWindowParams().type = WindowManager.LayoutParams.TYPE_STATUS_BAR_PANEL;
+        toast.getWindowParams().privateFlags |= WindowManager.LayoutParams.PRIVATE_FLAG_SHOW_FOR_ALL_USERS;
+        toast.getWindowParams().flags |= WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED;
+
+        // set offset position
+        toast.setGravity(Gravity.CENTER, 0, 400);
+        return toast;
+    }
+
+    /**
+     * 锁屏之上显示Dialog
+     */
+    public class SystemUIDialog extends AlertDialog {
+
+        private final Context mContext;
+
+        public SystemUIDialog(Context context) {
+            //super(context, R.style.Theme_SystemUI_Dialog);
+            super(context, R.style.AppTheme);
+            mContext = context;
+
+            getWindow().setType(WindowManager.LayoutParams.TYPE_STATUS_BAR_PANEL);
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM
+                    | WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+            WindowManager.LayoutParams attrs = getWindow().getAttributes();
+            attrs.setTitle(getClass().getSimpleName());
+            getWindow().setAttributes(attrs);
+        }
+
+        public void setShowForAllUsers(boolean show) {
+            if (show) {
+                getWindow().getAttributes().privateFlags |=
+                        WindowManager.LayoutParams.PRIVATE_FLAG_SHOW_FOR_ALL_USERS;
+            } else {
+                getWindow().getAttributes().privateFlags &=
+                        ~WindowManager.LayoutParams.PRIVATE_FLAG_SHOW_FOR_ALL_USERS;
+            }
+        }
+
+        public void setMessage(int resId) {
+            setMessage(mContext.getString(resId));
+        }
+
+        public void setPositiveButton(int resId, OnClickListener onClick) {
+            setButton(BUTTON_POSITIVE, mContext.getString(resId), onClick);
+        }
+
+        public void setNegativeButton(int resId, OnClickListener onClick) {
+            setButton(BUTTON_NEGATIVE, mContext.getString(resId), onClick);
+        }
     }
 }

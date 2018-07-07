@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -29,7 +30,6 @@ import com.stur.lib.Log;
 import com.stur.lib.SharedPreferenceUtils;
 import com.stur.lib.StringUtils;
 import com.stur.lib.SystemPropertiesProxy;
-import com.stur.lib.SystemUIUtils;
 import com.stur.lib.UIHelper;
 import com.stur.lib.Utils;
 import com.stur.lib.config.ConfigManager;
@@ -257,8 +257,10 @@ public class ToolsFragment extends Fragment {
                 //Settings.System.putInt(getContext().getContentResolver(),"pointer_screenshotchord", 1);
 
                 //SystemUIUtils.sendBroadcastForFlashLight(getContext());
-                SystemUIUtils.setLockNone(getContext());
-                UIHelper.toastMessage(getContext(), "setLockNone");
+                //SystemUIUtils.setLockNone(getContext());
+                Settings.Secure.putInt(getContext().getContentResolver(),
+                        "lock_screen_show_notifications", 0);
+                UIHelper.toastMessage(getContext(), "lock_screen_show_notifications 1");
             }
         });
 
