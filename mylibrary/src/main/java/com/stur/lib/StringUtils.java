@@ -66,6 +66,19 @@ public class StringUtils {
     }
 
     /**
+     * 去头尾空格,如果为null返回""
+     * @param s TODO
+     * @return TODO
+     */
+    public static String trimToEmpty(String s) {
+        if (s == null) {
+            return "";
+        } else {
+            return s.trim();
+        }
+    }
+
+    /**
      * @param email
      * @return
      */

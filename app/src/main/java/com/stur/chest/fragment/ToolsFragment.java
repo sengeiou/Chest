@@ -4,7 +4,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -35,6 +34,7 @@ import com.stur.lib.Utils;
 import com.stur.lib.config.ConfigManager;
 import com.stur.lib.constant.StActivityName;
 import com.stur.lib.constant.StCommand;
+import com.stur.lib.contacts.ContactsUtils;
 import com.stur.lib.file.FileUtils;
 import com.stur.lib.network.WakeOnLan;
 import com.stur.lib.network.WifiUtils;
@@ -258,8 +258,8 @@ public class ToolsFragment extends Fragment {
 
                 //SystemUIUtils.sendBroadcastForFlashLight(getContext());
                 //SystemUIUtils.setLockNone(getContext());
-                Settings.Secure.putInt(getContext().getContentResolver(),
-                        "lock_screen_show_notifications", 0);
+                //Settings.Secure.putInt(getContext().getContentResolver(), "lock_screen_show_notifications", 0);
+                ContactsUtils.getCallLogsByContactId(getContext(), 12, 100);
                 UIHelper.toastMessage(getContext(), "lock_screen_show_notifications 1");
             }
         });
