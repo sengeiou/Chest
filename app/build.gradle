@@ -1,5 +1,18 @@
 apply plugin: 'com.android.application'
 
+/******** 版本号定义区 ********/
+ext.majorNumber = 1  //主版本号，手动定义
+ext.minorNumber = 0  //次版本号，手动定义
+ext.revisionNumberCMD = 'git rev-list HEAD --count'
+//修订版本号：自动采用git命令获取当前repo的总Commit次数，即git中提交活动的次数，每次提交该数目加1，这里没有把git建在工程中，所以配置固定值
+//ext.revisionNumber = revisionNumberCMD.execute().getText().trim().toInteger()
+ext.revisionNumber = 32
+ext.revisionDescriptionCMD = 'git describe --always'
+//编译版本号：自动采用git命令获取当前repo的里程碑（截取后6位），这里没有把git建在工程中，所以配置固定值
+//ext.tempRevisionDescription = revisionDescriptionCMD.execute().getText().trim()
+ext.tempRevisionDescription = "13b590"
+ext.revisionDescription = (tempRevisionDescription == null || (tempRevisionDescription).size() == 0) ? new Date().format("yyMMdd") : (tempRevisionDescription).substring((tempRevisionDescription).size() - 6)
+
 android {
     compileSdkVersion 25
     buildToolsVersion "26.0.2"
@@ -7,12 +20,27 @@ android {
         applicationId "com.stur.chest"
         minSdkVersion 23
         targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
+        versionCode getVersionCode(false)
+        versionName getVersionName(false)
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         //如果添加方法数超标后需要做dex分包处理3-2
         //这个项目需要加上这个配置，否则出现AS Issue 34
         multiDexEnabled true
+    }
+
+    //这个配置决定了编译生成的apk名称
+    android.applicationVariants.all { variant ->
+        if (variant.buildType.name.equals('release')) {
+            variant.mergedFlavor.versionCode = getVersionCode(true)
+            variant.mergedFlavor.versionName = getVersionName(true)
+        } else if (variant.buildType.name.equals('debug')) {
+            variant.mergedFlavor.versionCode = getVersionCode(false)
+            variant.mergedFlavor.versionName = getVersionName(false)
+        }
+        variant.outputs.each { output ->
+            output.outputFile = new File(output.outputFile.parent, "Chest" + "-v" +
+                    defaultConfig.versionName + ".apk");
+        }
     }
 
     signingConfigs {
@@ -65,5 +93,29 @@ dependencies {
     //compile "com.android.support:multidex:1.0.0"
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile project(':mylibrary')
+}
+
+//获取app的版本码
+def getVersionCode(boolean isRelease) {
+    if (isRelease) {
+        //Release版本使用如下策略，输出例如: 10000032
+        majorNumber * 1000000 + minorNumber * 10000 + revisionNumber
+    } else {
+        //Debug版本使用系统时间，输出例如: 1807271537
+        Integer.parseInt(new Date().format("yyMMddHHmm"))
+    }
+}
+
+//获取app的版本号
+def getVersionName(boolean isRelease) {
+    if (isRelease) {
+        //Release版本使用如下策略，输出例如: 1.0.32.13b590
+        majorNumber + "." + minorNumber + "." + revisionNumber + "." + revisionDescription
+    } else {
+        //Debug版本使用如下策略，输出例如: 1.0.32.180727.153745.13b590
+        String today = new Date().format("yyMMdd")
+        String time = new Date().format("HHmmss")
+        majorNumber + "." + minorNumber + "." + revisionNumber + ".$today.$time." + revisionDescription
+    }
 }
 

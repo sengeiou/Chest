@@ -92,7 +92,7 @@ public class Log {
     }
 
     /**
-     * ´òÓ¡µ÷ÓÃÕ»£¬Ñ§Ï°´úÂë»òÕßdebugµÄÊ±ºò¿ÉÒÔÊ¹ÓÃ
+     * æ‰“å°è°ƒç”¨æ ˆï¼Œå­¦ä¹ ä»£ç æˆ–è€…debugçš„æ—¶å€™å¯ä»¥ä½¿ç”¨
      * @param tag
      */
     public static void trace(String tag) {
