@@ -284,6 +284,7 @@ public class StringUtils {
 
     /**
      * 十六进制String转byte[]
+     * 将"00A40004023F00" 转为 [0, -92, 0, 4, 2, 63, 0]，即[0x00, 0xA4, 0x00, 0x04, 0x02, 0x3F, 0x00]
      */
     public static byte[] hexStrToByteArray(String str)
     {
@@ -297,6 +298,30 @@ public class StringUtils {
         for (int i = 0; i < byteArray.length; i++){
             String subStr = str.substring(2 * i, 2 * i + 2);
             byteArray[i] = ((byte)Integer.parseInt(subStr, 16));
+        }
+        return byteArray;
+    }
+
+    /**
+     * To byte array byte [ ].
+     * 将"00A40004023F00" 转为 [0, -92, 0, 4, 2, 63, 0]，即[0x00, 0xA4, 0x00, 0x04, 0x02, 0x3F, 0x00]
+     * 测试结果与hexStrToByteArray相同
+     * @param hexString the hex string
+     * @return the byte [ ]
+     */
+    public static byte[] hexStrToByteArray2(String hexString) {
+        if (StringUtils.isEmpty(hexString))
+            return null;
+        hexString = hexString.toLowerCase();
+        final byte[] byteArray = new byte[hexString.length() >> 1];
+        int index = 0;
+        for (int i = 0; i < hexString.length(); i++) {
+            if (index  > hexString.length() - 1)
+                return byteArray;
+            byte highDit = (byte) (Character.digit(hexString.charAt(index), 16) & 0xFF);
+            byte lowDit = (byte) (Character.digit(hexString.charAt(index + 1), 16) & 0xFF);
+            byteArray[i] = (byte) (highDit << 4 | lowDit);
+            index += 2;
         }
         return byteArray;
     }

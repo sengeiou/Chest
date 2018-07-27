@@ -91,6 +91,27 @@ public class Log {
         android.util.Log.wtf(TAG, getPrefix(obj) + msg);
     }
 
+    /**
+     * 打印调用栈，学习代码或者debug的时候可以使用
+     * @param tag
+     */
+    public static void trace(String tag) {
+        if (DEBUG) {
+            RuntimeException e = new RuntimeException("here");
+            e.fillInStackTrace();
+            d(TAG, "e: ", e);
+        }
+    }
+
+    public static void trace(Object obj) {
+        if (DEBUG) {
+            RuntimeException e = new RuntimeException("trace here");
+            e.fillInStackTrace();
+            d(obj, "e: ", e);
+        }
+    }
+
+
     private static String getPrefix(Object obj) {
         return (obj == null ? "" : (obj.getClass().getSimpleName() + TAG_DELIMETER));
     }

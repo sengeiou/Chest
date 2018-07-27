@@ -34,7 +34,6 @@ import com.stur.lib.Utils;
 import com.stur.lib.config.ConfigManager;
 import com.stur.lib.constant.StActivityName;
 import com.stur.lib.constant.StCommand;
-import com.stur.lib.contacts.ContactsUtils;
 import com.stur.lib.file.FileUtils;
 import com.stur.lib.network.WakeOnLan;
 import com.stur.lib.network.WifiUtils;
@@ -259,7 +258,8 @@ public class ToolsFragment extends Fragment {
                 //SystemUIUtils.sendBroadcastForFlashLight(getContext());
                 //SystemUIUtils.setLockNone(getContext());
                 //Settings.Secure.putInt(getContext().getContentResolver(), "lock_screen_show_notifications", 0);
-                ContactsUtils.getCallLogsByContactId(getContext(), 12, 100);
+                //ContactsUtils.getCallLogsByContactId(getContext(), 12, 100);
+                byte[] ba = StringUtils.hexStrToByteArray("00A40004023F00");
                 UIHelper.toastMessage(getContext(), "lock_screen_show_notifications 1");
             }
         });
