@@ -1,16 +1,14 @@
 apply plugin: 'com.android.application'
 
-/******** °æ±¾ºÅ¶¨ÒåÇø ********/
-ext.majorNumber = 1  //Ö÷°æ±¾ºÅ£¬ÊÖ¶¯¶¨Òå
-ext.minorNumber = 0  //´Î°æ±¾ºÅ£¬ÊÖ¶¯¶¨Òå
+/******** ç‰ˆæœ¬å·å®šä¹‰åŒº ********/
+ext.majorNumber = 1  //ä¸»ç‰ˆæœ¬å·ï¼Œæ‰‹åŠ¨å®šä¹‰
+ext.minorNumber = 0  //æ¬¡ç‰ˆæœ¬å·ï¼Œæ‰‹åŠ¨å®šä¹‰
 ext.revisionNumberCMD = 'git rev-list HEAD --count'
-//ĞŞ¶©°æ±¾ºÅ£º×Ô¶¯²ÉÓÃgitÃüÁî»ñÈ¡µ±Ç°repoµÄ×ÜCommit´ÎÊı£¬¼´gitÖĞÌá½»»î¶¯µÄ´ÎÊı£¬Ã¿´ÎÌá½»¸ÃÊıÄ¿¼Ó1£¬ÕâÀïÃ»ÓĞ°Ñgit½¨ÔÚ¹¤³ÌÖĞ£¬ËùÒÔÅäÖÃ¹Ì¶¨Öµ
-//ext.revisionNumber = revisionNumberCMD.execute().getText().trim().toInteger()
-ext.revisionNumber = 32
+//ä¿®è®¢ç‰ˆæœ¬å·ï¼šè‡ªåŠ¨é‡‡ç”¨gitå‘½ä»¤è·å–å½“å‰repoçš„æ€»Commitæ¬¡æ•°ï¼Œå³gitä¸­æäº¤æ´»åŠ¨çš„æ¬¡æ•°ï¼Œæ¯æ¬¡æäº¤è¯¥æ•°ç›®åŠ 1
+ext.revisionNumber = revisionNumberCMD.execute().getText().trim().toInteger()
 ext.revisionDescriptionCMD = 'git describe --always'
-//±àÒë°æ±¾ºÅ£º×Ô¶¯²ÉÓÃgitÃüÁî»ñÈ¡µ±Ç°repoµÄÀï³Ì±®£¨½ØÈ¡ºó6Î»£©£¬ÕâÀïÃ»ÓĞ°Ñgit½¨ÔÚ¹¤³ÌÖĞ£¬ËùÒÔÅäÖÃ¹Ì¶¨Öµ
-//ext.tempRevisionDescription = revisionDescriptionCMD.execute().getText().trim()
-ext.tempRevisionDescription = "13b590"
+//ç¼–è¯‘ç‰ˆæœ¬å·ï¼šè‡ªåŠ¨é‡‡ç”¨gitå‘½ä»¤è·å–å½“å‰repoçš„é‡Œç¨‹ç¢‘ï¼ˆæˆªå–å6ä½ï¼‰
+ext.tempRevisionDescription = revisionDescriptionCMD.execute().getText().trim()
 ext.revisionDescription = (tempRevisionDescription == null || (tempRevisionDescription).size() == 0) ? new Date().format("yyMMdd") : (tempRevisionDescription).substring((tempRevisionDescription).size() - 6)
 
 android {
@@ -23,12 +21,12 @@ android {
         versionCode getVersionCode(false)
         versionName getVersionName(false)
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        //Èç¹ûÌí¼Ó·½·¨Êı³¬±êºóĞèÒª×ödex·Ö°ü´¦Àí3-2
-        //Õâ¸öÏîÄ¿ĞèÒª¼ÓÉÏÕâ¸öÅäÖÃ£¬·ñÔò³öÏÖAS Issue 34
+        //å¦‚æœæ·»åŠ æ–¹æ³•æ•°è¶…æ ‡åéœ€è¦åšdexåˆ†åŒ…å¤„ç†3-2
+        //è¿™ä¸ªé¡¹ç›®éœ€è¦åŠ ä¸Šè¿™ä¸ªé…ç½®ï¼Œå¦åˆ™å‡ºç°AS Issue 34
         multiDexEnabled true
     }
 
-    //Õâ¸öÅäÖÃ¾ö¶¨ÁË±àÒëÉú³ÉµÄapkÃû³Æ
+    //è¿™ä¸ªé…ç½®å†³å®šäº†ç¼–è¯‘ç”Ÿæˆçš„apkåç§°
     android.applicationVariants.all { variant ->
         if (variant.buildType.name.equals('release')) {
             variant.mergedFlavor.versionCode = getVersionCode(true)
@@ -89,30 +87,30 @@ android {
 }
 
 dependencies {
-    //Èç¹ûÌí¼Ó·½·¨Êı³¬±êºóĞèÒª×ödex·Ö°ü´¦Àí3-1
+    //å¦‚æœæ·»åŠ æ–¹æ³•æ•°è¶…æ ‡åéœ€è¦åšdexåˆ†åŒ…å¤„ç†3-1
     //compile "com.android.support:multidex:1.0.0"
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile project(':mylibrary')
 }
 
-//»ñÈ¡appµÄ°æ±¾Âë
+//è·å–appçš„ç‰ˆæœ¬ç 
 def getVersionCode(boolean isRelease) {
     if (isRelease) {
-        //Release°æ±¾Ê¹ÓÃÈçÏÂ²ßÂÔ£¬Êä³öÀıÈç: 10000032
+        //Releaseç‰ˆæœ¬ä½¿ç”¨å¦‚ä¸‹ç­–ç•¥ï¼Œè¾“å‡ºä¾‹å¦‚: 10000032
         majorNumber * 1000000 + minorNumber * 10000 + revisionNumber
     } else {
-        //Debug°æ±¾Ê¹ÓÃÏµÍ³Ê±¼ä£¬Êä³öÀıÈç: 1807271537
+        //Debugç‰ˆæœ¬ä½¿ç”¨ç³»ç»Ÿæ—¶é—´ï¼Œè¾“å‡ºä¾‹å¦‚: 1807271537
         Integer.parseInt(new Date().format("yyMMddHHmm"))
     }
 }
 
-//»ñÈ¡appµÄ°æ±¾ºÅ
+//è·å–appçš„ç‰ˆæœ¬å·
 def getVersionName(boolean isRelease) {
     if (isRelease) {
-        //Release°æ±¾Ê¹ÓÃÈçÏÂ²ßÂÔ£¬Êä³öÀıÈç: 1.0.32.13b590
+        //Releaseç‰ˆæœ¬ä½¿ç”¨å¦‚ä¸‹ç­–ç•¥ï¼Œè¾“å‡ºä¾‹å¦‚: 1.0.32.13b590
         majorNumber + "." + minorNumber + "." + revisionNumber + "." + revisionDescription
     } else {
-        //Debug°æ±¾Ê¹ÓÃÈçÏÂ²ßÂÔ£¬Êä³öÀıÈç: 1.0.32.180727.153745.13b590
+        //Debugç‰ˆæœ¬ä½¿ç”¨å¦‚ä¸‹ç­–ç•¥ï¼Œè¾“å‡ºä¾‹å¦‚: 1.0.32.180727.153745.13b590
         String today = new Date().format("yyMMdd")
         String time = new Date().format("HHmmss")
         majorNumber + "." + minorNumber + "." + revisionNumber + ".$today.$time." + revisionDescription
