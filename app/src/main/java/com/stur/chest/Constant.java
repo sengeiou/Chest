@@ -12,4 +12,6 @@ public class Constant {
     public static final String APP_ID_BUGLY = "a9e665bcce";
     //开发阶段很多场景与实际使用场景不一致，开发阶段开启，功能稳定后关闭
     public static final boolean DEBUGGABLE = true;
+
+    public static final String MAC_PC = "40-8D-5C-C1-DB-5B";
 }

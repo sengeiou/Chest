@@ -21,6 +21,7 @@ import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.gson.reflect.TypeToken;
+import com.stur.chest.Constant;
 import com.stur.chest.R;
 import com.stur.chest.dto.UserAccountDTO;
 import com.stur.chest.utils.ApiUtils;
@@ -137,11 +138,11 @@ public class ToolsFragment extends Fragment {
                     UIHelper.toastMessageMiddle(getContext(), "new mac addr is saved");
                 } else {
                     String oldMac = SharedPreferenceUtils.getString(SharedPreferenceUtils.KEY_MAC_ADDR);
+                    //如果之前保存过mac地址则使用旧的mac
                     if (StringUtils.isMacAddr(oldMac)) {
                         mac = oldMac;
                     } else {
-                        UIHelper.toastMessageMiddle(getContext(), "no mac addr is found");
-                        return;
+                        mac = Constant.MAC_PC;
                     }
                 }
                 WakeOnLan.start(mac);
