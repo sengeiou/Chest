@@ -5,7 +5,8 @@ import android.content.Context;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.provider.Settings;
-import android.telecom.Log;
+
+import com.stur.lib.Log;
 
 /**
  * Created by guanxuejin on 2018/7/10.

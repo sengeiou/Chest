@@ -2,13 +2,11 @@ package com.stur.lib;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
-import android.os.SystemProperties;
 import android.view.Gravity;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import com.android.internal.widget.LockPatternUtils;
+//import com.android.internal.widget.LockPatternUtils;
 
 /**
  * Created by guanxuejin on 2018/6/26.
@@ -31,7 +29,7 @@ public class SystemUIUtils {
      * @param context
      */
     public static void sendBroadcastForFlashLight(Context context){
-        String isOpen = SystemProperties.get("sys.yulong.flashlight", "0");
+        /*String isOpen = SystemProperties.get("sys.yulong.flashlight", "0");
         Log.d(getTag(), "sendBroadcastForFlashLight  isOpen = " +isOpen);
         String flashLight = "com.android.intent.action.Close_FlashLight";
         if(isOpen.equals("0")){
@@ -40,7 +38,7 @@ public class SystemUIUtils {
             flashLight = "com.android.intent.action.Close_FlashLight";
         }
         Intent intent = new Intent(flashLight);
-        context.sendBroadcast(intent);
+        context.sendBroadcast(intent);*/
     }
 
     /**
@@ -49,10 +47,10 @@ public class SystemUIUtils {
      * @param context
      */
     public static void setLockNone(Context context) {
-        LockPatternUtils lpu =new LockPatternUtils(context);
+        /*LockPatternUtils lpu =new LockPatternUtils(context);
         lpu.clearEncryptionPassword();
         lpu.clearLock(0);
-        lpu.setLockScreenDisabled(true,0);
+        lpu.setLockScreenDisabled(true,0);*/
     }
 
     /**
@@ -64,9 +62,9 @@ public class SystemUIUtils {
      */
     public static Toast makeKeyguardToast(Context context, CharSequence text, int duration) {
         Toast toast = Toast.makeText(context, text, duration);
-        toast.getWindowParams().type = WindowManager.LayoutParams.TYPE_STATUS_BAR_PANEL;
+        /*toast.getWindowParams().type = WindowManager.LayoutParams.TYPE_STATUS_BAR_PANEL;
         toast.getWindowParams().privateFlags |= WindowManager.LayoutParams.PRIVATE_FLAG_SHOW_FOR_ALL_USERS;
-        toast.getWindowParams().flags |= WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED;
+        toast.getWindowParams().flags |= WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED;*/
 
         // set offset position
         toast.setGravity(Gravity.CENTER, 0, 400);
@@ -94,13 +92,13 @@ public class SystemUIUtils {
         }
 
         public void setShowForAllUsers(boolean show) {
-            if (show) {
+            /*if (show) {
                 getWindow().getAttributes().privateFlags |=
                         WindowManager.LayoutParams.PRIVATE_FLAG_SHOW_FOR_ALL_USERS;
             } else {
                 getWindow().getAttributes().privateFlags &=
                         ~WindowManager.LayoutParams.PRIVATE_FLAG_SHOW_FOR_ALL_USERS;
-            }
+            }*/
         }
 
         public void setMessage(int resId) {

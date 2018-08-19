@@ -60,14 +60,14 @@ public class IntegerUtil {
     }
 
     /**
-     * byteÊý×éÓë int µÄÏà»¥×ª»»
-     * byteÊý×éÏÞ¶¨1-4¸öÔªËØ
+     * byteæ•°ç»„ä¸Ž int çš„ç›¸äº’è½¬æ¢
+     * byteæ•°ç»„é™å®š1-4ä¸ªå…ƒç´ 
      */
     public static int byteArrayToInt(byte[] b) {
         if (b != null && b.length >= 1 && b.length <= 4) {
             switch (b.length) {
                 case 1:
-                    //Java ×ÜÊÇ°Ñ byte µ±×öÓÐ·û´¦Àí£»ÎÒÃÇ¿ÉÒÔÍ¨¹ý½«ÆäºÍ 0xFF ½øÐÐ¶þ½øÖÆÓëµÃµ½ËüµÄÎÞ·ûÖµ
+                    //Java æ€»æ˜¯æŠŠ byte å½“åšæœ‰ç¬¦å¤„ç†ï¼›æˆ‘ä»¬å¯ä»¥é€šè¿‡å°†å…¶å’Œ 0xFF è¿›è¡ŒäºŒè¿›åˆ¶ä¸Žå¾—åˆ°å®ƒçš„æ— ç¬¦å€¼
                     return b[0] & 0xFF;
                 case 2:
                     return b[1] & 0xFF |

@@ -104,10 +104,10 @@ public class TMUtils {
     }
 
     /**
-     * ÊÔÍ¼»ñÈ¡MEID
-     * Ô­ÉúÊÇÃ»ÓĞÌá¹©µ¥¶À»ñÈ¡MEIDµÄ·½·¨µÄ£¬getDeviceIdÊÇ¸ù¾İµ±Ç°²å¿¨Çé¿öÀ´¶¯Ì¬·µ»ØIMEI»¹ÊÇMEIDµÄ
-     * ËùÒÔÕâÀï·Ö±ğ°´ÕÕÔ­ÉúµÄ·½·¨»ñÈ¡Á½ÕÅ¿¨µÄdeviceId£¬È»ºó¸ù¾İ³¤¶ÈÅĞ¶ÏÊÇ·ñMEID
-     * ÕâÑùÒ²²»Ò»¶¨ÄÜ»ñÈ¡µ½£¬±ÈÈç²åÁ½ÕÅGÍø¿¨µÄÇé¿öÏÂ¾Í»ñÈ¡²»µ½ÁË
+     * è¯•å›¾è·å–MEID
+     * åŸç”Ÿæ˜¯æ²¡æœ‰æä¾›å•ç‹¬è·å–MEIDçš„æ–¹æ³•çš„ï¼ŒgetDeviceIdæ˜¯æ ¹æ®å½“å‰æ’å¡æƒ…å†µæ¥åŠ¨æ€è¿”å›IMEIè¿˜æ˜¯MEIDçš„
+     * æ‰€ä»¥è¿™é‡Œåˆ†åˆ«æŒ‰ç…§åŸç”Ÿçš„æ–¹æ³•è·å–ä¸¤å¼ å¡çš„deviceIdï¼Œç„¶åæ ¹æ®é•¿åº¦åˆ¤æ–­æ˜¯å¦MEID
+     * è¿™æ ·ä¹Ÿä¸ä¸€å®šèƒ½è·å–åˆ°ï¼Œæ¯”å¦‚æ’ä¸¤å¼ Gç½‘å¡çš„æƒ…å†µä¸‹å°±è·å–ä¸åˆ°äº†
      * @param context
      * @return
      */
@@ -128,10 +128,10 @@ public class TMUtils {
     }
 
     /**
-     * Ö¸¶¨sim¿¨²¦´òµç»°
+     * æŒ‡å®šsimå¡æ‹¨æ‰“ç”µè¯
      *
      * @param phoneNumber
-     * @param slotId      0:¿¨1  1:¿¨2
+     * @param slotId      0:å¡1  1:å¡2
      */
     public static void callPhone(Context context, String phoneNumber, int slotId) {
         PhoneAccountHandle phoneAccountHandle = getPhoneAccountHandle(context, slotId);
@@ -142,9 +142,9 @@ public class TMUtils {
     }
 
     /**
-     * ÕâÒ»¿éÊ×ÏÈ»ñÈ¡ÊÖ»úÖĞËùÓĞsim¿¨ PhoneAccountHandle
-     * Ã¿Ò»¸ö PhoneAccountHandle ±íÊ¾Ò»¸ösim¿¨,
-     * È»ºó¸ù¾İ slotId ÅĞ¶ÏËùÖ¸¶¨µÄsim¿¨²¢·µ»Ø´Ë PhoneAccountHandle (ÕâÀï5.1 ºÍ 6.0ĞèÒªÇø·Ö¶Ô´ı)
+     * è¿™ä¸€å—é¦–å…ˆè·å–æ‰‹æœºä¸­æ‰€æœ‰simå¡ PhoneAccountHandle
+     * æ¯ä¸€ä¸ª PhoneAccountHandle è¡¨ç¤ºä¸€ä¸ªsimå¡,
+     * ç„¶åæ ¹æ® slotId åˆ¤æ–­æ‰€æŒ‡å®šçš„simå¡å¹¶è¿”å›æ­¤ PhoneAccountHandle (è¿™é‡Œ5.1 å’Œ 6.0éœ€è¦åŒºåˆ†å¯¹å¾…)
      */
     @TargetApi(Build.VERSION_CODES.M)
     public static PhoneAccountHandle getPhoneAccountHandle(Context context, int slotId) {
