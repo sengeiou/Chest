@@ -69,7 +69,7 @@ android {
         release {
             keyAlias 'urovo_release'
             keyPassword '123456'
-            storeFile file('../libs-keystores/urovo_release.jks')
+            storeFile file('../../libs-keystores/urovo_release.jks')
             storePassword '123456'
         }
     }
@@ -113,7 +113,9 @@ def getVersionName(boolean isRelease) {
         //Debug版本使用如下策略，输出例如: 1.0.32.180727.153745.13b590
         String today = new Date().format("yyMMdd")
         String time = new Date().format("HHmmss")
-        majorNumber + "." + minorNumber + "." + revisionNumber + ".$today.$time." + revisionDescription
+        //不要加HHmmss的时间戳，否则会由于编译和安装时间不一致导致run as时找不到目标apk
+        //majorNumber + "." + minorNumber + "." + revisionNumber + ".$today.$time." + revisionDescription
+        majorNumber + "." + minorNumber + "." + revisionNumber + ".$today." + revisionDescription
     }
 }
 

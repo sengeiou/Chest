@@ -260,8 +260,9 @@ public class ToolsFragment extends Fragment {
                 //SystemUIUtils.setLockNone(getContext());
                 //Settings.Secure.putInt(getContext().getContentResolver(), "lock_screen_show_notifications", 0);
                 //ContactsUtils.getCallLogsByContactId(getContext(), 12, 100);
-                byte[] ba = StringUtils.hexStrToByteArray("00A40004023F00");
-                UIHelper.toastMessage(getContext(), "lock_screen_show_notifications 1");
+
+                //byte[] ba = StringUtils.hexStrToByteArray("00A40004023F00");
+                //UIHelper.toastMessage(getContext(), "lock_screen_show_notifications 1");
             }
         });
 
