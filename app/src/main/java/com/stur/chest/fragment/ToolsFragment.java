@@ -36,6 +36,7 @@ import com.stur.lib.config.ConfigManager;
 import com.stur.lib.constant.StActivityName;
 import com.stur.lib.constant.StCommand;
 import com.stur.lib.file.FileUtils;
+import com.stur.lib.network.TMUtils;
 import com.stur.lib.network.WakeOnLan;
 import com.stur.lib.network.WifiUtils;
 import com.stur.lib.os.PackageUtils;
@@ -240,7 +241,7 @@ public class ToolsFragment extends Fragment {
                 //testHttpRequest();
 
                 //String ret = IccidParser.getInstance().getCarrier("898603");
-                //TMUtils.callPhone(getContext(), "10010", 1);
+                TMUtils.callPhone(getContext(), "10010", 0);
 
                 //FileUtils.deleteDirectory("data/user/0/com.android.providers.contacts");
 
@@ -259,7 +260,7 @@ public class ToolsFragment extends Fragment {
                 //SystemUIUtils.sendBroadcastForFlashLight(getContext());
                 //SystemUIUtils.setLockNone(getContext());
                 //Settings.Secure.putInt(getContext().getContentResolver(), "lock_screen_show_notifications", 0);
-                //ContactsUtils.getCallLogsByContactId(getContext(), 12, 100);
+                //ContactsUtils.queryContacts(getContext());
 
                 //byte[] ba = StringUtils.hexStrToByteArray("00A40004023F00");
                 //UIHelper.toastMessage(getContext(), "lock_screen_show_notifications 1");

@@ -157,13 +157,13 @@ public class TMUtils {
                 for (PhoneAccountHandle handle : handles) {
                     SubscriptionInfo info = sm.getActiveSubscriptionInfoForSimSlotIndex(slotId);
                     if (info != null) {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
-                            if (TextUtils.equals(info.getSubscriptionId() + "", handle.getId())) {
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {    //6.0使用iccid作为PhoneAccountHandle的ID
+                            if (TextUtils.equals(info.getIccId(), handle.getId())) {
                                 Log.d(getTag(), "getPhoneAccountHandle for slot" + slotId + " " + handle);
                                 return handle;
                             }
-                        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                            if (TextUtils.equals(info.getIccId(), handle.getId())) {
+                        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {  //5.1使用subId作为PhoneAccountHandle的ID
+                            if (TextUtils.equals(info.getSubscriptionId() + "", handle.getId())) {
                                 Log.d(getTag(), "getPhoneAccountHandle for slot" + slotId + " " + handle);
                                 return handle;
                             }
