@@ -1,8 +1,10 @@
 package com.stur.lib.network;
 
 import android.annotation.TargetApi;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Build;
 import android.telecom.PhoneAccountHandle;
@@ -108,6 +110,7 @@ public class TMUtils {
      * 原生是没有提供单独获取MEID的方法的，getDeviceId是根据当前插卡情况来动态返回IMEI还是MEID的
      * 所以这里分别按照原生的方法获取两张卡的deviceId，然后根据长度判断是否MEID
      * 这样也不一定能获取到，比如插两张G网卡的情况下就获取不到了
+     *
      * @param context
      * @return
      */
@@ -115,12 +118,12 @@ public class TMUtils {
         String deviceId = "";
         TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
         deviceId = telephonyManager.getDeviceId(0);
-        Log.d(getTag(), "getMeidInfo for slot0 " +  deviceId);
+        Log.d(getTag(), "getMeidInfo for slot0 " + deviceId);
         if (deviceId != null && !TextUtils.isEmpty(deviceId) && deviceId.length() == 14) {
             return deviceId;
         }
         deviceId = telephonyManager.getDeviceId(1);
-        Log.d(getTag(), "getMeidInfo for slot1 " +  deviceId);
+        Log.d(getTag(), "getMeidInfo for slot1 " + deviceId);
         if (deviceId != null && !TextUtils.isEmpty(deviceId) && deviceId.length() == 14) {
             return deviceId;
         }
@@ -173,5 +176,39 @@ public class TMUtils {
             }
         }
         return null;
+    }
+
+    /**
+     *  未接来电观察器，独立的广播接收器可以采用这种封装模式，降低耦合，功能单一
+     */
+    public static class MissedCallObserver extends BroadcastReceiver {
+        private int mLastCallState = TelephonyManager.CALL_STATE_IDLE;
+
+        public MissedCallObserver(Context context) {
+            IntentFilter filter = new IntentFilter();
+            filter.addAction(TelephonyManager.ACTION_PHONE_STATE_CHANGED);
+            context.registerReceiver(this, filter);
+        }
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (TelephonyManager.ACTION_PHONE_STATE_CHANGED.equals(intent.getAction())) {  //added by stur 20180910 for missing call not showd on launcher
+                TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+                int currentCallState = telephonyManager.getCallState();
+                Log.d(this, "currentCallState=" + currentCallState);
+                if (currentCallState == TelephonyManager.CALL_STATE_IDLE) {// 空闲
+                    //TODO
+                } else if (currentCallState == TelephonyManager.CALL_STATE_RINGING) {// 响铃
+                    //TODO
+                } else if (currentCallState == TelephonyManager.CALL_STATE_OFFHOOK) {// 接听
+                    //TODO
+                }
+                if (mLastCallState == TelephonyManager.CALL_STATE_RINGING &&
+                        currentCallState == TelephonyManager.CALL_STATE_IDLE) {
+                    Log.d(this, "MissedCallObserver onReceive missed call catched");
+                }
+                mLastCallState = currentCallState;
+            }
+        }
     }
 }

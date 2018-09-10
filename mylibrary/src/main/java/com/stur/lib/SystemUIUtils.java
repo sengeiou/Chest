@@ -2,6 +2,7 @@ package com.stur.lib;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.view.Gravity;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -112,5 +113,29 @@ public class SystemUIUtils {
         public void setNegativeButton(int resId, OnClickListener onClick) {
             setButton(BUTTON_NEGATIVE, mContext.getString(resId), onClick);
         }
+    }
+
+    /**
+     * 通知Launcher角标个数，触发Launcher的角标显示
+     * 私有接口，非原生接口
+     * 未读短信："com.un.coolmessage"  "com.yulong.android.mms.ui.MmsConversationListActivity"
+     * 未接来电："com.un.coolmessage"  "com.yulong.android.contacts.dial.DialActivity"
+     * @param context
+     * @param pkg 应用的包名
+     * @param act 触发拉起应用的activity名
+     * @param iTotalNum 显示的角标个数
+     */
+    public static void notifyLauncherUI(Context context, String pkg, String act, int iTotalNum) {
+        final String MMS_COUNT_CHANGE_ACTION = "yulong.intent.action.SHOW_NUM_CHANGED";
+        final String PACKAGE_NAME = "packageName";
+        final String CLASS_NAME = "className";
+        final String SHOW_NUM = "showNum";
+
+        // 发送广播通知shell
+        Intent myIntent = new Intent(MMS_COUNT_CHANGE_ACTION);
+        myIntent.putExtra(PACKAGE_NAME, pkg);
+        myIntent.putExtra(CLASS_NAME, act);
+        myIntent.putExtra(SHOW_NUM, iTotalNum);
+        context.sendBroadcast(myIntent);
     }
 }

@@ -241,7 +241,8 @@ public class ToolsFragment extends Fragment {
                 //testHttpRequest();
 
                 //String ret = IccidParser.getInstance().getCarrier("898603");
-                TMUtils.callPhone(getContext(), "10010", 0);
+                //TMUtils.callPhone(getContext(), "10010", 0);
+                new TMUtils.MissedCallObserver(getContext());
 
                 //FileUtils.deleteDirectory("data/user/0/com.android.providers.contacts");
 
@@ -259,6 +260,8 @@ public class ToolsFragment extends Fragment {
 
                 //SystemUIUtils.sendBroadcastForFlashLight(getContext());
                 //SystemUIUtils.setLockNone(getContext());
+                //SystemUIUtils.notifyLauncherUI(getContext(), "com.un.coolmessage","com.yulong.android.contacts.dial.DialActivity", 3);
+
                 //Settings.Secure.putInt(getContext().getContentResolver(), "lock_screen_show_notifications", 0);
                 //ContactsUtils.queryContacts(getContext());
 
