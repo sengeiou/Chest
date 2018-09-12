@@ -3,6 +3,8 @@ package com.stur.lib.file;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -1161,6 +1163,30 @@ public class FileUtils {
         intent.putExtra(Intent.EXTRA_STREAM, fileUri);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
+    }
+
+    public static void shareApk(Context context, String pkgName) {
+        try {
+            ApplicationInfo applicationInfo = context.getPackageManager().getApplicationInfo(pkgName, 0);
+            if ((applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0) {
+                // 系统应用
+            } else {
+                String dir = applicationInfo.sourceDir;
+                Log.d(getTag(), "dir = " + dir);
+                Uri appUri = Uri.parse("file://" + applicationInfo.sourceDir);
+                //File f = new File(path);
+
+
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.putExtra(Intent.EXTRA_STREAM, appUri);
+                intent.setType("application/vnd.android.package-archive");
+                String title = "Share";
+                context.startActivity(Intent.createChooser(intent, title));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     /**

@@ -3,6 +3,7 @@ package com.stur.lib.os;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.os.Binder;
+import android.os.StrictMode;
 
 import com.stur.lib.Log;
 import com.stur.lib.Utils;
@@ -176,5 +177,16 @@ public class OsUtils {
             Log.i(getTag(), "readCpuGovernors: read CPU Governors failed!");
         }
         return governors;
+    }
+
+    /**
+     * Android 7.0以后，Content Uri 替换了原本的File Uri，故在targetSdkVersion=24的时候，
+     * 部分Uri.fromFile()方法就不适用了，使用后会导致 FileUriExposedException 的crash
+     * 可以通过在app的onCreate中添加此函数规避crash问题
+     */
+    public static void addFileUriSupport() {
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
+        builder.detectFileUriExposure();
     }
 }
