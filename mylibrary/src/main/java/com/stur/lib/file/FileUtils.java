@@ -1174,9 +1174,6 @@ public class FileUtils {
                 String dir = applicationInfo.sourceDir;
                 Log.d(getTag(), "dir = " + dir);
                 Uri appUri = Uri.parse("file://" + applicationInfo.sourceDir);
-                //File f = new File(path);
-
-
                 Intent intent = new Intent(Intent.ACTION_SEND);
                 intent.putExtra(Intent.EXTRA_STREAM, appUri);
                 intent.setType("application/vnd.android.package-archive");

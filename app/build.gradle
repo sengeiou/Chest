@@ -72,6 +72,13 @@ android {
             storeFile file('../../libs-keystores/urovo_release.jks')
             storePassword '123456'
         }
+
+        /*release {
+            keyAlias 'stur_release'
+            keyPassword '123456'
+            storeFile file('../../libs-keystores/stur_release.jks')
+            storePassword '123456'
+        }*/
     }
 
     buildTypes {
