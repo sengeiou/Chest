@@ -7,9 +7,6 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-/**
- * Created by 80375140 on 2017/3/31.
- */
 public class TimerUtils {
     private final static Handler mHandler = new Handler();
     private final static Timer timer = new Timer();

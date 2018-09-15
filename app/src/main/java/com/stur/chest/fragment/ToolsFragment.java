@@ -20,11 +20,9 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
-import com.google.gson.reflect.TypeToken;
 import com.stur.chest.Constant;
 import com.stur.chest.R;
-import com.stur.chest.dto.UserAccountDTO;
-import com.stur.chest.utils.ApiUtils;
+import com.stur.chest.utils.TestUtils;
 import com.stur.lib.AdbUtils;
 import com.stur.lib.Log;
 import com.stur.lib.SharedPreferenceUtils;
@@ -39,14 +37,8 @@ import com.stur.lib.file.FileUtils;
 import com.stur.lib.network.WakeOnLan;
 import com.stur.lib.network.WifiUtils;
 import com.stur.lib.os.PackageUtils;
-import com.stur.lib.web.HttpFactory;
-import com.stur.lib.web.api.HttpResponseListener;
-import com.stur.lib.web.request.HttpMethod;
-import com.stur.lib.web.request.HttpRequest;
-import com.stur.lib.web.response.HttpResponse;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import static com.stur.lib.Utils.execCommand;
@@ -214,59 +206,7 @@ public class ToolsFragment extends Fragment {
         view.findViewById(R.id.btn_test).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //this is test field
-                //BluetoothUtils.getBondedDevices();
-                //CrashReport.testJavaCrash();
-                //mTvOutput.setText(PackageUtils.getSign(getContext(), "com.qualcomm.uimremoteclient"));
-
-                //拉起某个界面
-                //Intent intent = new Intent(this, WiFiActivity.class);
-                //startActivity(intent);
-
-                //拉起某个 服务
-                //Intent startIntent = new Intent(this, ChestService.class);
-                //startService(startIntent);
-
-                //开启ping
-                //WifiUtils.startPing();
-
-                //从arp缓存中获取某个mac地址对应的IP地址
-                //ArrayList<ClientScanResult> csrList = WifiUtils.getClientList(false, 0);
-                //for (ClientScanResult csr : csrList) {
-                //if(csr.getMac().equals("fc:25:3f:c2:3b:0a")) {
-                //mTv_output.setText(csr.getAddress()); }
-                //}
-
-                //testHttpRequest();
-
-                //String ret = IccidParser.getInstance().getCarrier("898603");
-                //TMUtils.callPhone(getContext(), "10010", 0);
-                //new TMUtils.MissedCallObserver(getContext());
-
-                //FileUtils.deleteDirectory("data/user/0/com.android.providers.contacts");
-                FileUtils.shareApk(getContext(), "com.stur.chest");
-
-                //PackageUtils.initiateClearUserData(getContext(), "com.android.systemui");
-
-                /*try {
-                    loadSettingsConfigXml("/system/etc/un_settings_conf.xml");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (XmlPullParserException e) {
-                    e.printStackTrace();
-                }*/
-
-                //Settings.System.putInt(getContext().getContentResolver(),"pointer_screenshotchord", 1);
-
-                //SystemUIUtils.sendBroadcastForFlashLight(getContext());
-                //SystemUIUtils.setLockNone(getContext());
-                //SystemUIUtils.notifyLauncherUI(getContext(), "com.un.coolmessage","com.yulong.android.contacts.dial.DialActivity", 3);
-
-                //Settings.Secure.putInt(getContext().getContentResolver(), "lock_screen_show_notifications", 0);
-                //ContactsUtils.queryContacts(getContext());
-
-                //byte[] ba = StringUtils.hexStrToByteArray("00A40004023F00");
-                //UIHelper.toastMessage(getContext(), "lock_screen_show_notifications 1");
+                new TestUtils().unitTest(getContext());
             }
         });
 
@@ -377,21 +317,5 @@ public class ToolsFragment extends Fragment {
         sb.append("setprop  " + StActivityName.PROP_ACTIVITY_NAME + "com.stur.lib.activity.SplashActivity" + "\n");
         sb.append("mac addr: " + SharedPreferenceUtils.getString(SharedPreferenceUtils.KEY_MAC_ADDR));
         mTvOutput.setText(sb);
-    }
-
-    private void testHttpRequest() {
-        HttpRequest httpRequest = new HttpRequest("http://10.66.128.123:8088/test", HttpMethod.POST);
-        httpRequest.addParams(ApiUtils.KEY_TOKEN, "123456");
-        HttpFactory.getHttpService().sendRequest(httpRequest, new HttpResponseListener() {
-            @Override
-            public void onSuccess(HttpResponse response) {
-                Log.d(this, "[response]" + response.toString());
-                Type type = new TypeToken<UserAccountDTO>() {
-                }.getType();
-                UserAccountDTO uat = response.convert(type);
-                String email = uat.getEmail();
-                UIHelper.toastMessageMiddle(getContext(), "email = " + email);
-            }
-        });
     }
 }
