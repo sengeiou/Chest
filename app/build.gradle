@@ -46,7 +46,7 @@ android {
         /*debug {
             keyAlias 'urovo_userdebug'
             keyPassword '123456'
-            storeFile file('../libs-keystores/urovo_userdebug.jks')
+            storeFile file('../../libs-keystores/urovo_userdebug.jks')
             storePassword '123456'
         }*/
 
@@ -54,7 +54,7 @@ android {
         /*debug {
             keyAlias 'platform'
             keyPassword 'android'
-            storeFile file('../libs-keystores/platform_debug.jks')
+            storeFile file('../../libs-keystores/platform_debug.jks')
             storePassword 'android'
         }*/
 
@@ -62,7 +62,7 @@ android {
         debug {
             keyAlias 'qcom_debug'
             keyPassword '123456'
-            storeFile file('../libs-keystores/qcom_debug.jks')
+            storeFile file('../../libs-keystores/qcom_debug.jks')
             storePassword '123456'
         }
 
