@@ -13,6 +13,7 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
+
     buildTypes {
         debug {
             minifyEnabled true
@@ -25,6 +26,7 @@ android {
         }
     }
 }
+
 
 dependencies {
     //添加framework的依赖jar包3-1
@@ -53,6 +55,8 @@ dependencies {
     compile 'com.tencent.bugly:crashreport:latest.release'
     //集成umeng的移动统计功能5-1
     compile 'com.umeng.analytics:analytics:latest.integration'
+    // 添加BaiduLBS方案6-2
+    compile files('../../libs-keystores/BaiduLBS/libs/BaiduLBS_Android.jar')
 }
 
 //添加framework的依赖jar包3-3

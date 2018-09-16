@@ -6,6 +6,7 @@ import com.google.gson.reflect.TypeToken;
 import com.stur.chest.dto.UserAccountDTO;
 import com.stur.lib.Log;
 import com.stur.lib.UIHelper;
+import com.stur.lib.location.LocationHelper;
 import com.stur.lib.web.HttpFactory;
 import com.stur.lib.web.api.HttpResponseListener;
 import com.stur.lib.web.request.HttpMethod;
@@ -58,10 +59,12 @@ public class TestUtils {
          * 实参：如果是基本类型或者String，则实参不会变（传的是值）；
          * 如果是对象集合或者数组，则实参会改变（传的是引用）。
          */
-        String str = "1";
+        /*String str = "1";
         function1(str);
-        Log.d(this, "str = " + str);
+        Log.d(this, "str = " + str);*/
 
+        /*********** Location ************/
+        LocationHelper.getInstance(context).startLocation();
 
         /*********** PackageUtils ************/
         //PackageUtils.initiateClearUserData(getContext(), "com.android.systemui");

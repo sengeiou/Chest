@@ -99,6 +99,8 @@
 
 
         <service android:name="com.stur.chest.service.ChestService" />
+        <!--添加BaiduLBS方案6-4-->
+        <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote"> </service>
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -113,6 +115,12 @@
         <!--集成umeng的移动统计功能5-2-->
         <meta-data android:value="5afe88f4a40fa37693000092" android:name="UMENG_APPKEY"/>
         <meta-data android:value="PrivateInstall" android:name="UMENG_CHANNEL"/>
+
+        <!--添加BaiduLBS方案6-3-->
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="mjPLwN8kb08b1IVo5XjdES6v6pcTADQH" >
+        </meta-data>
     </application>
 
 </manifest>
