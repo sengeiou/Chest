@@ -20,7 +20,6 @@ public class StringUtils {
             .compile("[A-Fa-f0-9]{12}");
 
     /**
-     *
      * @param str
      * @return
      */
@@ -29,7 +28,6 @@ public class StringUtils {
     }
 
     /**
-     *
      * @param str
      * @return
      */
@@ -43,7 +41,6 @@ public class StringUtils {
     }
 
     /**
-     *
      * @param str
      * @return
      */
@@ -52,7 +49,6 @@ public class StringUtils {
     }
 
     /**
-     *
      * @param str
      * @return
      */
@@ -67,6 +63,7 @@ public class StringUtils {
 
     /**
      * 去头尾空格,如果为null返回""
+     *
      * @param s TODO
      * @return TODO
      */
@@ -91,7 +88,7 @@ public class StringUtils {
     /**
      * 判断IP地址的合法性，这里采用了正则表达式的方法来判断
      * return true，合法
-     * */
+     */
     public static boolean isIpAddr(String text) {
         if (text != null && !text.isEmpty()) {
             // 定义正则表达式
@@ -141,6 +138,7 @@ public class StringUtils {
     }
 
     /**
+     * 是否电话号码
      *
      * @param phoneNumber
      * @return
@@ -160,11 +158,76 @@ public class StringUtils {
         }
 
         return isValid;
-
     }
 
     /**
+     * 利用正则表达式判断字符串是否是数字
+     */
+    public static boolean isNumeric(String str) {
+        Pattern pattern = Pattern.compile("[0-9]*");
+        Matcher isNum = pattern.matcher(str);
+        if (!isNum.matches()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 用JAVA自带的函数判断字符串是否是数字
      *
+     * @param str
+     * @return
+     */
+    public static boolean isNumeric2(String str) {
+        for (int i = 0; i < str.length(); i++) {
+            if (!Character.isDigit(str.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 通过ASCII码值判断字符串是否是数字
+     *
+     * @param str
+     * @return
+     */
+    public static boolean isNumeric3(String str) {
+        for (int i = str.length(); --i >= 0; ) {
+            int chr = str.charAt(i);
+            if (chr < 48 || chr > 57)
+                return false;
+        }
+        return true;
+    }
+
+    /**
+     * 通过逐个判断str中的字符是否是0-9来判断字符串是否是数字
+     */
+    public static boolean isNumeric4(String str) {
+        final String number = "0123456789";
+        for (int i = 0; i < str.length(); i++) {
+            if (number.indexOf(str.charAt(i)) == -1) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * 通过捕获NumberFormatException异常来判断字符串是否是数字
+     */
+    public static boolean isNumeric5(String str) {
+        try {
+            Integer.parseInt(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    /**
      * @param src
      * @param target
      * @return
@@ -184,7 +247,6 @@ public class StringUtils {
     }
 
     /**
-     *
      * @param str
      * @param seperator
      * @return
@@ -204,7 +266,7 @@ public class StringUtils {
 
     /**
      * String s = StringHelper.format("{0} is {1}", "apple", "fruit");
-     * System.out.println(s);    //杈撳嚭  apple is fruit.
+     * System.out.println(s);    //apple is fruit.
      *
      * @param pattern
      * @param args
@@ -265,11 +327,12 @@ public class StringUtils {
      * 而转换为int后为11111111111111111111111111111111，直接使用该值结果就不对了。
      * 而0xFF默认是int类型，即0x000000FF，一个byte值跟0xFF相与会先将那个byte值转化成int类型运算，
      * 这样，相与的结果中高的24个比特就总会被清0，后面的运算才会正确。
+     *
      * @param byteArray
      * @return
      */
     public static String byteArrayToHexStr(byte[] byteArray) {
-        if (byteArray == null){
+        if (byteArray == null) {
             return null;
         }
         char[] hexArray = "0123456789ABCDEF".toCharArray();
@@ -286,8 +349,7 @@ public class StringUtils {
      * 十六进制String转byte[]
      * 将"00A40004023F00" 转为 [0, -92, 0, 4, 2, 63, 0]，即[0x00, 0xA4, 0x00, 0x04, 0x02, 0x3F, 0x00]
      */
-    public static byte[] hexStrToByteArray(String str)
-    {
+    public static byte[] hexStrToByteArray(String str) {
         if (str == null) {
             return null;
         }
@@ -295,9 +357,9 @@ public class StringUtils {
             return new byte[0];
         }
         byte[] byteArray = new byte[str.length() / 2];
-        for (int i = 0; i < byteArray.length; i++){
+        for (int i = 0; i < byteArray.length; i++) {
             String subStr = str.substring(2 * i, 2 * i + 2);
-            byteArray[i] = ((byte)Integer.parseInt(subStr, 16));
+            byteArray[i] = ((byte) Integer.parseInt(subStr, 16));
         }
         return byteArray;
     }
@@ -306,6 +368,7 @@ public class StringUtils {
      * To byte array byte [ ].
      * 将"00A40004023F00" 转为 [0, -92, 0, 4, 2, 63, 0]，即[0x00, 0xA4, 0x00, 0x04, 0x02, 0x3F, 0x00]
      * 测试结果与hexStrToByteArray相同
+     *
      * @param hexString the hex string
      * @return the byte [ ]
      */
@@ -316,7 +379,7 @@ public class StringUtils {
         final byte[] byteArray = new byte[hexString.length() >> 1];
         int index = 0;
         for (int i = 0; i < hexString.length(); i++) {
-            if (index  > hexString.length() - 1)
+            if (index > hexString.length() - 1)
                 return byteArray;
             byte highDit = (byte) (Character.digit(hexString.charAt(index), 16) & 0xFF);
             byte lowDit = (byte) (Character.digit(hexString.charAt(index + 1), 16) & 0xFF);
@@ -324,5 +387,12 @@ public class StringUtils {
             index += 2;
         }
         return byteArray;
+    }
+
+    /**
+     * 截取倒数第n个字符串的起止位置到结束位置
+     */
+    public static String lastButSubString(String str, int lastBut) {
+        return str.substring(str.length()-lastBut,str.length()-1);
     }
 }

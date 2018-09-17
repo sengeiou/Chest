@@ -6,7 +6,7 @@ import com.google.gson.reflect.TypeToken;
 import com.stur.chest.dto.UserAccountDTO;
 import com.stur.lib.Log;
 import com.stur.lib.UIHelper;
-import com.stur.lib.location.LocationHelper;
+import com.stur.lib.time.DateUtils;
 import com.stur.lib.web.HttpFactory;
 import com.stur.lib.web.api.HttpResponseListener;
 import com.stur.lib.web.request.HttpMethod;
@@ -34,6 +34,9 @@ public class TestUtils {
         /*********** CrashReport ************/
         //CrashReport.testJavaCrash();
         //mTvOutput.setText(PackageUtils.getSign(getContext(), "com.qualcomm.uimremoteclient"));
+
+        /*********** Date ************/
+        DateUtils.getTwoDay("180910", "181001");
 
         /*********** DB ************/
         //Settings.System.putInt(getContext().getContentResolver(),"pointer_screenshotchord", 1);
@@ -64,7 +67,7 @@ public class TestUtils {
         Log.d(this, "str = " + str);*/
 
         /*********** Location ************/
-        LocationHelper.getInstance(context).startLocation();
+        //LocationHelper.getInstance(context).startLocation();
 
         /*********** PackageUtils ************/
         //PackageUtils.initiateClearUserData(getContext(), "com.android.systemui");

@@ -402,9 +402,17 @@ public class FileUtils {
     public static String getFileFormat(String fileName) {
         if (TextUtils.isEmpty(fileName))
             return "";
+        return fileName.substring(fileName.lastIndexOf(".") +1);
+    }
 
-        int point = fileName.lastIndexOf('.');
-        return fileName.substring(point + 1);
+    /**
+     * 获取文件文件名（去除后缀名）
+     */
+    public static String getFilePrefix(String fileName) {
+        //如果想获得不带点的后缀，变为fileName.lastIndexOf(".")+1
+        String suffixfix = fileName.substring(fileName.lastIndexOf("."));
+        int num = suffixfix.length();//得到后缀名长度
+        return fileName.substring(0, fileName.length()-num);//得到文件名。去掉了后缀
     }
 
     /**

@@ -18,9 +18,6 @@ public class DateUtils {
     //用来全局控制 上一周，本周，下一周的周数变化
     private  int weeks = 0;
 
-
-
-
     /**
      * <pre>
      * 判断date和当前日期是否在同一周内
@@ -170,14 +167,15 @@ public class DateUtils {
 
     /**
      * 得到两个日期间的间隔天数
+     * 注意时间格式，这里默认是用的yyMMdd格式，所以输入参数应该是类似180917
      */
     public static String getTwoDay(String begin, String end) {
-        SimpleDateFormat myFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat myFormatter = new SimpleDateFormat("yyMMdd");
         long day = 0;
         try {
             java.util.Date dateE = myFormatter.parse(begin);
             java.util.Date dateX = myFormatter.parse(end);
-            day = (dateE.getTime() - dateX.getTime()) / (24 * 60 * 60 * 1000);
+            day = (dateX.getTime() - dateE.getTime()) / (24 * 60 * 60 * 1000);
         } catch (Exception e) {
             return "";
         }
