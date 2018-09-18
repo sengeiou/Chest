@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by guanxuejin on 2018/2/9.
+ * Created by Sturmegezhutz on 2018/2/9.
  */
 
 public class OsUtils {

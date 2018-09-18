@@ -681,7 +681,7 @@ public class HTTPSession implements IHTTPSession {
     }
 
     /**
-     * added by guanxuejin 20180315 for resolve the SocketTimeoutException using parseBody of Json
+     * added by Sturmegezhutz 20180315 for resolve the SocketTimeoutException using parseBody of Json
      * 从Http head中读取content-length，并读取这个指定长度的body，避免parseBody时read超时等待
      * 注意这几个解析函数在一次session过程中，只能调用一次，获取全部body后再自己逐步解析
      * 一次会话中切忌多次调用，否则也会读取超时
@@ -719,7 +719,7 @@ public class HTTPSession implements IHTTPSession {
     }
 
     /**
-     * added by guanxuejin 20180315 for resolve the SocketTimeoutException using parseBody of Json
+     * added by Sturmegezhutz 20180315 for resolve the SocketTimeoutException using parseBody of Json
      * 从Http head中读取content-length，并读取这个指定长度的body，避免parseBody时read超时等待
      * 使用时按照如下次序使用：
      *     Map<String, String> map = new HashMap<String, String>();

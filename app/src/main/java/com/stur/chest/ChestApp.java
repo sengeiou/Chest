@@ -5,7 +5,7 @@ import com.stur.lib.config.ConfigManager;
 import com.stur.lib.os.OsUtils;
 
 /**
- * Created by guanxuejin on 2018/2/28.
+ * Created by Sturmegezhutz on 2018/2/28.
  */
 
 public class ChestApp extends ContextBase {

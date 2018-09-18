@@ -84,7 +84,7 @@ public interface IHTTPSession {
      */
     void parseBody(Map<String, String> files) throws IOException, ResponseException;
 
-    //added by guanxuejin 20180315 for resolve the SocketTimeoutException using parseBody of Json
+    //added by Sturmegezhutz 20180315 for resolve the SocketTimeoutException using parseBody of Json
     String parseBodyToString() throws IOException, ResponseException;
     void parseBodyFixedLength() throws IOException, ResponseException;
 

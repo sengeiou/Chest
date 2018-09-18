@@ -1,7 +1,7 @@
 package com.stur.lib.network;
 
 /**
- * Created by guanxuejin on 2018/1/22.
+ * Created by Sturmegezhutz on 2018/1/22.
  */
 
 public interface OnTCPListener {

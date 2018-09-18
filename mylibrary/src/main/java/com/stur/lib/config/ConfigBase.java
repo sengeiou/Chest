@@ -1,7 +1,7 @@
 package com.stur.lib.config;
 
 /*
- * Created by guanxuejin on 2018/2/28.
+ * Created by Sturmegezhutz on 2018/2/28.
  * 用于配置LOG_TAG, LOG_LEVEL，欢迎页面停留时间等
  * 考虑使用子类可以复写一些配置项，但是aar中引用的地方无法同步引用，所以没有成功
  * 本文件的配置为默认值，如需更改可通过ConfigManager操作

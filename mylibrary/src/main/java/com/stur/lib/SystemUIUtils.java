@@ -10,7 +10,7 @@ import android.widget.Toast;
 //import com.android.internal.widget.LockPatternUtils;
 
 /**
- * Created by guanxuejin on 2018/6/26.
+ * Created by Sturmegezhutz on 2018/6/26.
  */
 
 public class SystemUIUtils {

@@ -6,7 +6,7 @@ import com.stur.lib.activity.ActivityBase;
 import java.util.Stack;
 
 /**
- * Created by guanxuejin on 2018/2/27.
+ * Created by Sturmegezhutz on 2018/2/27.
  * 应用程序Activity管理类：用于Activity管理和应用程序退出
  */
 

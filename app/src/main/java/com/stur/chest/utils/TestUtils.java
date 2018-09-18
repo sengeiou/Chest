@@ -1,12 +1,13 @@
 package com.stur.chest.utils;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.google.gson.reflect.TypeToken;
 import com.stur.chest.dto.UserAccountDTO;
 import com.stur.lib.Log;
 import com.stur.lib.UIHelper;
-import com.stur.lib.time.DateUtils;
+import com.stur.lib.activity.FilesViewActivity2;
 import com.stur.lib.web.HttpFactory;
 import com.stur.lib.web.api.HttpResponseListener;
 import com.stur.lib.web.request.HttpMethod;
@@ -16,7 +17,7 @@ import com.stur.lib.web.response.HttpResponse;
 import java.lang.reflect.Type;
 
 /**
- * Created by guanxuejin on 2018/9/15.
+ * Created by Sturmegezhutz on 2018/9/15.
  */
 
 public class TestUtils {
@@ -36,7 +37,7 @@ public class TestUtils {
         //mTvOutput.setText(PackageUtils.getSign(getContext(), "com.qualcomm.uimremoteclient"));
 
         /*********** Date ************/
-        DateUtils.getTwoDay("180910", "181001");
+        //DateUtils.getTwoDay("180910", "181001");
 
         /*********** DB ************/
         //Settings.System.putInt(getContext().getContentResolver(),"pointer_screenshotchord", 1);
@@ -52,6 +53,7 @@ public class TestUtils {
                 } catch (XmlPullParserException e) {
                     e.printStackTrace();
                 }*/
+        //FileUtils.deleteDirectory("/sdcard/YunDaLog");
 
         /*********** HTTP ************/
         //testHttpRequest(context);
@@ -74,11 +76,12 @@ public class TestUtils {
 
         /*********** startActivity ************/
         //拉起某个界面
-        /*Intent intent = new Intent(this, WiFiActivity.class);
-        startActivity(intent);*/
+        Intent intent = new Intent(context, FilesViewActivity2.class);
+        context.startActivity(intent);
         //拉起某个 服务
         /*Intent startIntent = new Intent(this, ChestService.class);
         startService(startIntent);*/
+
 
         /*********** StringUtils ************/
         //byte[] ba = StringUtils.hexStrToByteArray("00A40004023F00");

@@ -15,7 +15,7 @@ import com.stur.lib.network.TCPServer;
 import java.io.IOException;
 
 /**
- * Created by guanxuejin on 2018/3/5.
+ * Created by Sturmegezhutz on 2018/3/5.
  */
 
 public class ServerActivity extends ActivityBase {

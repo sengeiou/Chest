@@ -3,7 +3,7 @@ package com.stur.lib.contacts;
 import java.io.Serializable;
 
 /**
- * Created by guanxuejin on 2018/7/8.
+ * Created by Sturmegezhutz on 2018/7/8.
  */
 
 public class CallLogBean implements Serializable {

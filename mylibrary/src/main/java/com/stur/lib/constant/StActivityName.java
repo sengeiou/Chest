@@ -1,7 +1,7 @@
 package com.stur.lib.constant;
 
 /**
- * Created by guanxuejin on 2018/3/6.
+ * Created by Sturmegezhutz on 2018/3/6.
  */
 
 public class StActivityName {

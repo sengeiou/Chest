@@ -25,7 +25,7 @@ import java.util.Map;
 
 
 /**
- * Created by guanxuejin on 2016/2/14.
+ * Created by Sturmegezhutz on 2016/2/14.
  * 这里用的是org.nanohttpd的库来实现，可以设置超时时间等
  * https://github.com/NanoHttpd/nanohttpd
  */

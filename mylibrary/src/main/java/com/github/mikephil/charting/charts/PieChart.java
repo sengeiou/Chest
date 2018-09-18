@@ -134,7 +134,7 @@ public class PieChart extends PieRadarChartBase<PieData> {
 
         mRenderer.drawValues(canvas);
 
-        if (isDrawLegendEnabed()) {  //added by guanxuejin 20180110 for hide the legend
+        if (isDrawLegendEnabed()) {  //added by Sturmegezhutz 20180110 for hide the legend
             mLegendRenderer.renderLegend(canvas);
         }
 
@@ -732,7 +732,7 @@ public class PieChart extends PieRadarChartBase<PieData> {
         super.onDetachedFromWindow();
     }
 
-    //added by guanxuejin 20180110 for hide the legend
+    //added by Sturmegezhutz 20180110 for hide the legend
     private boolean mDrawLegend = true;
     public boolean isDrawLegendEnabed(){
         return mDrawLegend;

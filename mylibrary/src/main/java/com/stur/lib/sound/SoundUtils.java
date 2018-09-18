@@ -9,7 +9,7 @@ import android.provider.Settings;
 import com.stur.lib.Log;
 
 /**
- * Created by guanxuejin on 2018/7/10.
+ * Created by Sturmegezhutz on 2018/7/10.
  */
 
 public class SoundUtils {

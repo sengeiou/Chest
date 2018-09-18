@@ -15,6 +15,7 @@ import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
 import android.util.Pair;
 import android.util.Xml;
+import android.widget.Toast;
 
 import com.stur.lib.IntegerUtil;
 import com.stur.lib.Log;
@@ -42,6 +43,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class FileUtils {
@@ -107,6 +109,7 @@ public class FileUtils {
     /**
      * 获取手机外置SD卡的根目录,非机身自带的SD卡，一般为空
      * 如果是需要访问内置SD卡，请使用@getWorkPath 或者 @getSDRoot
+     *
      * @return
      */
     public static String getExternalSDRoot() {
@@ -119,9 +122,10 @@ public class FileUtils {
     /**
      * 返回内置SD卡或data分区下某目录的完整工作路径（推荐使用）
      * 如果有SD卡，返回/sdcard/dir/，否则返回/data/user/0/pakage_name/files/dir/
+     *
      * @param context can be null if externalStorage is mounted
-     * @dir 工作目录名，如果传入为null则默认为stur
      * @return 返回完整工作路径
+     * @dir 工作目录名，如果传入为null则默认为stur
      */
     public static String getWorkPath(Context context, String dir) {
         // 判断是否挂载了SD卡
@@ -149,9 +153,10 @@ public class FileUtils {
 
     /**
      * 返回data分区下某目录的完整路径
+     *
      * @param context can be null if externalStorage is mounted
-     * @dir 工作目录名
      * @return 返回完成工作路径，如果有SD卡，返回/sdcard/stur/，否则返回/data/user/0/com.stur.chest/files/stur/
+     * @dir 工作目录名
      */
     public static String getDataPath(Context context) {
         String dataPath = null;
@@ -220,6 +225,7 @@ public class FileUtils {
 
     /**
      * 创建文件
+     *
      * @param folderPath
      * @param fileName
      * @return
@@ -234,6 +240,7 @@ public class FileUtils {
 
     /**
      * 在sdcard/Android/data/<package>/cache/目录下，创建临时文件
+     *
      * @param context
      * @param type
      * @return
@@ -273,6 +280,7 @@ public class FileUtils {
 
     /**
      * 写文本文件 在Android系统中，文件保存在 /data/data/PACKAGE_NAME/files 目录下
+     *
      * @param context
      * @param fileName
      * @param content
@@ -293,6 +301,7 @@ public class FileUtils {
 
     /**
      * 读取文本文件
+     *
      * @param context
      * @param fileName
      * @return
@@ -327,11 +336,11 @@ public class FileUtils {
 
     /**
      * 向手机写图片
+     *
      * @param buffer
-     * @param folder 根目录为/sdcard/，这里只填目录名即可，无需完整路径
+     * @param folder   根目录为/sdcard/，这里只填目录名即可，无需完整路径
      * @param fileName
-     * @return
-     * 注意要在manifest中配置权限，以及申请动态权限 READ_EXTERNAL_STORAGE
+     * @return 注意要在manifest中配置权限，以及申请动态权限 READ_EXTERNAL_STORAGE
      * <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
      */
     public static boolean writeFile(byte[] buffer, String folder, String fileName) {
@@ -372,6 +381,7 @@ public class FileUtils {
 
     /**
      * 根据文件绝对路径获取文件名
+     *
      * @param filePath
      * @return
      */
@@ -383,6 +393,7 @@ public class FileUtils {
 
     /**
      * 根据文件的绝对路径获取文件名但不包含扩展名
+     *
      * @param filePath
      * @return
      */
@@ -396,13 +407,14 @@ public class FileUtils {
 
     /**
      * 获取文件扩展名
+     *
      * @param fileName
      * @return
      */
     public static String getFileFormat(String fileName) {
         if (TextUtils.isEmpty(fileName))
             return "";
-        return fileName.substring(fileName.lastIndexOf(".") +1);
+        return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 
     /**
@@ -412,11 +424,12 @@ public class FileUtils {
         //如果想获得不带点的后缀，变为fileName.lastIndexOf(".")+1
         String suffixfix = fileName.substring(fileName.lastIndexOf("."));
         int num = suffixfix.length();//得到后缀名长度
-        return fileName.substring(0, fileName.length()-num);//得到文件名。去掉了后缀
+        return fileName.substring(0, fileName.length() - num);//得到文件名。去掉了后缀
     }
 
     /**
      * 获取文件大小
+     *
      * @param filePath
      * @return
      */
@@ -432,6 +445,7 @@ public class FileUtils {
 
     /**
      * 获取文件大小
+     *
      * @param size 字节
      * @return
      */
@@ -449,6 +463,7 @@ public class FileUtils {
 
     /**
      * 转换文件大小
+     *
      * @param fileS
      * @return B/KB/MB/GB
      */
@@ -469,6 +484,7 @@ public class FileUtils {
 
     /**
      * 获取目录文件大小
+     *
      * @param dir
      * @return
      */
@@ -494,6 +510,7 @@ public class FileUtils {
 
     /**
      * InputStream to bytes
+     *
      * @param in
      * @return
      * @throws java.io.IOException
@@ -511,6 +528,7 @@ public class FileUtils {
 
     /**
      * 检查文件是否存在
+     *
      * @param filename
      * @return
      */
@@ -523,6 +541,7 @@ public class FileUtils {
 
     /**
      * 检查文件是否存在
+     *
      * @param file
      * @return
      */
@@ -535,6 +554,7 @@ public class FileUtils {
 
     /**
      * 计算SD卡的剩余空间
+     *
      * @return 返回-1，说明没有安装sd卡
      */
     public static long getFreeDiskSpace() {
@@ -558,6 +578,7 @@ public class FileUtils {
 
     /**
      * 新建目录
+     *
      * @param directoryName
      * @return
      */
@@ -575,6 +596,7 @@ public class FileUtils {
 
     /**
      * 检查是否安装SD卡
+     *
      * @return
      */
     public static boolean checkSaveLocationExists() {
@@ -589,6 +611,7 @@ public class FileUtils {
 
     /**
      * 检查是否安装外置的SD卡
+     *
      * @return
      */
     public static boolean checkExternalSDExists() {
@@ -599,12 +622,13 @@ public class FileUtils {
 
     /**
      * 删除文件夹或者文件
+     *
      * @param folderPath 文件夹路径或者文件的绝对路径 如：/mnt/sdcard/def_ids/1.png
      */
     public static void deleteDirectory(String folderPath) {
         try {
             // 删除文件夹里所有的文件及文件夹
-            deleteAllFile(folderPath);
+            deleteAllFile(folderPath);  //如果此路径名表示一个目录，则此目录必须为空才能删除
             File lastFile = new File(folderPath);
             if (lastFile.exists()) {
                 // 最后删除空文件夹
@@ -617,8 +641,9 @@ public class FileUtils {
 
     /**
      * 删除文件夹里面的所有文件
+     *
      * @param path 文件夹路径或者文件的绝对路径 如：/mnt/sdcard/def_ids/1.png
-     * 删除非本应用程序工作空间的目录时会因为file.list()= null而捕获NPE
+     *             删除非本应用程序工作空间的目录时会因为file.list()= null而捕获NPE
      */
     public static void deleteAllFile(String path) {
         // 在内存开辟一个文件空间，但是没有创建
@@ -652,6 +677,7 @@ public class FileUtils {
 
     /**
      * 删除文件
+     *
      * @param fileName
      * @return
      */
@@ -684,6 +710,7 @@ public class FileUtils {
      * 删除空目录
      * <p/>
      * 返回 0代表成功 ,1 代表没有删除权限, 2代表不是空目录,3 代表未知错误
+     *
      * @return
      */
     public static int deleteBlankPath(String path) {
@@ -718,6 +745,7 @@ public class FileUtils {
 
     /**
      * 重命名
+     *
      * @param oldName
      * @param newName
      * @return
@@ -729,6 +757,7 @@ public class FileUtils {
 
     /**
      * 删除文件
+     *
      * @param filePath
      */
     public static boolean deleteFileWithPath(String filePath) {
@@ -745,6 +774,7 @@ public class FileUtils {
 
     /**
      * 清空一个文件夹
+     *
      * @param filePath
      */
     public static void clearFileWithPath(String filePath) {
@@ -763,6 +793,7 @@ public class FileUtils {
 
     /**
      * 列出root目录下所有子目录
+     *
      * @param root
      * @return 绝对路径
      */
@@ -784,6 +815,7 @@ public class FileUtils {
 
     /**
      * 获取一个文件夹下的所有文件
+     *
      * @param root
      * @return
      */
@@ -827,6 +859,7 @@ public class FileUtils {
 
     /**
      * 创建目录
+     *
      * @param newPath
      */
     public static PathStatus createPath(String newPath) {
@@ -843,6 +876,7 @@ public class FileUtils {
 
     /**
      * 截取路径名
+     *
      * @return
      */
     public static String getPathName(String absolutePath) {
@@ -853,6 +887,7 @@ public class FileUtils {
 
     /**
      * 获取应用程序缓存文件夹下的指定目录
+     *
      * @param context
      * @param dir
      * @return
@@ -869,6 +904,7 @@ public class FileUtils {
 
     /**
      * 获取目录文件个数
+     *
      * @param dir
      * @return
      */
@@ -890,9 +926,9 @@ public class FileUtils {
     }
 
     /**
-    * read file from assets/filename and write it to
-    * /sdcard/stur/image/filename
-    */
+     * read file from assets/filename and write it to
+     * /sdcard/stur/image/filename
+     */
     public static String getAssetsToPath(Context context, String filename) {
         File f = new File(getDataPath(context) + filename);
         Log.d(getTag(), "getAssetsToPath: " + f.getPath());
@@ -932,6 +968,7 @@ public class FileUtils {
 
     /**
      * read files from assets/oldPath and copy them to newPath
+     *
      * @param context
      * @param srcPath 源文件夹或文件路径，但仅限于assets目录下存放的原始资源文件
      * @param dstPath
@@ -969,6 +1006,7 @@ public class FileUtils {
 
     /**
      * 拷贝一个文件到指定的目录
+     *
      * @param context
      * @param srcPath 源文件全路径（包括文件名），不限于assets目录，仅单个文件
      * @param dstPath 目的文件全路径（包括文件名）
@@ -979,16 +1017,17 @@ public class FileUtils {
 
         byte[] buffer = new byte[1024];
         int byteCount = 0;
-            while ((byteCount = fis.read(buffer)) != -1) {// 循环从输入流读取 buffer字节
-                fos.write(buffer, 0, byteCount);// 将读取的输入流写入到输出流
-            }
-            fos.flush();// 刷新缓冲区
-            fis.close();
-            fos.close();
+        while ((byteCount = fis.read(buffer)) != -1) {// 循环从输入流读取 buffer字节
+            fos.write(buffer, 0, byteCount);// 将读取的输入流写入到输出流
+        }
+        fos.flush();// 刷新缓冲区
+        fis.close();
+        fos.close();
     }
 
     /**
      * 读取assets目录的字符文件
+     *
      * @param context
      * @param filename
      * @return
@@ -1019,6 +1058,7 @@ public class FileUtils {
 
     /**
      * 是否存在SD卡
+     *
      * @return
      */
     public static boolean isExsitSDCard() {
@@ -1031,6 +1071,7 @@ public class FileUtils {
 
     /**
      * 取得空闲SD卡空间大小
+     *
      * @return MB
      */
     public static long getAvailaleSize() {
@@ -1046,6 +1087,7 @@ public class FileUtils {
 
     /**
      * 获取程序图片目录
+     *
      * @return
      */
     public static String getImagePath(Context context) {
@@ -1059,6 +1101,7 @@ public class FileUtils {
 
     /**
      * 获取程序图片缓存目录 不可见图片 ImageLoader
+     *
      * @return
      */
     public static String getImageCachePath(Context context) {
@@ -1072,6 +1115,7 @@ public class FileUtils {
 
     /**
      * 获取程序图片目录
+     *
      * @return
      */
     public static String getLogPath(Context context) {
@@ -1085,6 +1129,7 @@ public class FileUtils {
 
     /**
      * 获取程序临时目录
+     *
      * @return
      */
     public static String getTempPath(Context context) {
@@ -1098,6 +1143,7 @@ public class FileUtils {
 
     /**
      * 获取目录的所有大小
+     *
      * @return
      */
     public static long getAppDataSize(Context context) {
@@ -1126,6 +1172,7 @@ public class FileUtils {
 
     /**
      * 保存Bitmap到sdcard
+     *
      * @param b
      */
     public static void saveBitmap(Context context, Bitmap b) {
@@ -1149,8 +1196,9 @@ public class FileUtils {
 
     /**
      * 调用系统的分享接口将文件分享出去，Android N之后需要借助FileProvider生成Uri再暴露出去
+     *
      * @param context
-     * @param path 文件的全路径（包括文件名）
+     * @param path    文件的全路径（包括文件名）
      */
     public static void shareFile(Context context, String path) {
         File f = new File(path);
@@ -1196,6 +1244,7 @@ public class FileUtils {
 
     /**
      * 将File转换为InputStream
+     *
      * @param path 文件的完整路径含文件名
      */
     public static InputStream tranferFileToInputStream(String path) throws IOException {
@@ -1206,6 +1255,7 @@ public class FileUtils {
 
     /**
      * 将File、FileInputStream 转换为byte数组
+     *
      * @param path 文件的完整路径含文件名
      */
     public static byte[] tranferFileToByteArray(String path) throws IOException {
@@ -1218,6 +1268,7 @@ public class FileUtils {
 
     /**
      * 将byte数组转换为InputStream
+     *
      * @param byt
      * @return
      */
@@ -1228,6 +1279,7 @@ public class FileUtils {
 
     /**
      * 将byte数组转换为File
+     *
      * @param byt
      * @param path 文件的完整路径，包含文件名
      * @return
@@ -1245,15 +1297,17 @@ public class FileUtils {
      * 读取xml配置，并将配置结果以 Map<String,List<Pair<String, Integer>>> 的格式存储，
      * 其中相同父节点的页面名放在同一个List下，并以父节点名String作为key
      * List中的节点定义：String-子页面名。Integer-配置值：0为不显示，1为显示但是不使能，2为使能
+     *
      * @param path 配置文件路径
      */
     public static final String UN_SETTINGS_CONF_ROOT = "UNSettingsConf";
-    public static Map<String,List<Pair<String, Integer>>> loadSettingsConfigXml(String path) throws IOException, XmlPullParserException {
+
+    public static Map<String, List<Pair<String, Integer>>> loadSettingsConfigXml(String path) throws IOException, XmlPullParserException {
         InputStream is = tranferFileToInputStream(path);
         XmlPullParser pullParser = Xml.newPullParser();
         pullParser.setInput(is, "UTF-8");
         int event = pullParser.getEventType();// 触发第一个事件
-        Map<String,List<Pair<String, Integer>>> confMap = new HashMap<String,List<Pair<String, Integer>>>();
+        Map<String, List<Pair<String, Integer>>> confMap = new HashMap<String, List<Pair<String, Integer>>>();
         String version = "";
         recursionParseSettingsConf(event, pullParser, confMap, null, UN_SETTINGS_CONF_ROOT);
         return confMap;
@@ -1261,14 +1315,15 @@ public class FileUtils {
 
     /**
      * 递归进行解析XML文件
-     * @param eventType 当前标记类型
-     * @param parser XmlPullParser
-     * @param map 传入的map对象，解析的内容会写入map里
+     *
+     * @param eventType      当前标记类型
+     * @param parser         XmlPullParser
+     * @param map            传入的map对象，解析的内容会写入map里
      * @param parentPageName 父页面的名称
-     * @param thisPageName 当前页面的名称
+     * @param thisPageName   当前页面的名称
      * @return
      */
-    public static void recursionParseSettingsConf(int eventType, XmlPullParser parser, Map<String,List<Pair<String, Integer>>> map, String parentPageName, String thisPageName) {
+    public static void recursionParseSettingsConf(int eventType, XmlPullParser parser, Map<String, List<Pair<String, Integer>>> map, String parentPageName, String thisPageName) {
         String visibility = "";
         try {
             while (eventType != XmlPullParser.END_DOCUMENT) {  //只要不是文档结束事件就一直循环
@@ -1278,9 +1333,9 @@ public class FileUtils {
                         case XmlPullParser.START_DOCUMENT:  //触发开始文档事件
                             break;
                         case XmlPullParser.START_TAG:  //触发开始元素事件
-                            if (tagName.equals(UN_SETTINGS_CONF_ROOT)){
+                            if (tagName.equals(UN_SETTINGS_CONF_ROOT)) {
                                 String version = parser.getAttributeValue(0);  //解析版本号，可能后面用得上
-                            } else if (thisPageName.equals(tagName)){  //如果记录的当前页面名称和tag名称一致的话，说明还没有进入body解析部分，这里负责解析属性
+                            } else if (thisPageName.equals(tagName)) {  //如果记录的当前页面名称和tag名称一致的话，说明还没有进入body解析部分，这里负责解析属性
                                 int count = parser.getAttributeCount();  //解析属性个数，目前只有visibility一个
                                 for (int i = 0; i < count; i++) {
                                     String attrName = parser.getAttributeName(i);  //属性名为"visibility"
@@ -1324,34 +1379,35 @@ public class FileUtils {
 
     /**
      * 功能说明：利用递归以及JAVA反射，实现的XML通用解析方法。
-     *     要求1：XML中的节点标签必须与Class 的类名一致，不区分大小写。
-     *     要求2：XML中的节点标签中的子标签必须与Class中的属性名一致，区分大小写，如需要不区分大小写自行更改判断。
+     * 要求1：XML中的节点标签必须与Class 的类名一致，不区分大小写。
+     * 要求2：XML中的节点标签中的子标签必须与Class中的属性名一致，区分大小写，如需要不区分大小写自行更改判断。
      * 使用说明：以记录学生档案的xml为例，按照如下步骤使用：
-     *     1. 假如待解析的xml格式如下：
-     *         <?xml version="1.0"  encoding="UTF-8"?>
-     *         <root>
-     *             <student id="1"  group="1">
-     *                 <name>zhangsan</name>
-     *                 <sex>male</sex>
-     *                 <userEntity id="5">
-     *                     <name>yyyy</name>
-     *                     <xxx>xxxx</xxx>
-     *                 </userEntity>
-     *             </student>
-     *         </root>
-     *     2. 根据XML文件创建对应的Bean：
-     *         public class Student {private int id;  private String name;...}
-     *         pulbic class UserEntity {...}
-     *     3. 根据业务情况从网络/本地获取XML流: InputStream  in=null；
-     *     4. 如果XML中student节点只会有一个,使用parseData方法: Student student=parseData(in,Student.class,"root");
-     *     5. 如果XML 中 student 节点有多个,使用 parseList方法: List<Student> listData=parseList(in,Student.class,"root");
-     *     6. 注意：属性为List时必须声明其为ArrayList或LinkedList
+     * 1. 假如待解析的xml格式如下：
+     * <?xml version="1.0"  encoding="UTF-8"?>
+     * <root>
+     * <student id="1"  group="1">
+     * <name>zhangsan</name>
+     * <sex>male</sex>
+     * <userEntity id="5">
+     * <name>yyyy</name>
+     * <xxx>xxxx</xxx>
+     * </userEntity>
+     * </student>
+     * </root>
+     * 2. 根据XML文件创建对应的Bean：
+     * public class Student {private int id;  private String name;...}
+     * pulbic class UserEntity {...}
+     * 3. 根据业务情况从网络/本地获取XML流: InputStream  in=null；
+     * 4. 如果XML中student节点只会有一个,使用parseData方法: Student student=parseData(in,Student.class,"root");
+     * 5. 如果XML 中 student 节点有多个,使用 parseList方法: List<Student> listData=parseList(in,Student.class,"root");
+     * 6. 注意：属性为List时必须声明其为ArrayList或LinkedList
      * 函数说明：将XML中的数据转换成<T>类型数据
      * 如果XML中根目录下一级节点只会有一个,使用parseData方法
      * 如果XML中根目录下一级节点有多个,使用 parseList方法
-     * @param in XML流数据
+     *
+     * @param in     XML流数据
      * @param mClass 将XML中的数据转换成的对象类型
-     * @param root XML中的根节点TagName
+     * @param root   XML中的根节点TagName
      * @return
      */
     @SuppressLint("DefaultLocale")
@@ -1374,9 +1430,10 @@ public class FileUtils {
      * 将XML中的数据转换成List<T>数据
      * 如果XML中根目录下一级节点只会有一个,使用parseData方法
      * 如果XML中根目录下一级节点有多个,使用 parseList方法
-     * @param in XML流数据
+     *
+     * @param in     XML流数据
      * @param mClass 将XML中的数据转换成的对象类型
-     * @param root XML中的根节点TagName
+     * @param root   XML中的根节点TagName
      * @return
      */
     @SuppressLint("DefaultLocale")
@@ -1399,14 +1456,15 @@ public class FileUtils {
 
     /**
      * 递归进行解析XML文件
+     *
      * @param eventType 当前标记类型
-     * @param parser XmlPullParser
-     * @param listData List<T> 集合
-     * @param mClass 将XML中的数据转换成的对象类型
-     * @param root XML中的父节点TagName
+     * @param parser    XmlPullParser
+     * @param listData  List<T> 集合
+     * @param mClass    将XML中的数据转换成的对象类型
+     * @param root      XML中的父节点TagName
      * @return
      */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({"unchecked", "rawtypes"})
     @SuppressLint("DefaultLocale")
     public static <T> T recursionParse(int eventType, XmlPullParser parser, List<T> listData, Class<T> mClass, String root) {
         T entity = null;
@@ -1570,4 +1628,277 @@ public class FileUtils {
         return null;
     }
 
+    /**
+     * 获取对应文件的Uri
+     * @param intent 相应的Intent
+     * @param file   文件对象
+     * @return
+     */
+    public static Uri getUri(Context context, Intent intent, File file) {
+        Uri uri = null;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            //判断版本是否在7.0以上
+            uri = FileProvider.getUriForFile(context,
+                    context.getPackageName() + ".fileprovider",
+                    file);
+            //添加这一句表示对目标应用临时授权该Uri所代表的文件
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        } else {
+            uri = Uri.fromFile(file);
+        }
+        return uri;
+    }
+
+    /**
+     * 各种文件的类型的DataType，DataType用于指定Intent中的数据类型，
+     * 不同类型的文件有不同的DataType，传入相应类型的DataType，系统会搜寻可以打开该文件的软件，
+     * 比如传入视频的DataType，即"video/*"，那么系统将会搜寻本机中可以播放视频的软件，
+     * 如果没有安装其他视频播放软件，则系统会默认使用自带的播放视频软件，
+     * 如果你还安装了其他视频播放软件，如手机QQ影音，那么就会弹出选择框让你选择使用哪个软件打开。
+     */
+    private static final String DATA_TYPE_ALL = "*/*";//未指定明确的文件类型，不能使用精确类型的工具打开，需要用户选择
+    private static final String DATA_TYPE_APK = "application/vnd.android.package-archive";
+    private static final String DATA_TYPE_VIDEO = "video/*";
+    private static final String DATA_TYPE_AUDIO = "audio/*";
+    private static final String DATA_TYPE_HTML = "text/html";
+    private static final String DATA_TYPE_IMAGE = "image/*";
+    private static final String DATA_TYPE_PPT = "application/vnd.ms-powerpoint";
+    private static final String DATA_TYPE_EXCEL = "application/vnd.ms-excel";
+    private static final String DATA_TYPE_WORD = "application/msword";
+    private static final String DATA_TYPE_CHM = "application/x-chm";
+    private static final String DATA_TYPE_TXT = "text/plain";
+    private static final String DATA_TYPE_PDF = "application/pdf";
+
+    /**
+     * 打开文件，还有问题，后面再调试
+     * 打开文件的处理步骤如下：
+     * 截取得到文件的后缀名
+     * 根据后缀名判断对应的文件属于哪种DataType，调用对应产生封装好的intent的方法，获取到intent；
+     * 调用startActivity()方法，传入intent
+     * @param filePath 文件的全路径，包括到文件名
+     */
+    public static void openFile(Context context, String filePath) {
+        File file = new File(filePath);
+        if (!file.exists()){
+            //如果文件不存在
+            Toast.makeText(context, "打开失败，原因：文件已经被移动或者删除", Toast.LENGTH_SHORT).show();
+            return;
+        }
+    /* 取得扩展名 */
+        String end = file.getName().substring(file.getName().lastIndexOf(".") + 1, file.getName().length()).toLowerCase(Locale.getDefault());
+    /* 依扩展名的类型决定MimeType */
+        Intent intent = null;
+        if (end.equals("m4a") || end.equals("mp3") || end.equals("mid") || end.equals("xmf") || end.equals("ogg") || end.equals("wav")) {
+            intent =  generateVideoAudioIntent(context, filePath,DATA_TYPE_AUDIO);
+        } else if (end.equals("3gp") || end.equals("mp4")) {
+            intent = generateVideoAudioIntent(context, filePath,DATA_TYPE_VIDEO);
+        } else if (end.equals("jpg") || end.equals("gif") || end.equals("png") || end.equals("jpeg") || end.equals("bmp")) {
+            intent = generateCommonIntent(context, filePath,DATA_TYPE_IMAGE);
+        } else if (end.equals("apk")) {
+            intent = generateCommonIntent(context, filePath,DATA_TYPE_APK);
+        }else if (end.equals("html") || end.equals("htm")){
+            intent = getHtmlFileIntent(filePath);
+        } else if (end.equals("ppt")) {
+            intent = generateCommonIntent(context, filePath,DATA_TYPE_PPT);
+        } else if (end.equals("xls")) {
+            intent = generateCommonIntent(context, filePath,DATA_TYPE_EXCEL);
+        } else if (end.equals("doc")) {
+            intent = generateCommonIntent(context, filePath,DATA_TYPE_WORD);
+        } else if (end.equals("pdf")) {
+            intent = generateCommonIntent(context, filePath,DATA_TYPE_PDF);
+        } else if (end.equals("chm")) {
+            intent = generateCommonIntent(context, filePath,DATA_TYPE_CHM);
+        } else if (end.equals("txt")) {
+            intent = generateCommonIntent(context, filePath, DATA_TYPE_TXT);
+        } else {
+            intent = generateCommonIntent(context, filePath,DATA_TYPE_ALL);
+        }
+        context.startActivity(intent);
+    }
+
+    /**
+     * 产生打开视频或音频的Intent
+     * @param filePath 文件路径
+     * @param dataType 文件类型
+     * @return
+     */
+    public static Intent generateVideoAudioIntent(Context context, String filePath, String dataType){
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("oneshot", 0);
+        intent.putExtra("configchange", 0);
+        File file = new File(filePath);
+        intent.setDataAndType(getUri(context, intent, file), dataType);
+        return intent;
+    }
+
+    /**
+     * 产生打开网页文件的Intent
+     * @param filePath 文件路径
+     * @return
+     */
+    public static Intent generateHtmlFileIntent(String filePath) {
+        Uri uri = Uri.parse(filePath)
+                .buildUpon()
+                .encodedAuthority("com.android.htmlfileprovider")
+                .scheme("content")
+                .encodedPath(filePath)
+                .build();
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setDataAndType(uri, DATA_TYPE_HTML);
+        return intent;
+    }
+
+    /**
+     * 产生除了视频、音频、网页文件外，打开其他类型文件的Intent
+     * @param filePath 文件路径
+     * @param dataType 文件类型
+     * @return
+     */
+    public static Intent generateCommonIntent(Context context, String filePath, String dataType) {
+        Intent intent = new Intent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setAction(Intent.ACTION_VIEW);
+        File file = new File(filePath);
+        Uri uri = getUri(context, intent, file);
+        intent.setDataAndType(uri, dataType);
+        return intent;
+    }
+
+    // Android获取一个用于打开APK文件的intent
+    public static Intent getAllIntent(String param) {
+
+        Intent intent = new Intent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setAction(Intent.ACTION_VIEW);
+        Uri uri = Uri.fromFile(new File(param));
+        intent.setDataAndType(uri, "*/*");
+        return intent;
+    }
+
+    // Android获取一个用于打开APK文件的intent
+    public static Intent getApkFileIntent(String param) {
+
+        Intent intent = new Intent();
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setAction(Intent.ACTION_VIEW);
+        Uri uri = Uri.fromFile(new File(param));
+        intent.setDataAndType(uri, "application/vnd.android.package-archive");
+        return intent;
+    }
+
+    // Android获取一个用于打开VIDEO文件的intent
+    public static Intent getVideoFileIntent(String param) {
+
+        Intent intent = new Intent("android.intent.action.VIEW");
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("oneshot", 0);
+        intent.putExtra("configchange", 0);
+        Uri uri = Uri.fromFile(new File(param));
+        intent.setDataAndType(uri, "video/*");
+        return intent;
+    }
+
+    // Android获取一个用于打开AUDIO文件的intent
+    public static Intent getAudioFileIntent(String param) {
+
+        Intent intent = new Intent("android.intent.action.VIEW");
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("oneshot", 0);
+        intent.putExtra("configchange", 0);
+        Uri uri = Uri.fromFile(new File(param));
+        intent.setDataAndType(uri, "audio/*");
+        return intent;
+    }
+
+    // Android获取一个用于打开Html文件的intent
+    public static Intent getHtmlFileIntent(String param) {
+
+        Uri uri = Uri.parse(param).buildUpon().encodedAuthority("com.android.htmlfileprovider").scheme("content").encodedPath(param).build();
+        Intent intent = new Intent("android.intent.action.VIEW");
+        intent.setDataAndType(uri, "text/html");
+        return intent;
+    }
+
+    // Android获取一个用于打开图片文件的intent
+    public static Intent getImageFileIntent(String param) {
+
+        Intent intent = new Intent("android.intent.action.VIEW");
+        intent.addCategory("android.intent.category.DEFAULT");
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Uri uri = Uri.fromFile(new File(param));
+        intent.setDataAndType(uri, "image/*");
+        return intent;
+    }
+
+    // Android获取一个用于打开PPT文件的intent
+    public static Intent getPptFileIntent(String param) {
+
+        Intent intent = new Intent("android.intent.action.VIEW");
+        intent.addCategory("android.intent.category.DEFAULT");
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Uri uri = Uri.fromFile(new File(param));
+        intent.setDataAndType(uri, "application/vnd.ms-powerpoint");
+        return intent;
+    }
+
+    // Android获取一个用于打开Excel文件的intent
+    public static Intent getExcelFileIntent(String param) {
+
+        Intent intent = new Intent("android.intent.action.VIEW");
+        intent.addCategory("android.intent.category.DEFAULT");
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Uri uri = Uri.fromFile(new File(param));
+        intent.setDataAndType(uri, "application/vnd.ms-excel");
+        return intent;
+    }
+
+    // Android获取一个用于打开Word文件的intent
+    public static Intent getWordFileIntent(String param) {
+
+        Intent intent = new Intent("android.intent.action.VIEW");
+        intent.addCategory("android.intent.category.DEFAULT");
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Uri uri = Uri.fromFile(new File(param));
+        intent.setDataAndType(uri, "application/msword");
+        return intent;
+    }
+
+    // Android获取一个用于打开CHM文件的intent
+    public static Intent getChmFileIntent(String param) {
+
+        Intent intent = new Intent("android.intent.action.VIEW");
+        intent.addCategory("android.intent.category.DEFAULT");
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Uri uri = Uri.fromFile(new File(param));
+        intent.setDataAndType(uri, "application/x-chm");
+        return intent;
+    }
+
+    // Android获取一个用于打开文本文件的intent
+    public static Intent getTextFileIntent(String param, boolean paramBoolean) {
+
+        Intent intent = new Intent("android.intent.action.VIEW");
+        intent.addCategory("android.intent.category.DEFAULT");
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        if (paramBoolean) {
+            Uri uri1 = Uri.parse(param);
+            intent.setDataAndType(uri1, "text/plain");
+        } else {
+            Uri uri2 = Uri.fromFile(new File(param));
+            intent.setDataAndType(uri2, "text/plain");
+        }
+        return intent;
+    }
+
+    // Android获取一个用于打开PDF文件的intent
+    public static Intent getPdfFileIntent(String param) {
+
+        Intent intent = new Intent("android.intent.action.VIEW");
+        intent.addCategory("android.intent.category.DEFAULT");
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        Uri uri = Uri.fromFile(new File(param));
+        intent.setDataAndType(uri, "application/pdf");
+        return intent;
+    }
 }

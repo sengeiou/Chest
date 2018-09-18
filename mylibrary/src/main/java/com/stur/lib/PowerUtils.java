@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 /**
- * Created by guanxuejin on 2018/5/30.
+ * Created by Sturmegezhutz on 2018/5/30.
  */
 
 public class PowerUtils {

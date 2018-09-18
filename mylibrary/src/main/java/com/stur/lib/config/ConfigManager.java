@@ -9,7 +9,7 @@ import com.stur.lib.UIHelper;
 import com.tencent.bugly.crashreport.CrashReport;
 
 /**
- * Created by guanxuejin on 2018/2/28.
+ * Created by Sturmegezhutz on 2018/2/28.
  */
 
 public class ConfigManager {

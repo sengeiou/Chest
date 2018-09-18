@@ -73,6 +73,7 @@
             android:name="com.stur.lib.activity.FilesTransferActivity"
             android:theme="@style/AppTheme.FullScreen" />
         <activity android:name="com.stur.lib.activity.FilesViewActivity" />
+        <activity android:name="com.stur.lib.activity.FilesViewActivity2" />
         <activity android:name="com.stur.lib.activity.QRCodeActivity" />
         <activity
             android:name="com.stur.lib.activity.WebServerActivity"

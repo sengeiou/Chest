@@ -1,18 +1,16 @@
-/*************************************************************************/
-/* Copyright (c) 2000-2012  YULONG Company*/
-/* PROPRIETARY RIGHTS of YULONG Company are involved in the*/
-/* subject matter of this material.  All manufacturing, reproduction, use, */
-/* and sales rights pertaining to this subject matter are governed by the */
-/* license agreement.  The recipient of this software implicitly accepts */
-/* the terms of the license. */
-/*************************************************************************/
-
 /******************************************************************************
- * Copyright (C), 2000-2012, Yulong Co., Ltd.
- *
+ * Copyright (C), 2017-2027, Sturmegezhutz private property right
+ * PROPRIETARY RIGHTS of Sturmegezhutz are involved in the
+ * subject matter of this material.  All manufacturing, reproduction, use,
+ * and sales rights pertaining to this subject matter are governed by the
+ * license agreement.  The recipient of this software implicitly accepts
+ * the terms of the license.
+
  * File name: SystemPropertiesProxy.java
- * Description:Systemproperties类在android.os下，但这个类是隐藏的，上层程序开发无法直接使用。使用Java的反射机制是可以使用这个类
- * 进行系统属性设置的程序也必须有system或root权限，否则反射调用时会抛InvocationTargetException
+ * Description: Systemproperties类在android.os下，但这个类是隐藏的，
+ * 上层程序开发无法直接使用。使用Java的反射机制是可以使用这个类
+ * 进行系统属性设置的程序也必须有system或root权限，
+ * 否则反射调用时会抛InvocationTargetException
  * Others:
 
  * Department:  Communication Software Development
@@ -24,9 +22,9 @@
  1. ...
 
  * History:
- 1. Author:       guanxuejin
- Date:         2016.10.03
- Modification: Create file
+ 1. Author:    Sturmegezhutz
+    Date:         2016.10.03
+    Modification: Create file
 
  *******************************************************************************/
 package com.stur.lib;

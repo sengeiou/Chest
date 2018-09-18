@@ -3,7 +3,7 @@ package com.stur.lib.os;
 import java.security.MessageDigest;
 
 /**
- * Created by guanxuejin on 2018/2/26.
+ * Created by Sturmegezhutz on 2018/2/26.
  */
 
 public final class MD5

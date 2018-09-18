@@ -19,7 +19,7 @@ import com.stur.lib.network.TCPClient;
 import java.io.IOException;
 
 /**
- * Created by guanxuejin on 2018/3/5.
+ * Created by Sturmegezhutz on 2018/3/5.
  */
 
 public class ClientActivity extends ActivityBase {

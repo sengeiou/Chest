@@ -14,7 +14,7 @@ import com.stur.lib.R;
 import java.util.ArrayList;
 
 /**
- * Created by guanxuejin on 2018/2/2.
+ * Created by Sturmegezhutz on 2018/2/2.
  */
 
 public class StDialog {

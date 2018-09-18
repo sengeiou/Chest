@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * 联系人概要信息实体类. 只包含联系人的概要信息, 一般在显示列表时用.
  * 与ContactBean的区别:ContactBean包含一个联系人的所有数据,如RawContact的数据.
- * Created by guanxuejin on 2018/7/7.
+ * Created by Sturmegezhutz on 2018/7/7.
  */
 
 public class ContactSummaryBean implements Serializable {
