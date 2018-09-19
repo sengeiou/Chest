@@ -15,7 +15,6 @@ import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
 import android.util.Pair;
 import android.util.Xml;
-import android.widget.Toast;
 
 import com.stur.lib.IntegerUtil;
 import com.stur.lib.Log;
@@ -41,6 +40,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -415,6 +415,17 @@ public class FileUtils {
         if (TextUtils.isEmpty(fileName))
             return "";
         return fileName.substring(fileName.lastIndexOf(".") + 1);
+    }
+
+    /**
+     * 获取文件后缀
+     * @param fileName
+     * @return
+     */
+    public static String getFileSuffixName(String fileName) {
+        int pointLct = fileName.lastIndexOf(".");
+        String strFileSuffixName = fileName.substring(pointLct);
+        return strFileSuffixName;
     }
 
     /**
@@ -1670,6 +1681,248 @@ public class FileUtils {
     private static final String DATA_TYPE_PDF = "application/pdf";
 
     /**
+     * 是否音频文件
+     * @param filePath
+     * @return
+     */
+    public static boolean isAudioFile(String filePath) {
+        File file = new File(filePath);
+        if (!file.exists()){
+            //文件不存在: 可能已经被移动或者删除
+            return false;
+        }
+        /* 取得扩展名 */
+        String suffix = file.getName().substring(file.getName().lastIndexOf(".") + 1,
+                file.getName().length()).toLowerCase(Locale.getDefault());
+        String[] audioTypeArray = {"m4a", "mp3", "mid", "xmf", "ogg", "wav", "aac"};
+        if (Arrays.asList(audioTypeArray).contains(suffix)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 是否视频文件
+     * @param filePath
+     * @return
+     */
+    public static boolean isVideoFile(String filePath) {
+        File file = new File(filePath);
+        if (!file.exists()){
+            //文件不存在: 可能已经被移动或者删除
+            return false;
+        }
+        /* 取得扩展名 */
+        String suffix = file.getName().substring(file.getName().lastIndexOf(".") + 1,
+                file.getName().length()).toLowerCase(Locale.getDefault());
+        String[] audioTypeArray = {"3gp", "mp4"};
+        if (Arrays.asList(audioTypeArray).contains(suffix)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 是否图片文件
+     * @param filePath
+     * @return
+     */
+    public static boolean isImageFile(String filePath) {
+        File file = new File(filePath);
+        if (!file.exists()){
+            //文件不存在: 可能已经被移动或者删除
+            return false;
+        }
+        /* 取得扩展名 */
+        String suffix = file.getName().substring(file.getName().lastIndexOf(".") + 1,
+                file.getName().length()).toLowerCase(Locale.getDefault());
+        String[] audioTypeArray = {"jpg", "gif", "png", "jpeg", "bmp"};
+        if (Arrays.asList(audioTypeArray).contains(suffix)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 是否APK文件
+     * @param filePath
+     * @return
+     */
+    public static boolean isApkFile(String filePath) {
+        File file = new File(filePath);
+        if (!file.exists()){
+            //文件不存在: 可能已经被移动或者删除
+            return false;
+        }
+        /* 取得扩展名 */
+        String suffix = file.getName().substring(file.getName().lastIndexOf(".") + 1,
+                file.getName().length()).toLowerCase(Locale.getDefault());
+        String[] audioTypeArray = {"apk"};
+        if (Arrays.asList(audioTypeArray).contains(suffix)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 是否html文件
+     * @param filePath
+     * @return
+     */
+    public static boolean isHtmlFile(String filePath) {
+        File file = new File(filePath);
+        if (!file.exists()){
+            //文件不存在: 可能已经被移动或者删除
+            return false;
+        }
+        /* 取得扩展名 */
+        String suffix = file.getName().substring(file.getName().lastIndexOf(".") + 1,
+                file.getName().length()).toLowerCase(Locale.getDefault());
+        String[] audioTypeArray = {"html", "htm"};
+        if (Arrays.asList(audioTypeArray).contains(suffix)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 是否PPT文件
+     * @param filePath
+     * @return
+     */
+    public static boolean isPptFile(String filePath) {
+        File file = new File(filePath);
+        if (!file.exists()){
+            //文件不存在: 可能已经被移动或者删除
+            return false;
+        }
+        /* 取得扩展名 */
+        String suffix = file.getName().substring(file.getName().lastIndexOf(".") + 1,
+                file.getName().length()).toLowerCase(Locale.getDefault());
+        String[] audioTypeArray = {"ppt"};
+        if (Arrays.asList(audioTypeArray).contains(suffix)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 是否Excel文件
+     * @param filePath
+     * @return
+     */
+    public static boolean isExcelFile(String filePath) {
+        File file = new File(filePath);
+        if (!file.exists()){
+            //文件不存在: 可能已经被移动或者删除
+            return false;
+        }
+        /* 取得扩展名 */
+        String suffix = file.getName().substring(file.getName().lastIndexOf(".") + 1,
+                file.getName().length()).toLowerCase(Locale.getDefault());
+        String[] audioTypeArray = {"xls"};
+        if (Arrays.asList(audioTypeArray).contains(suffix)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 是否WORD文件
+     * @param filePath
+     * @return
+     */
+    public static boolean isWordFile(String filePath) {
+        File file = new File(filePath);
+        if (!file.exists()){
+            //文件不存在: 可能已经被移动或者删除
+            return false;
+        }
+        /* 取得扩展名 */
+        String suffix = file.getName().substring(file.getName().lastIndexOf(".") + 1,
+                file.getName().length()).toLowerCase(Locale.getDefault());
+        String[] audioTypeArray = {"doc"};
+        if (Arrays.asList(audioTypeArray).contains(suffix)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 是否PDF文件
+     * @param filePath
+     * @return
+     */
+    public static boolean isPdfFile(String filePath) {
+        File file = new File(filePath);
+        if (!file.exists()){
+            //文件不存在: 可能已经被移动或者删除
+            return false;
+        }
+        /* 取得扩展名 */
+        String suffix = file.getName().substring(file.getName().lastIndexOf(".") + 1,
+                file.getName().length()).toLowerCase(Locale.getDefault());
+        String[] audioTypeArray = {"pdf"};
+        if (Arrays.asList(audioTypeArray).contains(suffix)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 是否CHM文件
+     * @param filePath
+     * @return
+     */
+    public static boolean isChmFile(String filePath) {
+        File file = new File(filePath);
+        if (!file.exists()){
+            //文件不存在: 可能已经被移动或者删除
+            return false;
+        }
+        /* 取得扩展名 */
+        String suffix = file.getName().substring(file.getName().lastIndexOf(".") + 1,
+                file.getName().length()).toLowerCase(Locale.getDefault());
+        String[] audioTypeArray = {"chm"};
+        if (Arrays.asList(audioTypeArray).contains(suffix)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * 是否TXT文件
+     * @param filePath
+     * @return
+     */
+    public static boolean isTxtFile(String filePath) {
+        File file = new File(filePath);
+        if (!file.exists()){
+            //文件不存在: 可能已经被移动或者删除
+            return false;
+        }
+        /* 取得扩展名 */
+        String suffix = file.getName().substring(file.getName().lastIndexOf(".") + 1,
+                file.getName().length()).toLowerCase(Locale.getDefault());
+        String[] audioTypeArray = {"txt"};
+        if (Arrays.asList(audioTypeArray).contains(suffix)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * 打开文件，还有问题，后面再调试
      * 打开文件的处理步骤如下：
      * 截取得到文件的后缀名
@@ -1678,37 +1931,29 @@ public class FileUtils {
      * @param filePath 文件的全路径，包括到文件名
      */
     public static void openFile(Context context, String filePath) {
-        File file = new File(filePath);
-        if (!file.exists()){
-            //如果文件不存在
-            Toast.makeText(context, "打开失败，原因：文件已经被移动或者删除", Toast.LENGTH_SHORT).show();
-            return;
-        }
-    /* 取得扩展名 */
-        String end = file.getName().substring(file.getName().lastIndexOf(".") + 1, file.getName().length()).toLowerCase(Locale.getDefault());
-    /* 依扩展名的类型决定MimeType */
+        /* 依扩展名的类型决定MimeType */
         Intent intent = null;
-        if (end.equals("m4a") || end.equals("mp3") || end.equals("mid") || end.equals("xmf") || end.equals("ogg") || end.equals("wav")) {
+        if (isAudioFile(filePath)) {
             intent =  generateVideoAudioIntent(context, filePath,DATA_TYPE_AUDIO);
-        } else if (end.equals("3gp") || end.equals("mp4")) {
+        } else if (isVideoFile(filePath)) {
             intent = generateVideoAudioIntent(context, filePath,DATA_TYPE_VIDEO);
-        } else if (end.equals("jpg") || end.equals("gif") || end.equals("png") || end.equals("jpeg") || end.equals("bmp")) {
+        } else if (isImageFile(filePath)) {
             intent = generateCommonIntent(context, filePath,DATA_TYPE_IMAGE);
-        } else if (end.equals("apk")) {
+        } else if (isApkFile(filePath)) {
             intent = generateCommonIntent(context, filePath,DATA_TYPE_APK);
-        }else if (end.equals("html") || end.equals("htm")){
+        }else if (isHtmlFile(filePath)){
             intent = getHtmlFileIntent(filePath);
-        } else if (end.equals("ppt")) {
+        } else if (isPptFile(filePath)) {
             intent = generateCommonIntent(context, filePath,DATA_TYPE_PPT);
-        } else if (end.equals("xls")) {
+        } else if (isExcelFile(filePath)) {
             intent = generateCommonIntent(context, filePath,DATA_TYPE_EXCEL);
-        } else if (end.equals("doc")) {
+        } else if (isWordFile(filePath)) {
             intent = generateCommonIntent(context, filePath,DATA_TYPE_WORD);
-        } else if (end.equals("pdf")) {
+        } else if (isPdfFile(filePath)) {
             intent = generateCommonIntent(context, filePath,DATA_TYPE_PDF);
-        } else if (end.equals("chm")) {
+        } else if (isChmFile(filePath)) {
             intent = generateCommonIntent(context, filePath,DATA_TYPE_CHM);
-        } else if (end.equals("txt")) {
+        } else if (isTxtFile(filePath)) {
             intent = generateCommonIntent(context, filePath, DATA_TYPE_TXT);
         } else {
             intent = generateCommonIntent(context, filePath,DATA_TYPE_ALL);

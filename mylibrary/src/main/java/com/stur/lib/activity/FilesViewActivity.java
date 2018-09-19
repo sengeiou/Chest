@@ -6,8 +6,8 @@
  * license agreement.  The recipient of this software implicitly accepts
  * the terms of the license.
 
- * File name: FilesViewActivity2.java
- * Description: 使用 SimpleAdapter 构建文件管理器
+ * File name:   FilesViewActivity2.java
+ * Description:
  * Others:
 
  * Author:      Sturmegezhutz
@@ -18,9 +18,9 @@
  1. ...
 
  * History:
- 1. Author:    Sturmegezhutz
- Date:         2018.09.18
- Modification: Create file
+ 1. Author:     Sturmegezhutz
+ Date:          2018.09.18
+ Modification:  Create file
 
  *******************************************************************************/
 package com.stur.lib.activity;
