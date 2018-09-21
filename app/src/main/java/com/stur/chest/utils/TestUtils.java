@@ -1,13 +1,12 @@
 package com.stur.chest.utils;
 
 import android.content.Context;
-import android.content.Intent;
 
 import com.google.gson.reflect.TypeToken;
 import com.stur.chest.dto.UserAccountDTO;
 import com.stur.lib.Log;
 import com.stur.lib.UIHelper;
-import com.stur.lib.activity.FilesViewActivity2;
+import com.stur.lib.file.RecursiveFileObserver;
 import com.stur.lib.web.HttpFactory;
 import com.stur.lib.web.api.HttpResponseListener;
 import com.stur.lib.web.request.HttpMethod;
@@ -54,6 +53,8 @@ public class TestUtils {
                     e.printStackTrace();
                 }*/
         //FileUtils.deleteDirectory("/sdcard/YunDaLog");
+        RecursiveFileObserver lister = new RecursiveFileObserver("/sdcard/YUNDARecord/Normal Records/");
+        lister.startWatching();
 
         /*********** HTTP ************/
         //testHttpRequest(context);
@@ -76,8 +77,8 @@ public class TestUtils {
 
         /*********** startActivity ************/
         //拉起某个界面
-        Intent intent = new Intent(context, FilesViewActivity2.class);
-        context.startActivity(intent);
+        /*Intent intent = new Intent(context, FilesViewActivity2.class);
+        context.startActivity(intent);*/
         //拉起某个 服务
         /*Intent startIntent = new Intent(this, ChestService.class);
         startService(startIntent);*/

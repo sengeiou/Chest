@@ -419,6 +419,7 @@ public class FileUtils {
 
     /**
      * 获取文件后缀
+     *
      * @param fileName
      * @return
      */
@@ -635,19 +636,23 @@ public class FileUtils {
      * 删除文件夹或者文件
      *
      * @param folderPath 文件夹路径或者文件的绝对路径 如：/mnt/sdcard/def_ids/1.png
+     * @return 是否删除成功
      */
-    public static void deleteDirectory(String folderPath) {
+    public static boolean deleteDirectory(String folderPath) {
+        boolean ret;
         try {
             // 删除文件夹里所有的文件及文件夹
-            deleteAllFile(folderPath);  //如果此路径名表示一个目录，则此目录必须为空才能删除
+            ret = deleteAllFile(folderPath);  //如果此路径名表示一个目录，则此目录必须为空才能删除
             File lastFile = new File(folderPath);
             if (lastFile.exists()) {
                 // 最后删除空文件夹
-                lastFile.delete();
+                ret = ret && lastFile.delete();
             }
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
+        return ret;
     }
 
     /**
@@ -655,35 +660,40 @@ public class FileUtils {
      *
      * @param path 文件夹路径或者文件的绝对路径 如：/mnt/sdcard/def_ids/1.png
      *             删除非本应用程序工作空间的目录时会因为file.list()= null而捕获NPE
+     * @return 是否删除成功
      */
-    public static void deleteAllFile(String path) {
+    public static boolean deleteAllFile(String path) {
+        boolean ret = true;
         // 在内存开辟一个文件空间，但是没有创建
         File file = new File(path);
         if (!file.exists()) {
-            return;
+            return false;
         }
         if (file.isFile()) {
-            file.delete();
+            return file.delete();
         } else if (file.isDirectory()) {
             String[] tempList = file.list();
             File temp = null;
             for (int i = 0; i < tempList.length; i++) {
-                if (path.endsWith(File.separator)) {
+                if (path.endsWith(File.separator)) {  //文件是否带终止符"/"
                     temp = new File(path + tempList[i]);
                 } else {
                     temp = new File(path + File.separator + tempList[i]);
                 }
                 if (temp.isFile()) {
-                    temp.delete();
+                    boolean tmpRet = temp.delete();
+                    ret = ret && tmpRet;
                 }
                 if (temp.isDirectory()) {
                     // 先删除文件夹里面的文件
-                    deleteAllFile(path + "/" + tempList[i]);
+                    boolean recuRet = deleteAllFile(path + "/" + tempList[i]);
+                    ret = ret && recuRet;
                     // 再删除空文件夹
-                    deleteDirectory(path + "/" + tempList[i]);
+                    ret = ret && deleteDirectory(path + "/" + tempList[i]);
                 }
             }
         }
+        return ret;
     }
 
     /**
@@ -1641,6 +1651,7 @@ public class FileUtils {
 
     /**
      * 获取对应文件的Uri
+     *
      * @param intent 相应的Intent
      * @param file   文件对象
      * @return
@@ -1682,12 +1693,13 @@ public class FileUtils {
 
     /**
      * 是否音频文件
+     *
      * @param filePath
      * @return
      */
     public static boolean isAudioFile(String filePath) {
         File file = new File(filePath);
-        if (!file.exists()){
+        if (!file.exists()) {
             //文件不存在: 可能已经被移动或者删除
             return false;
         }
@@ -1695,7 +1707,7 @@ public class FileUtils {
         String suffix = file.getName().substring(file.getName().lastIndexOf(".") + 1,
                 file.getName().length()).toLowerCase(Locale.getDefault());
         String[] audioTypeArray = {"m4a", "mp3", "mid", "xmf", "ogg", "wav", "aac"};
-        if (Arrays.asList(audioTypeArray).contains(suffix)){
+        if (Arrays.asList(audioTypeArray).contains(suffix)) {
             return true;
         } else {
             return false;
@@ -1704,12 +1716,13 @@ public class FileUtils {
 
     /**
      * 是否视频文件
+     *
      * @param filePath
      * @return
      */
     public static boolean isVideoFile(String filePath) {
         File file = new File(filePath);
-        if (!file.exists()){
+        if (!file.exists()) {
             //文件不存在: 可能已经被移动或者删除
             return false;
         }
@@ -1717,7 +1730,7 @@ public class FileUtils {
         String suffix = file.getName().substring(file.getName().lastIndexOf(".") + 1,
                 file.getName().length()).toLowerCase(Locale.getDefault());
         String[] audioTypeArray = {"3gp", "mp4"};
-        if (Arrays.asList(audioTypeArray).contains(suffix)){
+        if (Arrays.asList(audioTypeArray).contains(suffix)) {
             return true;
         } else {
             return false;
@@ -1726,12 +1739,13 @@ public class FileUtils {
 
     /**
      * 是否图片文件
+     *
      * @param filePath
      * @return
      */
     public static boolean isImageFile(String filePath) {
         File file = new File(filePath);
-        if (!file.exists()){
+        if (!file.exists()) {
             //文件不存在: 可能已经被移动或者删除
             return false;
         }
@@ -1739,7 +1753,7 @@ public class FileUtils {
         String suffix = file.getName().substring(file.getName().lastIndexOf(".") + 1,
                 file.getName().length()).toLowerCase(Locale.getDefault());
         String[] audioTypeArray = {"jpg", "gif", "png", "jpeg", "bmp"};
-        if (Arrays.asList(audioTypeArray).contains(suffix)){
+        if (Arrays.asList(audioTypeArray).contains(suffix)) {
             return true;
         } else {
             return false;
@@ -1748,12 +1762,13 @@ public class FileUtils {
 
     /**
      * 是否APK文件
+     *
      * @param filePath
      * @return
      */
     public static boolean isApkFile(String filePath) {
         File file = new File(filePath);
-        if (!file.exists()){
+        if (!file.exists()) {
             //文件不存在: 可能已经被移动或者删除
             return false;
         }
@@ -1761,7 +1776,7 @@ public class FileUtils {
         String suffix = file.getName().substring(file.getName().lastIndexOf(".") + 1,
                 file.getName().length()).toLowerCase(Locale.getDefault());
         String[] audioTypeArray = {"apk"};
-        if (Arrays.asList(audioTypeArray).contains(suffix)){
+        if (Arrays.asList(audioTypeArray).contains(suffix)) {
             return true;
         } else {
             return false;
@@ -1770,12 +1785,13 @@ public class FileUtils {
 
     /**
      * 是否html文件
+     *
      * @param filePath
      * @return
      */
     public static boolean isHtmlFile(String filePath) {
         File file = new File(filePath);
-        if (!file.exists()){
+        if (!file.exists()) {
             //文件不存在: 可能已经被移动或者删除
             return false;
         }
@@ -1783,7 +1799,7 @@ public class FileUtils {
         String suffix = file.getName().substring(file.getName().lastIndexOf(".") + 1,
                 file.getName().length()).toLowerCase(Locale.getDefault());
         String[] audioTypeArray = {"html", "htm"};
-        if (Arrays.asList(audioTypeArray).contains(suffix)){
+        if (Arrays.asList(audioTypeArray).contains(suffix)) {
             return true;
         } else {
             return false;
@@ -1792,12 +1808,13 @@ public class FileUtils {
 
     /**
      * 是否PPT文件
+     *
      * @param filePath
      * @return
      */
     public static boolean isPptFile(String filePath) {
         File file = new File(filePath);
-        if (!file.exists()){
+        if (!file.exists()) {
             //文件不存在: 可能已经被移动或者删除
             return false;
         }
@@ -1805,7 +1822,7 @@ public class FileUtils {
         String suffix = file.getName().substring(file.getName().lastIndexOf(".") + 1,
                 file.getName().length()).toLowerCase(Locale.getDefault());
         String[] audioTypeArray = {"ppt"};
-        if (Arrays.asList(audioTypeArray).contains(suffix)){
+        if (Arrays.asList(audioTypeArray).contains(suffix)) {
             return true;
         } else {
             return false;
@@ -1814,12 +1831,13 @@ public class FileUtils {
 
     /**
      * 是否Excel文件
+     *
      * @param filePath
      * @return
      */
     public static boolean isExcelFile(String filePath) {
         File file = new File(filePath);
-        if (!file.exists()){
+        if (!file.exists()) {
             //文件不存在: 可能已经被移动或者删除
             return false;
         }
@@ -1827,7 +1845,7 @@ public class FileUtils {
         String suffix = file.getName().substring(file.getName().lastIndexOf(".") + 1,
                 file.getName().length()).toLowerCase(Locale.getDefault());
         String[] audioTypeArray = {"xls"};
-        if (Arrays.asList(audioTypeArray).contains(suffix)){
+        if (Arrays.asList(audioTypeArray).contains(suffix)) {
             return true;
         } else {
             return false;
@@ -1836,12 +1854,13 @@ public class FileUtils {
 
     /**
      * 是否WORD文件
+     *
      * @param filePath
      * @return
      */
     public static boolean isWordFile(String filePath) {
         File file = new File(filePath);
-        if (!file.exists()){
+        if (!file.exists()) {
             //文件不存在: 可能已经被移动或者删除
             return false;
         }
@@ -1849,7 +1868,7 @@ public class FileUtils {
         String suffix = file.getName().substring(file.getName().lastIndexOf(".") + 1,
                 file.getName().length()).toLowerCase(Locale.getDefault());
         String[] audioTypeArray = {"doc"};
-        if (Arrays.asList(audioTypeArray).contains(suffix)){
+        if (Arrays.asList(audioTypeArray).contains(suffix)) {
             return true;
         } else {
             return false;
@@ -1858,12 +1877,13 @@ public class FileUtils {
 
     /**
      * 是否PDF文件
+     *
      * @param filePath
      * @return
      */
     public static boolean isPdfFile(String filePath) {
         File file = new File(filePath);
-        if (!file.exists()){
+        if (!file.exists()) {
             //文件不存在: 可能已经被移动或者删除
             return false;
         }
@@ -1871,7 +1891,7 @@ public class FileUtils {
         String suffix = file.getName().substring(file.getName().lastIndexOf(".") + 1,
                 file.getName().length()).toLowerCase(Locale.getDefault());
         String[] audioTypeArray = {"pdf"};
-        if (Arrays.asList(audioTypeArray).contains(suffix)){
+        if (Arrays.asList(audioTypeArray).contains(suffix)) {
             return true;
         } else {
             return false;
@@ -1880,12 +1900,13 @@ public class FileUtils {
 
     /**
      * 是否CHM文件
+     *
      * @param filePath
      * @return
      */
     public static boolean isChmFile(String filePath) {
         File file = new File(filePath);
-        if (!file.exists()){
+        if (!file.exists()) {
             //文件不存在: 可能已经被移动或者删除
             return false;
         }
@@ -1893,7 +1914,7 @@ public class FileUtils {
         String suffix = file.getName().substring(file.getName().lastIndexOf(".") + 1,
                 file.getName().length()).toLowerCase(Locale.getDefault());
         String[] audioTypeArray = {"chm"};
-        if (Arrays.asList(audioTypeArray).contains(suffix)){
+        if (Arrays.asList(audioTypeArray).contains(suffix)) {
             return true;
         } else {
             return false;
@@ -1902,12 +1923,13 @@ public class FileUtils {
 
     /**
      * 是否TXT文件
+     *
      * @param filePath
      * @return
      */
     public static boolean isTxtFile(String filePath) {
         File file = new File(filePath);
-        if (!file.exists()){
+        if (!file.exists()) {
             //文件不存在: 可能已经被移动或者删除
             return false;
         }
@@ -1915,7 +1937,7 @@ public class FileUtils {
         String suffix = file.getName().substring(file.getName().lastIndexOf(".") + 1,
                 file.getName().length()).toLowerCase(Locale.getDefault());
         String[] audioTypeArray = {"txt"};
-        if (Arrays.asList(audioTypeArray).contains(suffix)){
+        if (Arrays.asList(audioTypeArray).contains(suffix)) {
             return true;
         } else {
             return false;
@@ -1928,46 +1950,48 @@ public class FileUtils {
      * 截取得到文件的后缀名
      * 根据后缀名判断对应的文件属于哪种DataType，调用对应产生封装好的intent的方法，获取到intent；
      * 调用startActivity()方法，传入intent
+     *
      * @param filePath 文件的全路径，包括到文件名
      */
     public static void openFile(Context context, String filePath) {
         /* 依扩展名的类型决定MimeType */
         Intent intent = null;
         if (isAudioFile(filePath)) {
-            intent =  generateVideoAudioIntent(context, filePath,DATA_TYPE_AUDIO);
+            intent = generateVideoAudioIntent(context, filePath, DATA_TYPE_AUDIO);
         } else if (isVideoFile(filePath)) {
-            intent = generateVideoAudioIntent(context, filePath,DATA_TYPE_VIDEO);
+            intent = generateVideoAudioIntent(context, filePath, DATA_TYPE_VIDEO);
         } else if (isImageFile(filePath)) {
-            intent = generateCommonIntent(context, filePath,DATA_TYPE_IMAGE);
+            intent = generateCommonIntent(context, filePath, DATA_TYPE_IMAGE);
         } else if (isApkFile(filePath)) {
-            intent = generateCommonIntent(context, filePath,DATA_TYPE_APK);
-        }else if (isHtmlFile(filePath)){
+            intent = generateCommonIntent(context, filePath, DATA_TYPE_APK);
+        } else if (isHtmlFile(filePath)) {
             intent = getHtmlFileIntent(filePath);
         } else if (isPptFile(filePath)) {
-            intent = generateCommonIntent(context, filePath,DATA_TYPE_PPT);
+            intent = generateCommonIntent(context, filePath, DATA_TYPE_PPT);
         } else if (isExcelFile(filePath)) {
-            intent = generateCommonIntent(context, filePath,DATA_TYPE_EXCEL);
+            intent = generateCommonIntent(context, filePath, DATA_TYPE_EXCEL);
         } else if (isWordFile(filePath)) {
-            intent = generateCommonIntent(context, filePath,DATA_TYPE_WORD);
+            intent = generateCommonIntent(context, filePath, DATA_TYPE_WORD);
         } else if (isPdfFile(filePath)) {
-            intent = generateCommonIntent(context, filePath,DATA_TYPE_PDF);
+            intent = generateCommonIntent(context, filePath, DATA_TYPE_PDF);
         } else if (isChmFile(filePath)) {
-            intent = generateCommonIntent(context, filePath,DATA_TYPE_CHM);
+            intent = generateCommonIntent(context, filePath, DATA_TYPE_CHM);
         } else if (isTxtFile(filePath)) {
             intent = generateCommonIntent(context, filePath, DATA_TYPE_TXT);
         } else {
-            intent = generateCommonIntent(context, filePath,DATA_TYPE_ALL);
+            intent = generateCommonIntent(context, filePath, DATA_TYPE_ALL);
         }
         context.startActivity(intent);
     }
 
     /**
      * 产生打开视频或音频的Intent
+     *
      * @param filePath 文件路径
      * @param dataType 文件类型
      * @return
      */
-    public static Intent generateVideoAudioIntent(Context context, String filePath, String dataType){
+    public static Intent generateVideoAudioIntent(Context context, String filePath, String dataType) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("oneshot", 0);
@@ -1979,6 +2003,7 @@ public class FileUtils {
 
     /**
      * 产生打开网页文件的Intent
+     *
      * @param filePath 文件路径
      * @return
      */
@@ -1996,6 +2021,7 @@ public class FileUtils {
 
     /**
      * 产生除了视频、音频、网页文件外，打开其他类型文件的Intent
+     *
      * @param filePath 文件路径
      * @param dataType 文件类型
      * @return
