@@ -97,7 +97,7 @@
         <activity android:name="com.stur.chest.activity.ServerActivity" />
         <activity android:name="com.stur.activity.BetterListDemoActivity" />
         <activity android:name="com.stur.activity.ListContentDemoActivity" />
-
+        <activity android:name="com.stur.lib.activity.SearchActivity" />
 
         <service android:name="com.stur.chest.service.ChestService" />
         <!--添加BaiduLBS方案6-4-->
