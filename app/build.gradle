@@ -148,7 +148,9 @@ def getVersionName(boolean isRelease) {
         String time = new Date().format("HHmmss")
         //不要加HHmmss的时间戳，否则会由于编译和安装时间不一致导致run as时找不到目标apk
         //majorNumber + "." + minorNumber + "." + revisionNumber + ".$today.$time." + revisionDescription
-        majorNumber + "." + minorNumber + "." + revisionNumber + ".$today." + revisionDescription
+        //majorNumber + "." + minorNumber + "." + revisionNumber + ".$today." + revisionDescription
+        //不要加revisionNumber，否则提交git后会由于tag改变而无法安装
+        majorNumber + "." + minorNumber
     }
 }
 

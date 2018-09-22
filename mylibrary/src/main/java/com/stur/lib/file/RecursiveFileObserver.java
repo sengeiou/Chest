@@ -24,6 +24,7 @@ public class RecursiveFileObserver extends FileObserver {
     int mMask;
 
     public RecursiveFileObserver(String path) {
+        // MOVED_FROM 或者 MOVED_TO 即为重命名事件
         this(path, ALL_EVENTS);
     }
 
@@ -82,6 +83,7 @@ public class RecursiveFileObserver extends FileObserver {
     @Override
     public void onEvent(int event, String path) {
         int el = event & FileObserver.ALL_EVENTS;
+        Log.d(this, "onEvent: el = " + el);
         switch (el) {
             case FileObserver.ATTRIB:
                 Log.i(this, "ATTRIB: " + path);

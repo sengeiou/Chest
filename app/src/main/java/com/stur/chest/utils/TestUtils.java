@@ -24,6 +24,7 @@ public class TestUtils {
      * 单元测试模块，按照首字母排序
      * @param context
      */
+    RecursiveFileObserver mLister = null;
     public void unitTest(Context context) {
         /*********** BluetoothUtils ************/
         //BluetoothUtils.getBondedDevices();
@@ -53,8 +54,8 @@ public class TestUtils {
                     e.printStackTrace();
                 }*/
         //FileUtils.deleteDirectory("/sdcard/YunDaLog");
-        RecursiveFileObserver lister = new RecursiveFileObserver("/sdcard/YUNDARecord/Normal Records/");
-        lister.startWatching();
+        mLister = new RecursiveFileObserver("/sdcard/YUNDARecord/Normal Records/");
+        mLister.startWatching();
 
         /*********** HTTP ************/
         //testHttpRequest(context);

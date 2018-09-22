@@ -41,6 +41,8 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -772,8 +774,10 @@ public class FileUtils {
      * @return
      */
     public static boolean renamePath(String oldName, String newName) {
-        File f = new File(oldName);
-        return f.renameTo(new File(newName));
+        File oldFile = new File(oldName);
+        File newFile = new File(newName);
+        newFile.setWritable(true);
+        return oldFile.renameTo(newFile);
     }
 
     /**
@@ -1706,7 +1710,7 @@ public class FileUtils {
         /* 取得扩展名 */
         String suffix = file.getName().substring(file.getName().lastIndexOf(".") + 1,
                 file.getName().length()).toLowerCase(Locale.getDefault());
-        String[] audioTypeArray = {"m4a", "mp3", "mid", "xmf", "ogg", "wav", "aac"};
+        String[] audioTypeArray = {"aac", "amr", "m4a", "mp3", "mid", "xmf", "ogg", "wav", "aac"};
         if (Arrays.asList(audioTypeArray).contains(suffix)) {
             return true;
         } else {
@@ -2171,5 +2175,67 @@ public class FileUtils {
         Uri uri = Uri.fromFile(new File(param));
         intent.setDataAndType(uri, "application/pdf");
         return intent;
+    }
+
+    //按文件名称排序
+    public static File[] orderByName(String filePath) {
+        File file = new File(filePath);
+        File[] files = file.listFiles();
+        List fileList = Arrays.asList(files);
+        Collections.sort(fileList, new Comparator<File>() {
+            @Override
+            public int compare(File o1, File o2) {
+                if (o1.isDirectory() && o2.isFile())
+                    return -1;
+                if (o1.isFile() && o2.isDirectory())
+                    return 1;
+                return o1.getName().compareTo(o2.getName());
+            }
+        });
+        return files;
+    }
+
+    //按文件修改日期排序：递增
+    public static File[] orderByDate(String filePath) {
+        File file = new File(filePath);
+        File[] files = file.listFiles();
+        Arrays.sort(files, new Comparator<File>() {
+            public int compare(File f1, File f2) {
+                long diff = f1.lastModified() - f2.lastModified();
+                if (diff > 0)
+                    return 1;
+                else if (diff == 0)
+                    return 0;
+                else
+                    return -1;//如果 if 中修改为 返回-1 同时此处修改为返回 1  排序就会是递减
+            }
+
+            public boolean equals(Object obj) {
+                return true;
+            }
+        });
+        return files;
+    }
+
+    //按文件大小排序
+    public static File[] orderByLength(String filePath) {
+        File file = new File(filePath);
+        File[] files = file.listFiles();
+        List<File> fileList = Arrays.asList(files);
+        Collections.sort(fileList, new Comparator<File>() {
+            public int compare(File f1, File f2) {
+                long diff = f1.length() - f2.length();
+                if (diff > 0)
+                    return 1;
+                else if (diff == 0)
+                    return 0;
+                else
+                    return -1;//如果 if 中修改为 返回-1 同时此处修改为返回 1  排序就会是递减
+            }
+            public boolean equals(Object obj) {
+                return true;
+            }
+        });
+        return files;
     }
 }
