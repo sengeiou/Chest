@@ -1,5 +1,6 @@
 package com.stur.lib.thread;
 
+import android.app.Activity;
 import android.os.Handler;
 
 public class ThreadUtils {
@@ -38,4 +39,15 @@ public class ThreadUtils {
             mHandler.postDelayed(mRunnable, 3000);  //给自己发送消息，自运行
         }
     };
+
+    /**
+     * 在UI线程中执行
+     */
+    public static void runOnUIThread(Activity activity) {
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                new ReaderAsyncTask().execute("");
+            }
+        });
+    }
 }
