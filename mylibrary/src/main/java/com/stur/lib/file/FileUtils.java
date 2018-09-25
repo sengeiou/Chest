@@ -251,6 +251,12 @@ public class FileUtils {
         return new File(context.getExternalCacheDir(), System.currentTimeMillis() + "." + type);
     }
 
+    /**
+     * 单层目录下搜索文件
+     * @param root
+     * @param keyWords
+     * @return
+     */
     public static List<String> searchFile(File root, String keyWords) {
         List<String> result = new ArrayList<>();
         File[] listFiles = root.listFiles();
@@ -266,6 +272,38 @@ public class FileUtils {
         }
         return null;
     }
+
+    /**
+     * 递归搜索目录下的所有文件
+     * 仅限于较低层级的目录搜索，多级目录比较耗时
+     * @param filePath 搜索的根目录
+     * @param keyWords 关键字
+     * @return 返回搜索结果的绝对路径列表
+     */
+    public static List<String> searchAllFile(String filePath, String keyWords) {
+        List<String> result = new ArrayList<>();
+        File root = new File(filePath);
+        if (root.exists()) {
+            try {
+                File[] files = root.listFiles();
+                if (files.length > 0) {
+                    for (int i = 0; i < files.length; i++) {
+                        if (!files[i].isDirectory()) {
+                            if (files[i].getName().indexOf(keyWords) > -1) {
+                                result.add(files[i].getAbsolutePath());
+                            }
+                        } else {
+                            result.addAll(searchAllFile(files[i].getAbsolutePath(), keyWords));
+                        }
+                    }
+                }
+            } catch (Exception e) {
+            }
+            return result;
+        }
+        return null;
+    }
+
 
     public static boolean isValidFileName(String fileName) {
         String pattern = "[^\\s\\\\/:\\*\\?\\\"<>\\|](\\x20|[^\\s\\\\/:\\*\\?\\\"<>\\|])*[^\\s\\\\/:\\*\\?\\\"<>\\|\\.]$";
@@ -2232,6 +2270,7 @@ public class FileUtils {
                 else
                     return -1;//如果 if 中修改为 返回-1 同时此处修改为返回 1  排序就会是递减
             }
+
             public boolean equals(Object obj) {
                 return true;
             }
