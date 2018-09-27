@@ -37,6 +37,7 @@ import com.stur.lib.file.FileUtils;
 import com.stur.lib.network.WakeOnLan;
 import com.stur.lib.network.WifiUtils;
 import com.stur.lib.os.PackageUtils;
+import com.stur.lib.view.DiffuseView;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -49,8 +50,11 @@ public class ToolsFragment extends Fragment {
     private TextView mEtInput;
     private TextView mTvOutput;
     private PieChart mPieChart;
+    private DiffuseView mDiffuseView;
     private Handler mHandler;
     private String mOutput = "";
+
+    private static final int EVENT_DIFFUSE_START = 1;
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -63,6 +67,11 @@ public class ToolsFragment extends Fragment {
         mHandler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
+                switch (msg.what) {
+                    case EVENT_DIFFUSE_START:
+                        mDiffuseView.start();
+                        break;
+                }
             }
         };
         return view;
@@ -211,6 +220,7 @@ public class ToolsFragment extends Fragment {
         });
 
         initPieChart(view);
+        initDiffuseView(view);
     }
 
     private void initPieChart(View view) {
@@ -301,10 +311,21 @@ public class ToolsFragment extends Fragment {
         pieData.setValueTextSize(12f);
         pieData.setValueTextColor(Color.BLUE);
 
-        mPieChart.setData(pieData);
+        mPieChart.setData(pieData);;
         // undo all highlights
         mPieChart.highlightValues(null);
         mPieChart.invalidate();
+    }
+
+    private void initDiffuseView(View view) {
+        mDiffuseView = (DiffuseView) view.findViewById(R.id.dv_test);
+        mDiffuseView.setCoreImage(R.drawable.touch);
+        mDiffuseView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new TestUtils().unitTest(getContext());
+            }
+        });
     }
 
     @Override
@@ -317,5 +338,6 @@ public class ToolsFragment extends Fragment {
         sb.append("setprop  " + StActivityName.PROP_ACTIVITY_NAME + "com.stur.lib.activity.SplashActivity" + "\n");
         sb.append("mac addr: " + SharedPreferenceUtils.getString(SharedPreferenceUtils.KEY_MAC_ADDR));
         mTvOutput.setText(sb);
+        mHandler.sendEmptyMessageDelayed(EVENT_DIFFUSE_START, 500);
     }
 }

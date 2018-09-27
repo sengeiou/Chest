@@ -20,6 +20,8 @@ import java.util.List;
  *  DiffuseView mDiffuseView = (DiffuseView) findViewById(R.id.diffuseView);
  *  mDiffuseView.start(); // 开始扩散
  *  mDiffuseView.stop();// 停止扩散
+ *  注意：这个start()不能在onresume中立即启动生效，可以启用一个handler延迟500ms后start
+ *  直接handler处理也是无效的，500ms基本不会有视觉切换的感觉
  */
 public class DiffuseView extends View {
 

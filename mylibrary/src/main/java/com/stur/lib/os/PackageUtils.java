@@ -215,4 +215,11 @@ public class PackageUtils {
         } else {
         }*/
     }
+
+    /**
+     * 系统是否支持某Feature
+     */
+    public static boolean hasSystemFeature(Context context) {
+        return context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_PRINTING);
+    }
 }

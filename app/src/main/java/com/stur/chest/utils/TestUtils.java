@@ -5,8 +5,8 @@ import android.content.Context;
 import com.google.gson.reflect.TypeToken;
 import com.stur.chest.dto.UserAccountDTO;
 import com.stur.lib.Log;
+import com.stur.lib.SystemPropertiesProxy;
 import com.stur.lib.UIHelper;
-import com.stur.lib.file.FileUtils;
 import com.stur.lib.web.HttpFactory;
 import com.stur.lib.web.api.HttpResponseListener;
 import com.stur.lib.web.request.HttpMethod;
@@ -14,7 +14,6 @@ import com.stur.lib.web.request.HttpRequest;
 import com.stur.lib.web.response.HttpResponse;
 
 import java.lang.reflect.Type;
-import java.util.List;
 
 /**
  * Created by Sturmegezhutz on 2018/9/15.
@@ -56,8 +55,8 @@ public class TestUtils {
         //FileUtils.deleteDirectory("/sdcard/YunDaLog");
         /*RecursiveFileObserver lister = new RecursiveFileObserver("/sdcard/YUNDARecord/Normal Records/");
         lister.startWatching();*/
-        List<String> list = FileUtils.searchAllFile("/sdcard/YUNDARecord/Normal Records/", "YR");
-        List<String> list2 = list;
+        //List<String> list = FileUtils.searchAllFile("/sdcard/YUNDARecord/Normal Records/", "YR");
+
 
 
         /*********** HTTP ************/
@@ -78,16 +77,15 @@ public class TestUtils {
 
         /*********** PackageUtils ************/
         //PackageUtils.initiateClearUserData(getContext(), "com.android.systemui");
+        //boolean ret = PackageUtils.hasSystemFeature(context);
 
         /*********** startActivity ************/
         //拉起某个界面
-        /*Intent intent = new Intent(context, SearchActivity.class);
+        /*Intent intent = new Intent(context, DiffuseActivity.class);
         context.startActivity(intent);*/
         //拉起某个 服务
         /*Intent startIntent = new Intent(this, ChestService.class);
         startService(startIntent);*/
-
-
 
         /*********** StringUtils ************/
         //byte[] ba = StringUtils.hexStrToByteArray("00A40004023F00");
@@ -96,6 +94,9 @@ public class TestUtils {
         //SystemUIUtils.sendBroadcastForFlashLight(getContext());
         //SystemUIUtils.setLockNone(getContext());
         //SystemUIUtils.notifyLauncherUI(getContext(), "com.un.coolmessage","com.yulong.android.contacts.dial.DialActivity", 3);
+
+        /*********** SystemProperties ************/
+        SystemPropertiesProxy.set(context, "persist.yulong.operators.mode", "1");
 
         /*********** TMUtils ************/
         //String ret = IccidParser.getInstance().getCarrier("898603");

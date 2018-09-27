@@ -17,9 +17,6 @@ import android.widget.LinearLayout;
 
 import com.stur.lib.R;
 
-/**
- * Created by lizhangqu on 15-6-16.
- */
 public class CircleIndicator extends LinearLayout implements ViewPager.OnPageChangeListener {
     private static final int SCROLL_WHAT=0x01;
     private static final int CIRCLE_STROKE_WIDTH =1;
