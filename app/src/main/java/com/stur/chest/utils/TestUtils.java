@@ -96,7 +96,8 @@ public class TestUtils {
         //SystemUIUtils.notifyLauncherUI(getContext(), "com.un.coolmessage","com.yulong.android.contacts.dial.DialActivity", 3);
 
         /*********** SystemProperties ************/
-        SystemPropertiesProxy.set(context, "persist.yulong.operators.mode", "1");
+        String str = SystemPropertiesProxy.get(context, "persist.yulong.ggg");
+        Log.d(this, "SystemPropertiesProxy = " + str);
 
         /*********** TMUtils ************/
         //String ret = IccidParser.getInstance().getCarrier("898603");
