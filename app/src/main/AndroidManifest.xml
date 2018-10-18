@@ -102,6 +102,8 @@
         <activity android:name="android_serialport_api.sample.SerialPortPreferences" />
         <activity android:name="android_serialport_api.sample.Sending01010101Activity" />
         <activity android:name="com.stur.activity.GestureActivity" />
+        <activity android:name="com.stur.activity.SwipeListActivity" />
+
 
 
 

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.google.gson.reflect.TypeToken;
-import com.stur.activity.GestureActivity;
+import com.stur.activity.SwipeListActivity;
 import com.stur.chest.dto.UserAccountDTO;
 import com.stur.lib.Log;
 import com.stur.lib.UIHelper;
@@ -81,7 +81,7 @@ public class TestUtils {
 
         /*********** startActivity ************/
         //拉起某个界面
-        Intent intent = new Intent(context, GestureActivity.class);
+        Intent intent = new Intent(context, SwipeListActivity.class);
         context.startActivity(intent);
         //拉起某个 服务
         /*Intent startIntent = new Intent(this, ChestService.class);
