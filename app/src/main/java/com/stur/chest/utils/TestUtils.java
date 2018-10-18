@@ -1,11 +1,11 @@
 package com.stur.chest.utils;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.google.gson.reflect.TypeToken;
 import com.stur.chest.dto.UserAccountDTO;
 import com.stur.lib.Log;
-import com.stur.lib.SystemPropertiesProxy;
 import com.stur.lib.UIHelper;
 import com.stur.lib.web.HttpFactory;
 import com.stur.lib.web.api.HttpResponseListener;
@@ -14,6 +14,8 @@ import com.stur.lib.web.request.HttpRequest;
 import com.stur.lib.web.response.HttpResponse;
 
 import java.lang.reflect.Type;
+
+import android_serialport_api.sample.MainMenu;
 
 /**
  * Created by Sturmegezhutz on 2018/9/15.
@@ -58,7 +60,6 @@ public class TestUtils {
         //List<String> list = FileUtils.searchAllFile("/sdcard/YUNDARecord/Normal Records/", "YR");
 
 
-
         /*********** HTTP ************/
         //testHttpRequest(context);
 
@@ -81,8 +82,8 @@ public class TestUtils {
 
         /*********** startActivity ************/
         //拉起某个界面
-        /*Intent intent = new Intent(context, DiffuseActivity.class);
-        context.startActivity(intent);*/
+        Intent intent = new Intent(context, MainMenu.class);
+        context.startActivity(intent);
         //拉起某个 服务
         /*Intent startIntent = new Intent(this, ChestService.class);
         startService(startIntent);*/
@@ -96,8 +97,8 @@ public class TestUtils {
         //SystemUIUtils.notifyLauncherUI(getContext(), "com.un.coolmessage","com.yulong.android.contacts.dial.DialActivity", 3);
 
         /*********** SystemProperties ************/
-        String str = SystemPropertiesProxy.get(context, "persist.yulong.ggg");
-        Log.d(this, "SystemPropertiesProxy = " + str);
+        //String str = SystemPropertiesProxy.get(context, "persist.yulong.ggg");
+        //Log.d(this, "SystemPropertiesProxy = " + str);
 
         /*********** TMUtils ************/
         //String ret = IccidParser.getInstance().getCarrier("898603");

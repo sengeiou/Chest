@@ -12,6 +12,13 @@ android {
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
+        externalNativeBuild {
+            cmake {
+                abiFilters 'arm64-v8a', 'armeabi-v7a', 'x86', 'x86_64'
+                // 指定C++标准
+                cppFlags "-std=c++11"
+            }
+        }
     }
 
     buildTypes {
@@ -23,6 +30,12 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    externalNativeBuild {
+        cmake {
+            path "CMakeLists.txt"
         }
     }
 }
@@ -56,7 +69,7 @@ dependencies {
     //集成umeng的移动统计功能5-1
     compile 'com.umeng.analytics:analytics:latest.integration'
     // 添加BaiduLBS方案6-2
-    compile files('../../libs-keystores/BaiduLBS/libs/BaiduLBS_Android.jar')
+    // compile files('../../libs-keystores/BaiduLBS/libs/BaiduLBS_Android.jar')
 }
 
 //添加framework的依赖jar包3-3
