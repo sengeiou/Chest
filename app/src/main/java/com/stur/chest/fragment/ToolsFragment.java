@@ -26,9 +26,7 @@ import com.stur.chest.utils.TestUtils;
 import com.stur.lib.AdbUtils;
 import com.stur.lib.Log;
 import com.stur.lib.SharedPreferenceUtils;
-import com.stur.lib.StringUtils;
 import com.stur.lib.SystemPropertiesProxy;
-import com.stur.lib.UIHelper;
 import com.stur.lib.Utils;
 import com.stur.lib.config.ConfigManager;
 import com.stur.lib.constant.StActivityName;
@@ -132,22 +130,13 @@ public class ToolsFragment extends Fragment {
         view.findViewById(R.id.btn_wakeup_pc).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(this, "onPCWakeup");
-                String mac = mEtInput.getText().toString();
-                if(StringUtils.isMacAddr(mac)) {
-                    SharedPreferenceUtils.putString(SharedPreferenceUtils.KEY_MAC_ADDR, mac);
-                    UIHelper.toastMessageMiddle(getContext(), "new mac addr is saved");
-                } else {
-                    String oldMac = SharedPreferenceUtils.getString(SharedPreferenceUtils.KEY_MAC_ADDR);
-                    //如果之前保存过mac地址则使用旧的mac
-                    if (StringUtils.isMacAddr(oldMac)) {
-                        mac = oldMac;
-                    } else {
-                        mac = Constant.MAC_PC;
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        WakeOnLan.start(Constant.MAC_PC);
                     }
-                }
-                WakeOnLan.start(mac);
-                mTvOutput.setText("wake on lan at: " + mac);
+                }).start();
+                mTvOutput.setText("wake on lan at: " + Constant.MAC_PC);
             }
         });
 
