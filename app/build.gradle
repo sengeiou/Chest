@@ -112,6 +112,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
+            // 是否输出LOG信息，代码中通过 BuildConfig.LOG_DEBUG 使用
+            buildConfigField "boolean", "LOG_DEBUG", "true"
+            // 不同的API地址，适用于debug服务器和release服务器不同地址的情况
+            buildConfigField "String", "API_HOST", "\"http://api.test.com\""
             signingConfig signingConfigs.debug
             jniDebuggable true
         }

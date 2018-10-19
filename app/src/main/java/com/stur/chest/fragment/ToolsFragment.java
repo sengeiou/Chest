@@ -59,7 +59,6 @@ public class ToolsFragment extends Fragment {
                              @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_tools, null);
         Log.d(view, "onCreateView");
-
         initView(view);
 
         mHandler = new Handler() {

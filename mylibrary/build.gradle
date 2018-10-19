@@ -12,11 +12,13 @@ android {
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-        externalNativeBuild {
-            cmake {
-                abiFilters 'arm64-v8a', 'armeabi-v7a', 'x86', 'x86_64'
-                // 指定C++标准
-                cppFlags "-std=c++11"
+        if (rootProject.jniIntegrationEnabled.equals('1')) {
+            externalNativeBuild {
+                cmake {
+                    abiFilters 'arm64-v8a', 'armeabi-v7a', 'x86', 'x86_64'
+                    // 指定C++标准
+                    cppFlags "-std=c++11"
+                }
             }
         }
     }
@@ -33,9 +35,11 @@ android {
         }
     }
 
-    externalNativeBuild {
-        cmake {
-            path "CMakeLists.txt"
+    if (rootProject.jniIntegrationEnabled.equals('1')) {
+        externalNativeBuild {
+            cmake {
+                path "CMakeLists.txt"
+            }
         }
     }
 }
