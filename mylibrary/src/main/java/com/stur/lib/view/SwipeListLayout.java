@@ -16,14 +16,14 @@ import com.stur.lib.Log;
  */
 public class SwipeListLayout extends FrameLayout {
 
-	private View hiddenView;
-	private View itemView;
+	private View mHiddenView;  //被隐藏的置顶/删除按钮
+	private View mItemView;  // List视图
 	private int hiddenViewWidth;
 	private ViewDragHelper mDragHelper;
 	private int hiddenViewHeight;
 	private int itemWidth;
 	private int itemHeight;
-	private OnSwipeStatusListener listener;
+	private OnSwipeStatusListener mListener;
 	private Status status = Status.Close;
 	private boolean smooth = true;
 
@@ -50,7 +50,7 @@ public class SwipeListLayout extends FrameLayout {
 	}
 
 	public void setOnSwipeStatusListener(OnSwipeStatusListener listener) {
-		this.listener = listener;
+		this.mListener = listener;
 	}
 
 	/**
@@ -97,12 +97,12 @@ public class SwipeListLayout extends FrameLayout {
 
 		@Override
 		public boolean tryCaptureView(View view, int arg1) {
-			return view == itemView;
+			return view == mItemView;
 		}
 
 		@Override
 		public int clampViewPositionHorizontal(View child, int left, int dx) {
-			if (child == itemView) {
+			if (child == mItemView) {
 				if (left > 0) {
 					return 0;
 				} else {
@@ -121,8 +121,8 @@ public class SwipeListLayout extends FrameLayout {
 		@Override
 		public void onViewPositionChanged(View changedView, int left, int top,
 				int dx, int dy) {
-			if (itemView == changedView) {
-				hiddenView.offsetLeftAndRight(dx);
+			if (mItemView == changedView) {
+				mHiddenView.offsetLeftAndRight(dx);
 			}
 			// 有时候滑动很快的话 会出现隐藏按钮的linearlayout没有绘制的问题
 			// 为了确保绘制成功 调用 invalidate
@@ -131,9 +131,9 @@ public class SwipeListLayout extends FrameLayout {
 
 		public void onViewReleased(View releasedChild, float xvel, float yvel) {
 			// 向右滑xvel为正 向左滑xvel为负
-			if (releasedChild == itemView) {
+			if (releasedChild == mItemView) {
 				if (xvel == 0
-						&& Math.abs(itemView.getLeft()) > hiddenViewWidth / 2.0f) {
+						&& Math.abs(mItemView.getLeft()) > hiddenViewWidth / 2.0f) {
 					open(smooth);
 				} else if (xvel < 0) {
 					open(smooth);
@@ -156,19 +156,19 @@ public class SwipeListLayout extends FrameLayout {
 		preStatus = status;
 		status = Status.Close;
 		if (smooth) {
-			if (mDragHelper.smoothSlideViewTo(itemView, 0, 0)) {
-				if (listener != null) {
+			if (mDragHelper.smoothSlideViewTo(mItemView, 0, 0)) {
+				if (mListener != null) {
 					Log.i(this, "start close animation");
-					listener.onStartCloseAnimation();
+					mListener.onStartCloseAnimation();
 				}
 				ViewCompat.postInvalidateOnAnimation(this);
 			}
 		} else {
 			layout(status);
 		}
-		if (listener != null && preStatus == Status.Open) {
+		if (mListener != null && preStatus == Status.Open) {
 			Log.i(this, "close");
-			listener.onStatusChanged(status);
+			mListener.onStatusChanged(status);
 		}
 	}
 
@@ -178,13 +178,13 @@ public class SwipeListLayout extends FrameLayout {
 	 */
 	private void layout(Status status) {
 		if (status == Status.Close) {
-			hiddenView.layout(itemWidth, 0, itemWidth + hiddenViewWidth,
+			mHiddenView.layout(itemWidth, 0, itemWidth + hiddenViewWidth,
 					itemHeight);
-			itemView.layout(0, 0, itemWidth, itemHeight);
+			mItemView.layout(0, 0, itemWidth, itemHeight);
 		} else {
-			hiddenView.layout(itemWidth - hiddenViewWidth, 0, itemWidth,
+			mHiddenView.layout(itemWidth - hiddenViewWidth, 0, itemWidth,
 					itemHeight);
-			itemView.layout(-hiddenViewWidth, 0, itemWidth - hiddenViewWidth,
+			mItemView.layout(-hiddenViewWidth, 0, itemWidth - hiddenViewWidth,
 					itemHeight);
 		}
 	}
@@ -199,19 +199,19 @@ public class SwipeListLayout extends FrameLayout {
 		preStatus = status;
 		status = Status.Open;
 		if (smooth) {
-			if (mDragHelper.smoothSlideViewTo(itemView, -hiddenViewWidth, 0)) {
-				if (listener != null) {
+			if (mDragHelper.smoothSlideViewTo(mItemView, -hiddenViewWidth, 0)) {
+				if (mListener != null) {
 					Log.i(this, "start open animation");
-					listener.onStartOpenAnimation();
+					mListener.onStartOpenAnimation();
 				}
 				ViewCompat.postInvalidateOnAnimation(this);
 			}
 		} else {
 			layout(status);
 		}
-		if (listener != null && preStatus == Status.Close) {
+		if (mListener != null && preStatus == Status.Close) {
 			Log.i(this, "open");
-			listener.onStatusChanged(status);
+			mListener.onStatusChanged(status);
 		}
 	}
 
@@ -243,18 +243,18 @@ public class SwipeListLayout extends FrameLayout {
 	@Override
 	protected void onFinishInflate() {
 		super.onFinishInflate();
-		hiddenView = getChildAt(0); // 得到隐藏按钮的linearlayout
-		itemView = getChildAt(1); // 得到最上层的linearlayout
+		mHiddenView = getChildAt(0); // 得到隐藏按钮的linearlayout
+		mItemView = getChildAt(1); // 得到最上层的linearlayout
 	}
 
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
 		// 测量子View的长和宽
-		itemWidth = itemView.getMeasuredWidth();
-		itemHeight = itemView.getMeasuredHeight();
-		hiddenViewWidth = hiddenView.getMeasuredWidth();
-		hiddenViewHeight = hiddenView.getMeasuredHeight();
+		itemWidth = mItemView.getMeasuredWidth();
+		itemHeight = mItemView.getMeasuredHeight();
+		hiddenViewWidth = mHiddenView.getMeasuredWidth();
+		hiddenViewHeight = mHiddenView.getMeasuredHeight();
 	}
 
 	@Override

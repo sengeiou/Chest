@@ -27,6 +27,8 @@ import java.util.Set;
 public class SwipeListActivity extends Activity {
 
     private List<String> mList = new ArrayList<String>(15);
+
+    // 保存当前展开侧滑按钮的item
     private Set<SwipeListLayout> sets = new HashSet();
 
     @Override
@@ -43,7 +45,7 @@ public class SwipeListActivity extends Activity {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
                 switch (scrollState) {
-                    //当listview开始滑动时，若有item的状态为Open，则Close，然后移除
+                    //当listview开始上下滑动时，若有item的状态为Open（即展开了侧滑按钮），则Close，然后移除
                     case SCROLL_STATE_TOUCH_SCROLL:
                         if (sets.size() > 0) {
                             for (SwipeListLayout s : sets) {
@@ -52,14 +54,12 @@ public class SwipeListActivity extends Activity {
                             }
                         }
                         break;
-
                 }
             }
 
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem,
                                  int visibleItemCount, int totalItemCount) {
-
             }
         });
     }
