@@ -23,6 +23,7 @@ import java.lang.reflect.Type;
 public class TestUtils {
     /**
      * 单元测试模块，按照首字母排序
+     *
      * @param context
      */
     public void unitTest(Context context) {
@@ -83,6 +84,18 @@ public class TestUtils {
         //拉起某个界面
         Intent intent = new Intent(context, SwipeListActivity.class);
         context.startActivity(intent);
+        /*Intent intent = new Intent("android.intent.action.MBNFileActivate");
+        ComponentName cn = new ComponentName("com.qualcomm.qti.modemtestmode", "com.qualcomm.qti.modemtestmode.MbnFileActivate");
+        intent.setComponent(cn);
+        //intent.setClassName("com.qualcomm.qti.modemtestmode", "com.qualcomm.qti.modemtestmode.MbnFileActivate");
+        context.startActivity(intent);*/
+
+
+        /*PackageManager packageManager = context.getPackageManager();
+        Intent intent = packageManager.getLaunchIntentForPackage("com.qualcomm.qti.modemtestmode");
+        context.startActivity(intent);*/
+
+
         //拉起某个 服务
         /*Intent startIntent = new Intent(this, ChestService.class);
         startService(startIntent);*/

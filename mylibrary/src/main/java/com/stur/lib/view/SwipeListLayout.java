@@ -41,6 +41,7 @@ public class SwipeListLayout extends FrameLayout {
 	 *            若为true则有过渡动画，否则没有
 	 */
 	public void setStatus(Status status, boolean smooth) {
+		Log.d(this, "setStatus: status = " + status + ", smooth = " + smooth);
 		this.status = status;
 		if (status == Status.Open) {
 			open(smooth);
@@ -129,10 +130,14 @@ public class SwipeListLayout extends FrameLayout {
 			invalidate();
 		}
 
+		@Override
 		public void onViewReleased(View releasedChild, float xvel, float yvel) {
+			Log.d(this, "onViewReleased: ");
 			// 向右滑xvel为正 向左滑xvel为负
 			if (releasedChild == mItemView) {
 				if (xvel == 0
+						// 如果左滑的距离超过侧滑按钮布局控件一般的宽度，则启动拉起侧滑动画
+						// 如果侧滑体验不好，需要在这里调试参数
 						&& Math.abs(mItemView.getLeft()) > hiddenViewWidth / 2.0f) {
 					open(smooth);
 				} else if (xvel < 0) {
@@ -192,10 +197,10 @@ public class SwipeListLayout extends FrameLayout {
 	/**
 	 * 侧滑打开
 	 * 
-	 * @param smooth
-	 *            为true则有平滑的过渡动画
+	 * @param smooth 为true则有平滑的过渡动画
 	 */
 	private void open(boolean smooth) {
+		Log.d(this, "open smooth = " + smooth);
 		preStatus = status;
 		status = Status.Open;
 		if (smooth) {
@@ -236,6 +241,7 @@ public class SwipeListLayout extends FrameLayout {
 
 	// 让ViewDragHelper来处理触摸事件
 	public boolean onTouchEvent(MotionEvent event) {
+		Log.d(this, "onTouchEvent: event = " + event);
 		mDragHelper.processTouchEvent(event);
 		return true;
 	};
