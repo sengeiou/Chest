@@ -84,9 +84,10 @@ public class TestUtils {
         //拉起某个界面
         Intent intent = new Intent(context, SwipeListActivity.class);
         context.startActivity(intent);
-        /*Intent intent = new Intent("android.intent.action.MBNFileActivate");
+        /*Intent intent = new Intent();
         ComponentName cn = new ComponentName("com.qualcomm.qti.modemtestmode", "com.qualcomm.qti.modemtestmode.MbnFileActivate");
         intent.setComponent(cn);
+        intent.setAction("android.intent.action.MBNFileActivate");
         //intent.setClassName("com.qualcomm.qti.modemtestmode", "com.qualcomm.qti.modemtestmode.MbnFileActivate");
         context.startActivity(intent);*/
 

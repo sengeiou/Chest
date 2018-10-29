@@ -6,8 +6,10 @@ import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.KeyEvent;
 import android.widget.Toast;
 
+import com.stur.lib.Log;
 import com.stur.lib.R;
 import com.stur.lib.app.AppManager;
 import com.stur.lib.app.ContextBase;
@@ -17,6 +19,7 @@ import com.stur.lib.constant.StConstant;
 import com.stur.lib.os.BusProvider;
 import com.stur.lib.os.PackageUtils;
 import com.umeng.analytics.MobclickAgent;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -92,7 +95,7 @@ public abstract class ActivityBase extends AppCompatActivity implements IContext
     protected void checkInitkWiFiPermission() {
         int hasWriteContactsPermission = checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION);
         if (hasWriteContactsPermission != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[] { Manifest.permission.ACCESS_COARSE_LOCATION },
+            requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
                     StConstant.REQUEST_CODE_WIFI_SCAN);
             return;
         }
@@ -151,13 +154,13 @@ public abstract class ActivityBase extends AppCompatActivity implements IContext
                 showMessageOKCancel("You need to allow access to Contacts", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        requestPermissions(new String[] { Manifest.permission.ACCESS_COARSE_LOCATION },
+                        requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
                                 StConstant.REQUEST_CODE_WIFI_SCAN);
                     }
                 });
                 return;
             }
-            requestPermissions(new String[] { Manifest.permission.ACCESS_COARSE_LOCATION },
+            requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
                     StConstant.REQUEST_CODE_WIFI_SCAN);
             return;
         }
@@ -225,5 +228,24 @@ public abstract class ActivityBase extends AppCompatActivity implements IContext
     protected void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
         new AlertDialog.Builder(this).setMessage(message).setPositiveButton("OK", okListener)
                 .setNegativeButton("Cancel", null).create().show();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_MENU:
+                Log.d(this, "KeyEvent.KEYCODE_MENU");
+                break;
+            case KeyEvent.KEYCODE_HOME:
+                Log.d(this, "KeyEvent.KEYCODE_HOME");
+                finish();
+                break;
+            case KeyEvent.KEYCODE_BACK:
+                Log.d(this, "KeyEvent.KEYCODE_BACK");
+                break;
+            default:
+                Log.d(this, "no matched: " + keyCode);
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }
