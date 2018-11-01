@@ -16,14 +16,14 @@
 
 package android_serialport_api;
 
+import android.util.Log;
+
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.LineNumberReader;
 import java.util.Iterator;
 import java.util.Vector;
-
-import android.util.Log;
 
 public class SerialPortFinder {
 
@@ -35,6 +35,7 @@ public class SerialPortFinder {
 		private String mDriverName;
 		private String mDeviceRoot;
 		Vector<File> mDevices = null;
+		// 这里应用需要为platform签名或者system用户，否则读取dev目录失败
 		public Vector<File> getDevices() {
 			if (mDevices == null) {
 				mDevices = new Vector<File>();
@@ -62,6 +63,7 @@ public class SerialPortFinder {
 	Vector<Driver> getDrivers() throws IOException {
 		if (mDrivers == null) {
 			mDrivers = new Vector<Driver>();
+			// 测试时调试样机需要 setenforce 0, 否则会因为权限被拒贰读取失败
 			LineNumberReader r = new LineNumberReader(new FileReader("/proc/tty/drivers"));
 			String l;
 			while((l = r.readLine()) != null) {

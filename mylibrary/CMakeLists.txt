@@ -3,6 +3,13 @@
 # 指定cmake版本
 cmake_minimum_required(VERSION 3.4.1)
 
+#C 的编译选项是 CMAKE_C_FLAGS
+# 指定编译参数，可选
+SET(CMAKE_CXX_FLAGS "-Wno-error=format-security -Wno-error=pointer-sign")
+
+#设置生成的so动态库最后输出的路径
+# set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/../jniLibs/${ANDROID_ABI})
+
 # 指定项目的名称，一般和项目的文件夹名称对应
 # project(Chest)
 
@@ -58,5 +65,4 @@ target_link_libraries( # Specifies the target library.
 
 # 添加需要链接的库文件路径LINK_LIBRARIES
 # link_libraries(log)
-
 

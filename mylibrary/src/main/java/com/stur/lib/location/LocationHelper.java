@@ -4,16 +4,15 @@ import android.content.Context;
 import android.telephony.CellLocation;
 import android.telephony.cdma.CdmaCellLocation;
 
+/*import com.baidu.location.BDAbstractLocationListener;
+import com.baidu.location.BDLocation;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;*/
+import com.stur.lib.Log;
+
 //import com.baidu.location.BDAbstractLocationListener;
 //import com.baidu.location.BDLocation;
 //import com.baidu.location.LocationClientOption;
-import com.stur.lib.Log;
-
-/*import com.baidu.location.BDLocation;
-import com.baidu.location.BDLocationListener;
-import com.baidu.location.LocationClient;
-import com.baidu.location.LocationClientOption;
-import com.baidu.location.Poi;*/
 
 /**
  * BDLocation类，封装了定位SDK的定位结果，在BDLocationListener的onReceive方法中获取。通过该类用户可以获取错误码，位置的坐标，精度半径等信息。具体方法请参考类参考。
@@ -243,9 +242,9 @@ public class LocationHelper {
             sInstance = new LocationHelper(context);
         }
         return sInstance;
-    }*/
+    }
 
-    /*public LocationClient mLocationClient = null;
+    public LocationClient mLocationClient = null;
     //BDAbstractLocationListener为7.2版本新增的Abstract类型的监听接口
     //原有BDLocationListener接口暂时同步保留。
     private MyLocationListener myListener = new MyLocationListener();
@@ -254,10 +253,10 @@ public class LocationHelper {
         mLocationClient = new LocationClient(context);
         mLocationClient.registerLocationListener(myListener);  //注册监听函数
         setOption();
-    }*/
+    }
 
     public void setOption() {
-        //LocationClientOption option = new LocationClientOption();
+        LocationClientOption option = new LocationClientOption();*/
 
         /**
          * 可选，设置定位模式，默认高精度
@@ -307,7 +306,7 @@ public class LocationHelper {
         //需将配置好的LocationClientOption对象，通过setLocOption方法传递给LocationClient对象使用
         //更多LocationClientOption的配置，请参照类参考中LocationClientOption类的详细说明
         //mLocationClient.setLocOption(option);
-    }
+    //}
 
     /**
      * 只需发起定位，便能够从BDAbstractLocationListener监听接口中获取定位结果信息。
@@ -320,9 +319,9 @@ public class LocationHelper {
      */
     /*public void startLocation() {
         mLocationClient.start();
-    }*/
+    }
 
-    /*public class MyLocationListener extends BDAbstractLocationListener {
+    public class MyLocationListener extends BDAbstractLocationListener {
         //此处的BDLocation为定位结果信息类，通过它的各种get方法可获取定位相关的全部结果
         //以下只列举部分获取经纬度相关（常用）的结果信息
         //更多结果信息获取说明，请参照类参考中BDLocation类中的说明

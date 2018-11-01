@@ -3,7 +3,7 @@
 // 全局参数配置区，通过 rootProject.jniIntegrationEnabled 使用
 ext {
     // 是否允许jni编译或集成，默认关闭以提高java调试效率
-    jniIntegrationEnabled = 0
+    jniIntegrationEnabled = '1'
 }
 
 buildscript {

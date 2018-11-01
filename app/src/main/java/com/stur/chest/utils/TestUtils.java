@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.google.gson.reflect.TypeToken;
-import com.stur.activity.SwipeListActivity;
 import com.stur.chest.dto.UserAccountDTO;
 import com.stur.lib.Log;
 import com.stur.lib.UIHelper;
@@ -15,6 +14,8 @@ import com.stur.lib.web.request.HttpRequest;
 import com.stur.lib.web.response.HttpResponse;
 
 import java.lang.reflect.Type;
+
+import android_serialport_api.sample.MainMenu;
 
 /**
  * Created by Sturmegezhutz on 2018/9/15.
@@ -82,7 +83,7 @@ public class TestUtils {
 
         /*********** startActivity ************/
         //拉起某个界面
-        Intent intent = new Intent(context, SwipeListActivity.class);
+        Intent intent = new Intent(context, MainMenu.class);
         context.startActivity(intent);
         /*Intent intent = new Intent();
         ComponentName cn = new ComponentName("com.qualcomm.qti.modemtestmode", "com.qualcomm.qti.modemtestmode.MbnFileActivate");
