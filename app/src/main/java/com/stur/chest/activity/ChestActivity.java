@@ -80,6 +80,14 @@ public class ChestActivity extends FragmentActivityBase {
         if (action.equals(Utils.INTENT_DISPLAY)) {
             String str = intent.getStringExtra(Utils.INTENT_DISPLAY_EXTRA);
             mTvOutput.setText(str);
+        } else if (action.equals("un.intent.incallui.action.CALL_RECORDED")) {
+            String callType = intent.getStringExtra("callType");
+            String loalNumber = intent.getStringExtra("loalNumber");
+            String remoteNumber = intent.getStringExtra("remoteNumber");
+            String startTime = intent.getStringExtra("startTime");
+            String endTime = intent.getStringExtra("endTime");
+            String filePath = intent.getStringExtra("filePath");
+            Log.d(this, "handleIntent: " + callType + loalNumber + remoteNumber + startTime + endTime + filePath);
         }
     }
 
@@ -122,6 +130,7 @@ public class ChestActivity extends FragmentActivityBase {
         IntentFilter filter = new IntentFilter();
         filter.addAction(Utils.INTENT_DISPLAY);
         filter.addAction(Utils.INTENT_TEST);
+        filter.addAction("un.intent.incallui.action.CALL_RECORDED");
         registerReceiver(mBroadcastReceiver, filter);// 注册Broadcast Receiver
     }
 

@@ -18,7 +18,7 @@ SET(CMAKE_CXX_FLAGS "-Wno-error=format-security -Wno-error=pointer-sign")
 # 同步你的项目，然后你会发现 Android studio 将关联的头文件也显示了处理。
 # 然而，为了让 CMake 在编译时期能定位到你的头文件，
 # 你需要在 CMake 构建脚本中添加 include_directories()命令，并指定头文件路径：
-include_directories(src/main/cpp/)
+include_directories(src/main/cpp/SerialPort)
 
 # 源文件目录
 # aux_source_directorydir(cpp DIR_SRCS)
@@ -38,7 +38,7 @@ include_directories(src/main/cpp/)
 # You can  define multiple libraries by adding multiple add.library() commands,
 # and CMake builds them for you. When you build your app,
 # Gradle  automatically packages shared libraries with your APK.
-add_library(serial_port SHARED src/main/cpp/SerialPort.c)
+add_library(serial_port SHARED src/main/cpp/SerialPort/SerialPort.c)
 
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by

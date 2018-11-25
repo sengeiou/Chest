@@ -1,7 +1,6 @@
 package com.stur.chest.utils;
 
 import android.content.Context;
-import android.content.Intent;
 
 import com.google.gson.reflect.TypeToken;
 import com.stur.chest.dto.UserAccountDTO;
@@ -15,7 +14,6 @@ import com.stur.lib.web.response.HttpResponse;
 
 import java.lang.reflect.Type;
 
-import android_serialport_api.sample.MainMenu;
 
 /**
  * Created by Sturmegezhutz on 2018/9/15.
@@ -27,7 +25,7 @@ public class TestUtils {
      *
      * @param context
      */
-    public void unitTest(Context context) {
+    public void unitTest(final Context context) {
         /*********** BluetoothUtils ************/
         //BluetoothUtils.getBondedDevices();
 
@@ -39,7 +37,7 @@ public class TestUtils {
         //mTvOutput.setText(PackageUtils.getSign(getContext(), "com.qualcomm.uimremoteclient"));
 
         /*********** Date ************/
-        //DateUtils.getTwoDay("180910", "181001");
+        //DateUtils.getTwoDay("20181025", "20190327");
 
         /*********** DB ************/
         //Settings.System.putInt(getContext().getContentResolver(),"pointer_screenshotchord", 1);
@@ -62,7 +60,7 @@ public class TestUtils {
 
 
         /*********** HTTP ************/
-        //testHttpRequest(context);
+        HttpRequest(context);
 
         /*********** JAVA ************/
         /**
@@ -83,14 +81,20 @@ public class TestUtils {
 
         /*********** startActivity ************/
         //拉起某个界面
-        Intent intent = new Intent(context, MainMenu.class);
-        context.startActivity(intent);
-        /*Intent intent = new Intent();
-        ComponentName cn = new ComponentName("com.qualcomm.qti.modemtestmode", "com.qualcomm.qti.modemtestmode.MbnFileActivate");
-        intent.setComponent(cn);
-        intent.setAction("android.intent.action.MBNFileActivate");
-        //intent.setClassName("com.qualcomm.qti.modemtestmode", "com.qualcomm.qti.modemtestmode.MbnFileActivate");
+        /*Intent intent = new Intent(context, MainMenu.class);
         context.startActivity(intent);*/
+        /*Intent intent =
+                new Intent("android.provider.Telephony.SECRET_CODE", Uri.parse("android_secret_code://" + "76266344"));
+        ComponentName cn = new ComponentName("com.qualcomm.qti.modemtestmode", "com.qualcomm.qti.modemtestmode.DefaultReceiver");
+        intent.setComponent(cn);
+        context.sendBroadcast(intent);*/
+
+        /*Intent intent1 = new Intent();
+        ComponentName cn1 = new ComponentName("com.qualcomm.qti.modemtestmode", "com.qualcomm.qti.modemtestmode.MbnFileActivate");
+        intent1.setComponent(cn1);*/
+        //intent.setAction("android.intent.action.MBNFileActivate");
+        //intent.setClassName("com.qualcomm.qti.modemtestmode", "com.qualcomm.qti.modemtestmode.MbnFileActivate");
+        //context.startActivity(intent1);
 
 
         /*PackageManager packageManager = context.getPackageManager();
@@ -119,6 +123,26 @@ public class TestUtils {
         //TMUtils.callPhone(getContext(), "10010", 0);
         //new TMUtils.MissedCallObserver(getContext());
 
+        /*********** ThreadUtils ************/
+        /*new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    InetAddress addr = InetAddress.getByName("1.2.3.4.");
+                    String name = addr.getHostName();
+                    Log.d(this, "getByName: " + name);
+                    UIHelper.toastMessage(context, "getByName: " + name );
+                } catch (UnknownHostException e) {
+                    e.printStackTrace();
+                    Log.d(this, "UnknownHostException");
+                    UIHelper.toastMessage(context, "UnknownHostException: " + e);
+                } catch (Exception e) {
+                    Log.d(this, "Exception: " + e);
+                    UIHelper.toastMessage(context, "Exception: " + e);
+                }
+            }
+        }).start();*/
+
         /*********** WifiUtils ************/
         //开启ping
         //WifiUtils.startPing();
@@ -130,9 +154,9 @@ public class TestUtils {
         }*/
     }
 
-    private static void testHttpRequest(final Context context) {
-        HttpRequest httpRequest = new HttpRequest("http://10.66.128.123:8088/test", HttpMethod.POST);
-        httpRequest.addParams(ApiUtils.KEY_TOKEN, "123456");
+    private static void HttpRequest(final Context context) {
+        HttpRequest httpRequest = new HttpRequest("http://218.17.162.179:29500/SoftSIMServer/SoftSIMServlet/card/connect", HttpMethod.POST);
+        httpRequest.addParams("card_id", "0");
         HttpFactory.getHttpService().sendRequest(httpRequest, new HttpResponseListener() {
             @Override
             public void onSuccess(HttpResponse response) {

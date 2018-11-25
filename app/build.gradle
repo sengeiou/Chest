@@ -61,19 +61,19 @@ android {
         }*/
 
         //used for qcom
-        debug {
+        /*debug {
             keyAlias 'qcom_debug'
             keyPassword '123456'
             storeFile file('../../libs-keystores/qcom_debug.jks')
             storePassword '123456'
-        }
+        }*/
 
-        /*debug {
+        debug {
             keyAlias 'stur_release'
             keyPassword '123456'
             storeFile file('../../libs-keystores/stur_release.jks')
             storePassword '123456'
-        }*/
+        }
 
         /*debug {
             keyAlias 'urovo_sq52_overseas'
