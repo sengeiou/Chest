@@ -5,6 +5,7 @@ import android.content.Context;
 import com.google.gson.reflect.TypeToken;
 import com.stur.chest.dto.UserAccountDTO;
 import com.stur.lib.Log;
+import com.stur.lib.SystemPropertiesProxy;
 import com.stur.lib.UIHelper;
 import com.stur.lib.web.HttpFactory;
 import com.stur.lib.web.api.HttpResponseListener;
@@ -60,7 +61,7 @@ public class TestUtils {
 
 
         /*********** HTTP ************/
-        HttpRequest(context);
+        //HttpRequest(context);
 
         /*********** JAVA ************/
         /**
@@ -115,8 +116,10 @@ public class TestUtils {
         //SystemUIUtils.notifyLauncherUI(getContext(), "com.un.coolmessage","com.yulong.android.contacts.dial.DialActivity", 3);
 
         /*********** SystemProperties ************/
-        //String str = SystemPropertiesProxy.get(context, "persist.yulong.ggg");
-        //Log.d(this, "SystemPropertiesProxy = " + str);
+        String str = SystemPropertiesProxy.get(context, "pwv.custom.custom.attach");
+        //String str1 = SystemProperties.get("pwv.custom.custom.attach");
+
+        Log.d(this, "SystemPropertiesProxy = " + str);
 
         /*********** TMUtils ************/
         //String ret = IccidParser.getInstance().getCarrier("898603");

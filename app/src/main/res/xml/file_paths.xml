@@ -1,12 +1,25 @@
-<paths>
-    <!--对应 getFilesDir()，可选-->
-    <files-path name="chest_file" path="."/>
-    <!--对应 getCacheDir()，可选-->
-    <cache-path name="chest_cache" path="." />
-    <!--对应 Environment.getExternalStorageDirectory()，可选-->
-    <external-path name="ext" path="stur" />
-    <!--对应 getExternalFilesDir()，即: sdcard/Android/data/<package>/file/, 可选-->
-    <external-files-path name="ext_file" path="." />
-    <!--对应 getExternalCacheDir()，即: sdcard/Android/data/<package>/cache/ ，可选-->
-    <external-cache-path name="ext_cache" path="." />
-</paths>  
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <paths>
+        <!--对应 getFilesDir()，可选-->
+        <files-path
+            name="chest_file"
+            path="." />
+        <!--对应 getCacheDir()，可选-->
+        <cache-path
+            name="chest_cache"
+            path="." />
+        <!--对应 Environment.getExternalStorageDirectory()，可选-->
+        <external-path
+            name="ext"
+            path="stur" />
+        <!--对应 getExternalFilesDir()，即: sdcard/Android/data/<package>/file/, 可选-->
+        <external-files-path
+            name="ext_file"
+            path="." />
+        <!--对应 getExternalCacheDir()，即: sdcard/Android/data/<package>/cache/ ，可选-->
+        <external-cache-path
+            name="ext_cache"
+            path="." />
+    </paths>
+</resources>

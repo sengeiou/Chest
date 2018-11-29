@@ -1,6 +1,7 @@
 package com.stur.lib.file;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -11,6 +12,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.os.StatFs;
+import android.provider.MediaStore;
 import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
 import android.util.Pair;
@@ -1303,6 +1305,47 @@ public class FileUtils {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    }
+
+    /**
+     * @param activity 当前activity
+     * @param authority FileProvider对应的authority
+     * @param file 拍照后照片存储的文件
+     * @param requestCode 调用系统相机请求码
+     */
+    public static void takePicture(Activity activity, String authority, File file, int requestCode) {
+        Intent intent = new Intent();
+        Uri imageUri;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            imageUri = FileProvider.getUriForFile(activity, authority, file);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        } else {
+            imageUri = Uri.fromFile(file);
+        }
+        intent.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+        activity.startActivityForResult(intent, requestCode);
+    }
+
+    /**
+     * 调用系统安装器安装apk
+     *
+     * @param context 上下文
+     * @param authority FileProvider对应的authority
+     * @param file apk文件
+     */
+    public static void installApk(Context context, String authority, File file) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        Uri data;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            data = FileProvider.getUriForFile(context, authority, file);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        } else {
+            data = Uri.fromFile(file);
+        }
+        String INSTALL_TYPE = "";
+        intent.setDataAndType(data, INSTALL_TYPE);
+        context.startActivity(intent);
     }
 
     /**
