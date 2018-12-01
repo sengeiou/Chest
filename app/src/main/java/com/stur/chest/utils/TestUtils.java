@@ -5,8 +5,8 @@ import android.content.Context;
 import com.google.gson.reflect.TypeToken;
 import com.stur.chest.dto.UserAccountDTO;
 import com.stur.lib.Log;
-import com.stur.lib.SystemPropertiesProxy;
 import com.stur.lib.UIHelper;
+import com.stur.lib.os.OsUtils;
 import com.stur.lib.web.HttpFactory;
 import com.stur.lib.web.api.HttpResponseListener;
 import com.stur.lib.web.request.HttpMethod;
@@ -76,9 +76,25 @@ public class TestUtils {
         /*********** Location ************/
         //LocationHelper.getInstance(context).startLocation();
 
+        /*********** OsUtils ************/
+        String brandName = OsUtils.getDeviceBrand();
+        if ("Android".equals(brandName)) {
+            brandName = "UROVO";
+        }
+        String deviceName = OsUtils.getSystemModel();
+        String systemVersion = OsUtils.getSystemVersion();
+        String channel = brandName + "_" + deviceName + "_" + systemVersion;
+        UIHelper.toastMessageMiddle(context, "channel = " + channel);
+
         /*********** PackageUtils ************/
         //PackageUtils.initiateClearUserData(getContext(), "com.android.systemui");
         //boolean ret = PackageUtils.hasSystemFeature(context);
+
+        /*********** ReflectUtil ************/
+        // 反射读取静态变量
+        /*Boolean featureEnabled = (Boolean) ReflectUtil.getStaticFieldValue("com.uner.android.feature.UnerFeature",
+                "FEATURE_SET_DEFALUT_PERMISSION", false);
+        UIHelper.toastMessageMiddle(context, "featureEnabled = " + featureEnabled);*/
 
         /*********** startActivity ************/
         //拉起某个界面
@@ -103,7 +119,7 @@ public class TestUtils {
         context.startActivity(intent);*/
 
 
-        //拉起某个 服务
+        //拉起某个服务
         /*Intent startIntent = new Intent(this, ChestService.class);
         startService(startIntent);*/
 
@@ -116,10 +132,9 @@ public class TestUtils {
         //SystemUIUtils.notifyLauncherUI(getContext(), "com.un.coolmessage","com.yulong.android.contacts.dial.DialActivity", 3);
 
         /*********** SystemProperties ************/
-        String str = SystemPropertiesProxy.get(context, "pwv.custom.custom.attach");
+        //String str = SystemPropertiesProxy.get(context, "pwv.custom.custom.attach");
         //String str1 = SystemProperties.get("pwv.custom.custom.attach");
-
-        Log.d(this, "SystemPropertiesProxy = " + str);
+        //Log.d(this, "SystemPropertiesProxy = " + str);
 
         /*********** TMUtils ************/
         //String ret = IccidParser.getInstance().getCarrier("898603");
