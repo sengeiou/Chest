@@ -6,7 +6,6 @@ import com.google.gson.reflect.TypeToken;
 import com.stur.chest.dto.UserAccountDTO;
 import com.stur.lib.Log;
 import com.stur.lib.UIHelper;
-import com.stur.lib.os.OsUtils;
 import com.stur.lib.web.HttpFactory;
 import com.stur.lib.web.api.HttpResponseListener;
 import com.stur.lib.web.request.HttpMethod;
@@ -59,6 +58,7 @@ public class TestUtils {
         lister.startWatching();*/
         //List<String> list = FileUtils.searchAllFile("/sdcard/YUNDARecord/Normal Records/", "YR");
 
+        /*********** GMS ************/
 
         /*********** HTTP ************/
         //HttpRequest(context);
@@ -77,14 +77,14 @@ public class TestUtils {
         //LocationHelper.getInstance(context).startLocation();
 
         /*********** OsUtils ************/
-        String brandName = OsUtils.getDeviceBrand();
+        /*String brandName = OsUtils.getDeviceBrand();
         if ("Android".equals(brandName)) {
             brandName = "UROVO";
         }
         String deviceName = OsUtils.getSystemModel();
         String systemVersion = OsUtils.getSystemVersion();
         String channel = brandName + "_" + deviceName + "_" + systemVersion;
-        UIHelper.toastMessageMiddle(context, "channel = " + channel);
+        UIHelper.toastMessageMiddle(context, "channel = " + channel);*/
 
         /*********** PackageUtils ************/
         //PackageUtils.initiateClearUserData(getContext(), "com.android.systemui");
@@ -93,8 +93,7 @@ public class TestUtils {
         /*********** ReflectUtil ************/
         // 反射读取静态变量
         /*Boolean featureEnabled = (Boolean) ReflectUtil.getStaticFieldValue("com.uner.android.feature.UnerFeature",
-                "FEATURE_SET_DEFALUT_PERMISSION", false);
-        UIHelper.toastMessageMiddle(context, "featureEnabled = " + featureEnabled);*/
+                "FEATURE_SET_DEFALUT_PERMISSION", false);*/
 
         /*********** startActivity ************/
         //拉起某个界面
@@ -133,7 +132,8 @@ public class TestUtils {
 
         /*********** SystemProperties ************/
         //String str = SystemPropertiesProxy.get(context, "pwv.custom.custom.attach");
-        //String str1 = SystemProperties.get("pwv.custom.custom.attach");
+        //SystemProperties.set("service.adb.tcp.port", "5555");
+        //SystemPropertiesProxy.set(context, "service.adb.tcp.port", "5555");
         //Log.d(this, "SystemPropertiesProxy = " + str);
 
         /*********** TMUtils ************/
@@ -170,6 +170,8 @@ public class TestUtils {
         if(csr.getMac().equals("fc:25:3f:c2:3b:0a")) {
         mTv_output.setText(csr.getAddress()); }
         }*/
+
+        //UIHelper.toastMessageMiddle(context, "service.adb.tcp.port = " + SystemProperties.get("service.adb.tcp.port"));
     }
 
     private static void HttpRequest(final Context context) {
