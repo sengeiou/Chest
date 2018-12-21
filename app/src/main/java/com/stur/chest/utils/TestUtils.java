@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.google.gson.reflect.TypeToken;
 import com.stur.chest.dto.UserAccountDTO;
+import com.stur.lib.AudioUtils;
 import com.stur.lib.Log;
 import com.stur.lib.UIHelper;
 import com.stur.lib.web.HttpFactory;
@@ -26,6 +27,9 @@ public class TestUtils {
      * @param context
      */
     public void unitTest(final Context context) {
+        /*********** AudioUtils ************/
+        AudioUtils.playRmOgg(context, "/system/etc/Scan_buzzer.ogg");
+
         /*********** BluetoothUtils ************/
         //BluetoothUtils.getBondedDevices();
 
