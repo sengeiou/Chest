@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.stur.chest"
     android:versionCode="1"
-    android:versionName="1.0">
-    <!--android:sharedUserId="android.uid.system"-->
+    android:versionName="1.0"
+    android:sharedUserId="android.uid.system">
 
     <uses-sdk
         android:minSdkVersion="23"
@@ -34,6 +34,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
 
     <application
         android:name=".ChestApp"
@@ -105,6 +106,8 @@
         <activity android:name="android_serialport_api.sample.LoopbackActivity" />
         <activity android:name="com.stur.activity.GestureActivity" />
         <activity android:name="com.stur.activity.SwipeListActivity" />
+        <activity android:name="com.stur.activity.ChipsailingFingerprintActivity" />
+
 
         <service android:name="com.stur.chest.service.ChestService" />
         <!--添加BaiduLBS方案6-4-->

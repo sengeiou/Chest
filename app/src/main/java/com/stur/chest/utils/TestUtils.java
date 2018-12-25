@@ -1,10 +1,11 @@
 package com.stur.chest.utils;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.google.gson.reflect.TypeToken;
+import com.stur.activity.ChipsailingFingerprintActivity;
 import com.stur.chest.dto.UserAccountDTO;
-import com.stur.lib.AudioUtils;
 import com.stur.lib.Log;
 import com.stur.lib.UIHelper;
 import com.stur.lib.web.HttpFactory;
@@ -28,7 +29,7 @@ public class TestUtils {
      */
     public void unitTest(final Context context) {
         /*********** AudioUtils ************/
-        AudioUtils.playRmOgg(context, "/system/etc/Scan_buzzer.ogg");
+        //AudioUtils.playRmOgg(context, "/system/etc/Scan_buzzer.ogg");
 
         /*********** BluetoothUtils ************/
         //BluetoothUtils.getBondedDevices();
@@ -101,8 +102,8 @@ public class TestUtils {
 
         /*********** startActivity ************/
         //拉起某个界面
-        /*Intent intent = new Intent(context, MainMenu.class);
-        context.startActivity(intent);*/
+        Intent intent = new Intent(context, ChipsailingFingerprintActivity.class);
+        context.startActivity(intent);
         /*Intent intent =
                 new Intent("android.provider.Telephony.SECRET_CODE", Uri.parse("android_secret_code://" + "76266344"));
         ComponentName cn = new ComponentName("com.qualcomm.qti.modemtestmode", "com.qualcomm.qti.modemtestmode.DefaultReceiver");

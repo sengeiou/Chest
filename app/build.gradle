@@ -53,20 +53,20 @@ android {
         }*/
 
         //used for ivvi userdebug
-        debug {
+        /*debug {
             keyAlias 'platform'
             keyPassword 'android'
             storeFile file('../../libs-keystores/platform_debug.jks')
             storePassword 'android'
-        }
+        }*/
 
         //used for qcom
-        /*debug {
+        debug {
             keyAlias 'qcom_debug'
             keyPassword '123456'
             storeFile file('../../libs-keystores/qcom_debug.jks')
             storePassword '123456'
-        }*/
+        }
 
         /*debug {
             keyAlias 'stur_release'
