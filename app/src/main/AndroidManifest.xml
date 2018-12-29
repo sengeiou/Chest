@@ -8,7 +8,7 @@
 
     <uses-sdk
         android:minSdkVersion="23"
-        android:targetSdkVersion="26" />
+        android:targetSdkVersion="27" />
 
     <uses-permission android:name="android.permission.CAPTURE_VIDEO_OUTPUT" />
     <uses-permission android:name="android.permission.CAPTURE_SECURE_VIDEO_OUTPUT" />
@@ -107,6 +107,8 @@
         <activity android:name="com.stur.activity.GestureActivity" />
         <activity android:name="com.stur.activity.SwipeListActivity" />
         <activity android:name="com.stur.activity.ChipsailingFingerprintActivity" />
+        <activity android:name="com.stur.activity.LedSettingActivity" />
+
 
 
         <service android:name="com.stur.chest.service.ChestService" />

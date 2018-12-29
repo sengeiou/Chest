@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.google.gson.reflect.TypeToken;
-import com.stur.activity.ChipsailingFingerprintActivity;
+import com.stur.activity.LedSettingActivity;
 import com.stur.chest.dto.UserAccountDTO;
 import com.stur.lib.Log;
 import com.stur.lib.UIHelper;
@@ -102,7 +102,7 @@ public class TestUtils {
 
         /*********** startActivity ************/
         //拉起某个界面
-        Intent intent = new Intent(context, ChipsailingFingerprintActivity.class);
+        Intent intent = new Intent(context, LedSettingActivity.class);
         context.startActivity(intent);
         /*Intent intent =
                 new Intent("android.provider.Telephony.SECRET_CODE", Uri.parse("android_secret_code://" + "76266344"));

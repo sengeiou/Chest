@@ -12,12 +12,12 @@ ext.tempRevisionDescription = revisionDescriptionCMD.execute().getText().trim()
 ext.revisionDescription = (tempRevisionDescription == null || (tempRevisionDescription).size() == 0) ? new Date().format("yyMMdd") : (tempRevisionDescription).substring((tempRevisionDescription).size() - 6)
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "26.0.2"
+    compileSdkVersion 27
+    buildToolsVersion "27.0.2"
     defaultConfig {
         applicationId "com.stur.chest"
         minSdkVersion 23
-        targetSdkVersion 25
+        targetSdkVersion 27
         versionCode getVersionCode(false)
         versionName getVersionName(false)
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"

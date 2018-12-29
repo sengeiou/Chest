@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="LED Settig">
+    <SwitchPreference
+        android:key="Charge"
+        android:persistent="true"
+        android:title="Charge"></SwitchPreference>
+    <SwitchPreference
+        android:key="Red"
+        android:persistent="true"
+        android:title="Red"></SwitchPreference>
+    <SwitchPreference
+        android:key="Blue"
+        android:persistent="true"
+        android:title="Blue"></SwitchPreference>
+    <SwitchPreference
+        android:key="Green"
+        android:persistent="true"
+        android:title="Green"></SwitchPreference>
+    <EditTextPreference
+        android:key="Text"
+        android:persistent="true"
+        android:title="Text"></EditTextPreference>
+</PreferenceScreen>
