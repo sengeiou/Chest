@@ -1,11 +1,19 @@
 package com.stur.lib;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.database.ContentObserver;
 import android.media.AudioManager;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.media.SoundPool;
 import android.net.Uri;
+import android.os.Handler;
+import android.view.KeyEvent;
+
+import static io.ganguo.app.gcache.disk.DiskBasedCache.TAG;
 
 /**
  * Created by guanxuejin on 2018/12/21 0021.
@@ -19,6 +27,107 @@ public class AudioUtils {
                 return clazzName.substring(clazzName.lastIndexOf('.')+1, clazzName.lastIndexOf('$'));
             }
         }.getClassName();
+    }
+
+
+    /**
+     * 获取音量值
+     * @param context
+     * @param type AudioManager.STREAM_MUSIC代表媒体音量，也可以替换成其他的类型，获取其他类型音量
+     * @return
+     */
+    public static int getCurrentVolume(Context context, int type) {
+        AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+        int currentVolume = audioManager.getStreamVolume(type);
+        Log.d(getTag(), "getCurrentVolume: type = " + type + ", currentVolume = " + currentVolume);
+        return currentVolume;
+    }
+
+    /**
+     * @param context
+     * @param type 例如 例如我把媒体音量设置为0（静音）
+     * @param value 例如 0
+     */
+    public static void setCurrentVolume(Context context, int type, int value) {
+        AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+        audioManager.setStreamVolume(type, value, AudioManager.FLAG_PLAY_SOUND);
+    }
+
+    //监听音量键被按下：在activity重写onKeyDown方法
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        Log.d(TAG, "onKeyDown" + keyCode + "" + (keyCode == KeyEvent.KEYCODE_VOLUME_UP));
+        if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
+            // 音量+键
+        }
+        if(keyCode == KeyEvent.KEYCODE_VOLUME_DOWN){
+            // 音量-键
+        }
+        return false;
+    }
+
+    //监听音量变化：上面通过监听按键来监听调整音量的方法，不是很靠谱，因为可能用户在设置里调整音量，所以用下面方式监听音量变化
+    private void registerVolumeChangeReceiver(Context context) {
+        SettingsContentObserver settingsContentObserver = new SettingsContentObserver(context, new Handler());
+        context.getContentResolver()
+                .registerContentObserver(android.provider.Settings.System.CONTENT_URI, true, settingsContentObserver);
+    }
+
+    private void unregisterVolumeChangeReceiver(Context context) {
+        //context.getContentResolver().unregisterContentObserver(mSettingsContentObserver);
+    }
+
+    public class SettingsContentObserver extends ContentObserver {
+        Context context;
+
+        public SettingsContentObserver(Context c, Handler handler) {
+            super(handler);
+            context = c;
+        }
+
+        @Override
+        public boolean deliverSelfNotifications() {
+            return super.deliverSelfNotifications();
+        }
+
+        @Override
+        public void onChange(boolean selfChange) {
+            super.onChange(selfChange);
+            AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+            int currentVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+            Log.d(TAG, "音量：" + currentVolume);
+            audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, 0, AudioManager.FLAG_PLAY_SOUND);
+        }
+    }
+
+    //监听震动模式变化
+    public boolean isMuteMode(Context context) {
+        AudioManager am = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
+        return am.getRingerMode() == AudioManager.RINGER_MODE_SILENT;
+    }
+
+    public boolean isVibrateMode(Context context) {
+        AudioManager am = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
+        return am.getRingerMode() == AudioManager.RINGER_MODE_VIBRATE;
+    }
+
+    public boolean isNormalMode(Context context) {
+        AudioManager am = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
+        return am.getRingerMode() == AudioManager.RINGER_MODE_NORMAL;
+    }
+
+    private void registerRingerModeReceiver(Context context) {
+        BroadcastReceiver mRingerModeReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (intent.getAction().equals(AudioManager.RINGER_MODE_CHANGED_ACTION)) {
+                    // 监听到震动/静音/响铃的模式变化
+                    if( isMuteMode(context)){
+                    }
+                }
+            }
+        };
+        IntentFilter filter = new IntentFilter(AudioManager.RINGER_MODE_CHANGED_ACTION);
+        context.registerReceiver(mRingerModeReceiver, filter);
     }
 
     /**

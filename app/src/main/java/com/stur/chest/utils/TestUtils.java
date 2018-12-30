@@ -1,10 +1,8 @@
 package com.stur.chest.utils;
 
 import android.content.Context;
-import android.content.Intent;
 
 import com.google.gson.reflect.TypeToken;
-import com.stur.activity.LedSettingActivity;
 import com.stur.chest.dto.UserAccountDTO;
 import com.stur.lib.Log;
 import com.stur.lib.UIHelper;
@@ -30,6 +28,7 @@ public class TestUtils {
     public void unitTest(final Context context) {
         /*********** AudioUtils ************/
         //AudioUtils.playRmOgg(context, "/system/etc/Scan_buzzer.ogg");
+        //int ret = AudioUtils.getCurrentVolume(context, AudioManager.STREAM_VOICE_CALL);
 
         /*********** BluetoothUtils ************/
         //BluetoothUtils.getBondedDevices();
@@ -102,8 +101,8 @@ public class TestUtils {
 
         /*********** startActivity ************/
         //拉起某个界面
-        Intent intent = new Intent(context, LedSettingActivity.class);
-        context.startActivity(intent);
+        /*Intent intent = new Intent(context, LedSettingActivity.class);
+        context.startActivity(intent);*/
         /*Intent intent =
                 new Intent("android.provider.Telephony.SECRET_CODE", Uri.parse("android_secret_code://" + "76266344"));
         ComponentName cn = new ComponentName("com.qualcomm.qti.modemtestmode", "com.qualcomm.qti.modemtestmode.DefaultReceiver");
@@ -176,7 +175,7 @@ public class TestUtils {
         mTv_output.setText(csr.getAddress()); }
         }*/
 
-        //UIHelper.toastMessageMiddle(context, "service.adb.tcp.port = " + SystemProperties.get("service.adb.tcp.port"));
+        //UIHelper.toastMessageMiddle(context, "ret = " + ret);
     }
 
     private static void HttpRequest(final Context context) {
