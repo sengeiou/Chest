@@ -58,6 +58,7 @@ public class ChipsailingFingerprintActivity extends Activity {
     private static boolean mhasClickIc = false;
 
     private static final int UPDATE_RESULT = 1;
+    //private static final int UPDATE_RESULT = 11;
 
     private static final int FINGERPRINT_TEMP_EXIST = 1001;
     private static final int FINGERPRINT_ERROR_CANCELED = 5;
@@ -371,6 +372,7 @@ public class ChipsailingFingerprintActivity extends Activity {
             if (mEnrollmentSteps == -1) {
                 mEnrollmentSteps = remaining;
             }
+            // 检测到一次之后就直接取消录入
             cancelEnrollment();
             hascancell = true;
             mEnrollmentRemaining = remaining;
@@ -414,7 +416,7 @@ public class ChipsailingFingerprintActivity extends Activity {
             Log.e(TAG, "onEnrollmentError=" + errMsgId + "  errString="
                     + errString);
 
-            if (TEST_ONE == UPDATE_RESULT&&(errMsgId==1105||errMsgId==1106)) {
+            if (TEST_ONE == UPDATE_RESULT && (errMsgId==1105||errMsgId==1106)) {
                 mhasClickIc = true;
                 mResultTV.setText("Pass");
                 mResultTV.setTextColor(Color.rgb(0, 255, 0));
