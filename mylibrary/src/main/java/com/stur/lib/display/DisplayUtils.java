@@ -1,4 +1,4 @@
-package com.stur.lib;
+package com.stur.lib.display;
 
 import android.content.Context;
 import android.graphics.Point;
@@ -6,7 +6,9 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
-public class DisplayUtil {
+import com.stur.lib.Log;
+
+public class DisplayUtils {
     public static String getTag() {
         return new Object() {
             public String getClassName() {

@@ -9,10 +9,10 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageButton;
 
-import com.stur.lib.DisplayUtil;
 import com.stur.lib.R;
 import com.stur.lib.camera.CameraInterface;
 import com.stur.lib.camera.preview.CameraGLSurfaceView;
+import com.stur.lib.display.DisplayUtils;
 
 public class CameraGLSurfaceActivity extends Activity {
     private CameraGLSurfaceView mGLSFView = null;
@@ -55,8 +55,8 @@ public class CameraGLSurfaceActivity extends Activity {
     private void initViewParams(){
         //手动设置拍照ImageButton的大小为120dip×120dip,原图片大小是64×64
         LayoutParams p2 = shutterBtn.getLayoutParams();
-        p2.width = DisplayUtil.dip2px(this, 80);
-        p2.height = DisplayUtil.dip2px(this, 80);;
+        p2.width = DisplayUtils.dip2px(this, 80);
+        p2.height = DisplayUtils.dip2px(this, 80);;
         shutterBtn.setLayoutParams(p2);
 
     }

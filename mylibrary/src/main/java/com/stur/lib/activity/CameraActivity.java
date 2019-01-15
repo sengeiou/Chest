@@ -10,7 +10,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageButton;
 
-import com.stur.lib.DisplayUtil;
+import com.stur.lib.display.DisplayUtils;
 import com.stur.lib.R;
 import com.stur.lib.camera.CameraInterface;
 import com.stur.lib.camera.CameraInterface.CamOpenOverCallback;
@@ -52,17 +52,17 @@ public class CameraActivity extends Activity implements CamOpenOverCallback {
     }
     private void initViewParams(){
         LayoutParams params = surfaceView.getLayoutParams();
-        Point p = DisplayUtil.getScreenMetrics(this);
+        Point p = DisplayUtils.getScreenMetrics(this);
         params.width = p.x;
         params.height = p.y;
-        previewRate = DisplayUtil.getScreenRate(this);  //preview for full screen
+        previewRate = DisplayUtils.getScreenRate(this);  //preview for full screen
         surfaceView.setLayoutParams(params);
 
 
         //set the shutter button size of 120dip×120dip, ori picture is 64×64
         LayoutParams p2 = shutterBtn.getLayoutParams();
-        p2.width = DisplayUtil.dip2px(this, 80);
-        p2.height = DisplayUtil.dip2px(this, 80);;
+        p2.width = DisplayUtils.dip2px(this, 80);
+        p2.height = DisplayUtils.dip2px(this, 80);;
         shutterBtn.setLayoutParams(p2);
 
     }

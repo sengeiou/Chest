@@ -1,13 +1,12 @@
 package com.stur.chest.utils;
 
 import android.content.Context;
-import android.content.Intent;
 
 import com.google.gson.reflect.TypeToken;
-import com.stur.activity.ChipsailingFingerprintActivity;
 import com.stur.chest.dto.UserAccountDTO;
 import com.stur.lib.Log;
 import com.stur.lib.UIHelper;
+import com.stur.lib.display.ColorManagerUtils;
 import com.stur.lib.web.HttpFactory;
 import com.stur.lib.web.api.HttpResponseListener;
 import com.stur.lib.web.request.HttpMethod;
@@ -48,6 +47,10 @@ public class TestUtils {
         /*********** DB ************/
         //Settings.System.putInt(getContext().getContentResolver(),"pointer_screenshotchord", 1);
         //Settings.Secure.putInt(getContext().getContentResolver(), "lock_screen_show_notifications", 0);
+
+        /*********** Display ************/
+        (new ColorManagerUtils(context)).setDisplayMode(ColorManagerUtils.CE_BLACKWHITE);
+        (new ColorManagerUtils(context)).setDefaultMode(ColorManagerUtils.CE_BLACKWHITE);
 
         /*********** FileUtils ************/
         //FileUtils.deleteDirectory("data/user/0/com.android.providers.contacts");
@@ -103,8 +106,8 @@ public class TestUtils {
 
         /*********** startActivity ************/
         //拉起某个界面
-        Intent intent = new Intent(context, ChipsailingFingerprintActivity.class);
-        context.startActivity(intent);
+        /*Intent intent = new Intent(context, ChipsailingFingerprintActivity.class);
+        context.startActivity(intent);*/
         /*Intent intent =
                 new Intent("android.provider.Telephony.SECRET_CODE", Uri.parse("android_secret_code://" + "76266344"));
         ComponentName cn = new ComponentName("com.qualcomm.qti.modemtestmode", "com.qualcomm.qti.modemtestmode.DefaultReceiver");

@@ -10,11 +10,11 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageButton;
 
-import com.stur.lib.DisplayUtil;
 import com.stur.lib.R;
 import com.stur.lib.camera.CameraInterface;
 import com.stur.lib.camera.CameraInterface.CamOpenOverCallback;
 import com.stur.lib.camera.preview.CameraTextureView;
+import com.stur.lib.display.DisplayUtils;
 
 public class CameraTextureActivity extends Activity implements CamOpenOverCallback {
     CameraTextureView textureView = null;
@@ -52,16 +52,16 @@ public class CameraTextureActivity extends Activity implements CamOpenOverCallba
     }
     private void initViewParams(){
         LayoutParams params = textureView.getLayoutParams();
-        Point p = DisplayUtil.getScreenMetrics(this);
+        Point p = DisplayUtils.getScreenMetrics(this);
         params.width = p.x;
         params.height = p.y;
-        previewRate = DisplayUtil.getScreenRate(this); //默认全屏的比例预览
+        previewRate = DisplayUtils.getScreenRate(this); //默认全屏的比例预览
         textureView.setLayoutParams(params);
 
         //手动设置拍照ImageButton的大小为120dip×120dip,原图片大小是64×64
         LayoutParams p2 = shutterBtn.getLayoutParams();
-        p2.width = DisplayUtil.dip2px(this, 80);
-        p2.height = DisplayUtil.dip2px(this, 80);;
+        p2.width = DisplayUtils.dip2px(this, 80);
+        p2.height = DisplayUtils.dip2px(this, 80);;
         shutterBtn.setLayoutParams(p2);
 
     }
