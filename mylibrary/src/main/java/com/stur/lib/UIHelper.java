@@ -1,9 +1,12 @@
 package com.stur.lib;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
+import android.os.Build;
 import android.support.annotation.StringRes;
 import android.view.Gravity;
 import android.widget.Toast;
@@ -14,12 +17,25 @@ import com.stur.lib.network.NetworkUtils;
  * Created by Administrator on 2016/3/4.
  */
 public class UIHelper {
-    private static Toast TOAST_MIDDLE;
-    private static Toast TOAST_NORMAL;
+    private static Toast sToastMiddle;
+    private static Toast sToastNormal;
 
-    private static NotificationManager NOTIFICATION_MANAGER = null;
+    private static NotificationManager sNotificationManager = null;
+    // 通知渠道的id，可以使用context.getPackageName()来代替
+    public static final String CHANNEL_ID_STATUS_CHANGE = "status change";
+    // 用户可以看到的通知渠道的名字，可以使用getTag()来代替
+    public static final String CHANNEL_NAME_STATUS_CHANGE = "status change";
 
 //    static MaterialDialog mMaterialDialog = null;
+
+    public static String getTag() {
+        return new Object() {
+            public String getClassName() {
+                String clazzName = this.getClass().getName();
+                return clazzName.substring(clazzName.lastIndexOf('.')+1, clazzName.lastIndexOf('$'));
+            }
+        }.getClassName();
+    }
 
     /**
      * 弹出Toast消息
@@ -27,12 +43,12 @@ public class UIHelper {
      * @param charSequence
      */
     public static void toastMessage(Context context, CharSequence charSequence) {
-        if (TOAST_NORMAL == null) {
-            TOAST_NORMAL = Toast.makeText(context, charSequence, Toast.LENGTH_SHORT);
+        if (sToastNormal == null) {
+            sToastNormal = Toast.makeText(context, charSequence, Toast.LENGTH_SHORT);
         } else {
-            TOAST_NORMAL.setText(charSequence);
+            sToastNormal.setText(charSequence);
         }
-        TOAST_NORMAL.show();
+        sToastNormal.show();
     }
 
     /**
@@ -41,12 +57,12 @@ public class UIHelper {
      * @param msgStrId
      */
     public static void toastMessage(Context context, @StringRes int msgStrId) {
-        if (TOAST_NORMAL == null) {
-            TOAST_NORMAL = Toast.makeText(context, msgStrId, Toast.LENGTH_SHORT);
+        if (sToastNormal == null) {
+            sToastNormal = Toast.makeText(context, msgStrId, Toast.LENGTH_SHORT);
         } else {
-            TOAST_NORMAL.setText(msgStrId);
+            sToastNormal.setText(msgStrId);
         }
-        TOAST_NORMAL.show();
+        sToastNormal.show();
     }
 
     /**
@@ -54,26 +70,26 @@ public class UIHelper {
      * @param charSequence
      */
     public static void toastMessageMiddle(Context context, CharSequence charSequence) {
-        if (TOAST_MIDDLE == null) {
-            TOAST_MIDDLE = Toast.makeText(context, charSequence, Toast.LENGTH_SHORT);
+        if (sToastMiddle == null) {
+            sToastMiddle = Toast.makeText(context, charSequence, Toast.LENGTH_SHORT);
         } else {
-            TOAST_MIDDLE.setText(charSequence);
+            sToastMiddle.setText(charSequence);
         }
-        TOAST_MIDDLE.setGravity(Gravity.CENTER, 0, 0);
-        TOAST_MIDDLE.show();
+        sToastMiddle.setGravity(Gravity.CENTER, 0, 0);
+        sToastMiddle.show();
     }
 
     /**
      * 弹出Toast消息
      */
     public static void toastMessageMiddle(Context context, @StringRes int msgStrId) {
-        if (TOAST_MIDDLE == null) {
-            TOAST_MIDDLE = Toast.makeText(context, msgStrId, Toast.LENGTH_SHORT);
+        if (sToastMiddle == null) {
+            sToastMiddle = Toast.makeText(context, msgStrId, Toast.LENGTH_SHORT);
         } else {
-            TOAST_MIDDLE.setText(msgStrId);
+            sToastMiddle.setText(msgStrId);
         }
-        TOAST_MIDDLE.setGravity(Gravity.CENTER, 0, 0);
-        TOAST_MIDDLE.show();
+        sToastMiddle.setGravity(Gravity.CENTER, 0, 0);
+        sToastMiddle.show();
     }
 
     /**
@@ -84,10 +100,63 @@ public class UIHelper {
      * @param notification
      */
     public static void showNotification(Context context, int id, Notification notification) {
-        if (NOTIFICATION_MANAGER == null) {
-            NOTIFICATION_MANAGER = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        if (sNotificationManager == null) {
+            sNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         }
-        NOTIFICATION_MANAGER.notify(id, notification); // 发动通知,id由自己指定，每一个Notification对应的唯一标志
+        sNotificationManager.notify(id, notification); // 发动通知,id由自己指定，每一个Notification对应的唯一标志
+    }
+
+    /**
+     * Android O 之后增加通知渠道
+     * @param context
+     * @param id
+     * @param notification
+     */
+    @TargetApi(27)
+    public static void showNotificationWithChannel(Context context, int id, Notification notification) {
+        if (sNotificationManager == null) {
+            sNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        }
+        NotificationChannel channel = new NotificationChannel(
+                CHANNEL_ID_STATUS_CHANGE,
+                CHANNEL_NAME_STATUS_CHANGE,
+                NotificationManager.IMPORTANCE_DEFAULT);
+        sNotificationManager.createNotificationChannel(channel);
+        sNotificationManager.notify(id, notification); // 发动通知,id由自己指定，每一个Notification对应的唯一标志
+    }
+
+    /**
+     * 测试：UIHelper.showNotification(context, 5555, UIHelper.buildNotificationBuilder(context, "test", "test").build());
+     * @param context
+     * @param title
+     * @param text
+     * @return
+     */
+    @TargetApi(27)
+    public static Notification.Builder buildNotificationBuilder(Context context, CharSequence title,
+                                                          CharSequence text) {
+        if (sNotificationManager == null) {
+            sNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        }
+
+        Notification.Builder builder = new Notification.Builder(context)
+                .setSmallIcon(R.drawable.ic_sd_card_48dp)
+                .setColor(context.getColor(R.color.colorPrimary))
+                .setContentTitle(title)
+                .setContentText(text)
+                .setStyle(new Notification.BigTextStyle().bigText(text))
+                .setVisibility(Notification.VISIBILITY_PUBLIC)
+                .setLocalOnly(true);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(
+                    context.getPackageName(),
+                    getTag(),
+                    NotificationManager.IMPORTANCE_DEFAULT);
+            sNotificationManager.createNotificationChannel(channel);
+            builder.setChannelId(context.getPackageName());
+        }
+        return builder;
     }
 
     /**
@@ -96,8 +165,8 @@ public class UIHelper {
      * @param id
      */
     public static void cancelNotification(int id) {
-        if (NOTIFICATION_MANAGER != null) {
-            NOTIFICATION_MANAGER.cancel(id);
+        if (sNotificationManager != null) {
+            sNotificationManager.cancel(id);
         }
     }
 

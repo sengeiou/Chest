@@ -6,7 +6,6 @@ import com.google.gson.reflect.TypeToken;
 import com.stur.chest.dto.UserAccountDTO;
 import com.stur.lib.Log;
 import com.stur.lib.UIHelper;
-import com.stur.lib.display.ColorManagerUtils;
 import com.stur.lib.web.HttpFactory;
 import com.stur.lib.web.api.HttpResponseListener;
 import com.stur.lib.web.request.HttpMethod;
@@ -49,8 +48,8 @@ public class TestUtils {
         //Settings.Secure.putInt(getContext().getContentResolver(), "lock_screen_show_notifications", 0);
 
         /*********** Display ************/
-        (new ColorManagerUtils(context)).setDisplayMode(ColorManagerUtils.CE_BLACKWHITE);
-        (new ColorManagerUtils(context)).setDefaultMode(ColorManagerUtils.CE_BLACKWHITE);
+        /*(new ColorManagerUtils(context)).setDisplayMode(ColorManagerUtils.CE_BLACKWHITE);
+        (new ColorManagerUtils(context)).setDefaultMode(ColorManagerUtils.CE_BLACKWHITE);*/
 
         /*********** FileUtils ************/
         //FileUtils.deleteDirectory("data/user/0/com.android.providers.contacts");
@@ -169,6 +168,9 @@ public class TestUtils {
                 }
             }
         }).start();*/
+
+        /*********** UIHelper ************/
+        UIHelper.showNotification(context, 5555, UIHelper.buildNotificationBuilder(context, "test", "test").build());
 
         /*********** WifiUtils ************/
         //开启ping
