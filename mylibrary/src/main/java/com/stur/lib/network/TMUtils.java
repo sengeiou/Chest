@@ -15,7 +15,7 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 
 import com.stur.lib.Log;
-import com.stur.lib.ReflectUtil;
+import com.stur.lib.ReflectUtils;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -154,7 +154,7 @@ public class TMUtils {
         TelecomManager tm = (TelecomManager) context.getSystemService(Context.TELECOM_SERVICE);
         //PhoneAccountHandle api>5.1
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
-            List<PhoneAccountHandle> handles = (List<PhoneAccountHandle>) ReflectUtil.invoke(tm, "getCallCapablePhoneAccounts");
+            List<PhoneAccountHandle> handles = (List<PhoneAccountHandle>) ReflectUtils.invoke(tm, "getCallCapablePhoneAccounts");
             SubscriptionManager sm = SubscriptionManager.from(context);
             if (handles != null) {
                 for (PhoneAccountHandle handle : handles) {

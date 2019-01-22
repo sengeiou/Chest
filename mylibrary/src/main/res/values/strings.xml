@@ -19,4 +19,18 @@
     <string name="btn_stop">Stop</string>
 
     <string name="restart_for_take_effect">it will take effect after restart app</string>
+
+    <!-- AlarmUtils -->
+    <!-- Alarm confirmation toast: singular day -->
+    <string name="day">&quot;1 day&quot;</string>
+    <!-- Alarm confirmation toast: plural days -->
+    <string name="days">&quot;%s days&quot;</string>
+    <!-- Alarm confirmation toast: singular hour -->
+    <string name="hour">1 h</string>
+    <!-- Alarm confirmation toast: plural hours -->
+    <string name="hours">%s h</string>
+    <!-- Alarm confirmation toast: singular minute -->
+    <string name="minute">&quot;1 min&quot;</string>
+    <!-- Alarm confirmation toast: plural minutes -->
+    <string name="minutes">&quot;%s min&quot;</string>
 </resources>

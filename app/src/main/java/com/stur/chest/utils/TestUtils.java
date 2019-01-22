@@ -26,6 +26,9 @@ public class TestUtils {
      * @param context
      */
     public void unitTest(final Context context) {
+        /*********** AlarmUtils ************/
+        //AlarmUtils.setPowerOffAlarm(context, System.currentTimeMillis() + 80000);
+
         /*********** AudioUtils ************/
         //AudioUtils.playRmOgg(context, "/system/etc/Scan_buzzer.ogg");
         //int ret = AudioUtils.getCurrentVolume(context, AudioManager.STREAM_VOICE_CALL);
@@ -120,11 +123,9 @@ public class TestUtils {
         //intent.setClassName("com.qualcomm.qti.modemtestmode", "com.qualcomm.qti.modemtestmode.MbnFileActivate");
         //context.startActivity(intent1);
 
-
         /*PackageManager packageManager = context.getPackageManager();
         Intent intent = packageManager.getLaunchIntentForPackage("com.qualcomm.qti.modemtestmode");
         context.startActivity(intent);*/
-
 
         //拉起某个服务
         /*Intent startIntent = new Intent(this, ChestService.class);
@@ -170,7 +171,8 @@ public class TestUtils {
         }).start();*/
 
         /*********** UIHelper ************/
-        UIHelper.showNotification(context, 5555, UIHelper.buildNotificationBuilder(context, "test", "test").build());
+        //UIHelper.showNotification(context, 5555, UIHelper.buildNotificationBuilder(context, "test", "test").build());
+
 
         /*********** WifiUtils ************/
         //开启ping
@@ -182,7 +184,7 @@ public class TestUtils {
         mTv_output.setText(csr.getAddress()); }
         }*/
 
-        //UIHelper.toastMessageMiddle(context, "ret = " + ret);
+        UIHelper.toastMessageMiddle(context, "Clicked!");
     }
 
     private static void HttpRequest(final Context context) {

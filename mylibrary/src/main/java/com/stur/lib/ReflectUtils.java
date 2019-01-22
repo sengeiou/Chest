@@ -10,7 +10,7 @@ import java.lang.reflect.Method;
  *
  *
  */
-public final class ReflectUtil {
+public final class ReflectUtils {
     public static String getTag() {
         return new Object() {
             public String getClassName() {

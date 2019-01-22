@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Alarm confirmation toast: Describes how long from now until          alarm fires -->
+    <string-array name="alarm_set">
+        <item>This alarm is set for less than 1 minute from now.</item>
+        <item>This alarm is set for %1$s from now.</item>
+        <item>This alarm is set for %2$s from now.</item>
+        <item>This alarm is set for %1$s and %2$s from now.</item>
+        <item>This alarm is set for %3$s from now.</item>
+        <item>This alarm is set for %1$s and %3$s from now.</item>
+        <item>This alarm is set for %2$s and %3$s from now.</item>
+        <item>This alarm is set for %1$s, %2$s, and %3$s from now.</item>
+    </string-array>
+
+    <string-array name="alarm_shutdown_set">
+        <item>This shutdown is set for less than 1 minute from now.</item>
+        <item>This shutdown is set for %1$s from now.</item>
+        <item>This shutdown is set for %2$s from now.</item>
+        <item>This shutdown is set for %1$s and %2$s from now.</item>
+        <item>This shutdown is set for %3$s from now.</item>
+        <item>This shutdown is set for %1$s and %3$s from now.</item>
+        <item>This shutdown is set for %2$s and %3$s from now.</item>
+        <item>This shutdown is set for %1$s, %2$s, and %3$s from now.</item>
+    </string-array>
+
+    <string-array name="alarm_startup_set">
+        <item>This startup is set for less than 1 minute from now.</item>
+        <item>This startup is set for %1$s from now.</item>
+        <item>This startup is set for %2$s from now.</item>
+        <item>This startup is set for %1$s and %2$s from now.</item>
+        <item>This startup is set for %3$s from now.</item>
+        <item>This startup is set for %1$s and %3$s from now.</item>
+        <item>This startup is set for %2$s and %3$s from now.</item>
+        <item>This startup is set for %1$s, %2$s, and %3$s from now.</item>
+    </string-array>
+</resources>
