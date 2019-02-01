@@ -8,6 +8,12 @@ import android.os.Build;
 
 import com.stur.lib.Log;
 import com.stur.lib.Utils;
+import com.stur.lib.web.HttpFactory;
+import com.stur.lib.web.api.HttpResponseListener;
+import com.stur.lib.web.request.HttpMethod;
+import com.stur.lib.web.request.HttpRequest;
+import com.stur.lib.web.response.HttpError;
+import com.stur.lib.web.response.HttpResponse;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -562,5 +568,36 @@ public class NetworkUtils {
             return true;
         }
         return false;
+    }
+
+    /**
+     * 用于SoftSIM测试card connect连接请求
+     */
+    public static void requestCardConnect(final Context context, int cardId) {
+        Log.d(getTag(), "requestCardConnect E: cardId = " + cardId);
+        // 外部访问地址
+        //HttpRequest httpRequest = new HttpRequest("http://218.17.162.179:29500/SoftSIMServer/SoftSIMServlet" + "/card/connect", HttpMethod.POST);
+        // 内部访问地址
+        HttpRequest httpRequest = new HttpRequest("http://192.168.1.213:8080/SoftSIMServer/SoftSIMServlet" + "/card/connect", HttpMethod.POST);
+        httpRequest.addParams("card_id", "1");    //希望激活的卡槽ID，目前Servlet固定写死卡槽1（从0开始）
+        HttpFactory.getHttpService().sendRequest(httpRequest, new HttpResponseListener() {
+            @Override
+            public void onSuccess(HttpResponse httpResponse) {
+                Log.d(getTag(), "requestCardConnect onSuccess: " + httpResponse.toString());
+                Utils.display(context, "requestCardConnect onSuccess: " + httpResponse.toString());
+                /*Type type = new TypeToken<UserAccountDTO>() {
+                }.getType();
+                UserAccountDTO uat = response.convert(type);
+                String email = uat.getEmail();
+                UIHelper.toastMessageMiddle(context, "email = " + email);*/
+            }
+
+            @Override
+            public void onFailure(HttpError error) {
+                super.onFailure(error);
+                Log.d(getTag(), "requestCardConnect onFailure");
+                Utils.display(context, "requestCardConnect onFailure: ");
+            }
+        });
     }
 }

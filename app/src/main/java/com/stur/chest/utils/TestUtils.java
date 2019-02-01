@@ -2,17 +2,8 @@ package com.stur.chest.utils;
 
 import android.content.Context;
 
-import com.google.gson.reflect.TypeToken;
-import com.stur.chest.dto.UserAccountDTO;
-import com.stur.lib.Log;
 import com.stur.lib.UIHelper;
-import com.stur.lib.web.HttpFactory;
-import com.stur.lib.web.api.HttpResponseListener;
-import com.stur.lib.web.request.HttpMethod;
-import com.stur.lib.web.request.HttpRequest;
-import com.stur.lib.web.response.HttpResponse;
-
-import java.lang.reflect.Type;
+import com.stur.lib.network.NetworkUtils;
 
 
 /**
@@ -71,9 +62,6 @@ public class TestUtils {
 
         /*********** GMS ************/
 
-        /*********** HTTP ************/
-        //HttpRequest(context);
-
         /*********** JAVA ************/
         /**
          * 参数引用传递，
@@ -86,6 +74,9 @@ public class TestUtils {
 
         /*********** Location ************/
         //LocationHelper.getInstance(context).startLocation();
+
+        /*********** NetworkUtils ************/
+        NetworkUtils.requestCardConnect(context, 1);
 
         /*********** OsUtils ************/
         /*String brandName = OsUtils.getDeviceBrand();
@@ -185,22 +176,6 @@ public class TestUtils {
         }*/
 
         UIHelper.toastMessageMiddle(context, "Clicked!");
-    }
-
-    private static void HttpRequest(final Context context) {
-        HttpRequest httpRequest = new HttpRequest("http://218.17.162.179:29500/SoftSIMServer/SoftSIMServlet/card/connect", HttpMethod.POST);
-        httpRequest.addParams("card_id", "0");
-        HttpFactory.getHttpService().sendRequest(httpRequest, new HttpResponseListener() {
-            @Override
-            public void onSuccess(HttpResponse response) {
-                Log.d(this, "[response]" + response.toString());
-                Type type = new TypeToken<UserAccountDTO>() {
-                }.getType();
-                UserAccountDTO uat = response.convert(type);
-                String email = uat.getEmail();
-                UIHelper.toastMessageMiddle(context, "email = " + email);
-            }
-        });
     }
 
     private void function1(String str) {

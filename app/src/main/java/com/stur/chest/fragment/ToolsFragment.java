@@ -1,5 +1,9 @@
 package com.stur.chest.fragment;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -40,6 +44,7 @@ import com.stur.lib.view.DiffuseView;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static com.stur.lib.Utils.INTENT_DISPLAY_EXTRA;
 import static com.stur.lib.Utils.execCommand;
 
 
@@ -52,6 +57,8 @@ public class ToolsFragment extends Fragment {
     private Handler mHandler;
     private String mOutput = "";
 
+    private BroadcastReceiver mBroadcastReceiver;
+
     private static final int EVENT_DIFFUSE_START = 1;
 
     @Override
@@ -60,6 +67,7 @@ public class ToolsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_tools, null);
         Log.d(view, "onCreateView");
         initView(view);
+        initListener(getContext());
 
         mHandler = new Handler() {
             @Override
@@ -72,6 +80,14 @@ public class ToolsFragment extends Fragment {
             }
         };
         return view;
+    }
+
+    @Override
+    public void onDestroy() {
+        // TODO Auto-generated method stub
+        super.onDestroy();
+        getContext().unregisterReceiver(mBroadcastReceiver);
+        Log.d(this, "onDestroy");
     }
 
     private void initView(View view) {
@@ -316,6 +332,22 @@ public class ToolsFragment extends Fragment {
         });
     }
 
+    protected void initListener(Context context) {
+        mBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (Utils.INTENT_DISPLAY.equals(intent.getAction())) {
+                    mTvOutput.setText(intent.getStringExtra(Utils.INTENT_DISPLAY_EXTRA));
+                }
+            }
+        };
+        IntentFilter filter = new IntentFilter();
+        filter.addAction(Utils.INTENT_DISPLAY);
+        filter.addAction(Utils.INTENT_TEST);
+        filter.addAction("un.intent.incallui.action.CALL_RECORDED");
+        context.registerReceiver(mBroadcastReceiver, filter);// 注册Broadcast Receiver
+    }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -327,5 +359,23 @@ public class ToolsFragment extends Fragment {
         sb.append("mac addr: " + SharedPreferenceUtils.getString(SharedPreferenceUtils.KEY_MAC_ADDR));
         mTvOutput.setText(sb);
         mHandler.sendEmptyMessageDelayed(EVENT_DIFFUSE_START, 500);
+    }
+
+    protected void handleIntent(Intent intent) {
+        // TODO Auto-generated method stub
+        String action = intent.getAction();
+        Log.d(this, "onReceive: " + action);
+        if (action.equals(Utils.INTENT_DISPLAY)) {
+            String str = intent.getStringExtra(INTENT_DISPLAY_EXTRA);
+            mTvOutput.setText(str);
+        } else if (action.equals("un.intent.incallui.action.CALL_RECORDED")) {
+            String callType = intent.getStringExtra("callType");
+            String loalNumber = intent.getStringExtra("loalNumber");
+            String remoteNumber = intent.getStringExtra("remoteNumber");
+            String startTime = intent.getStringExtra("startTime");
+            String endTime = intent.getStringExtra("endTime");
+            String filePath = intent.getStringExtra("filePath");
+            Log.d(this, "handleIntent: " + callType + loalNumber + remoteNumber + startTime + endTime + filePath);
+        }
     }
 }
