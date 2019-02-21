@@ -1,11 +1,20 @@
 package com.stur.lib;
 
+import android.app.ActivityManager;
 import android.app.AlertDialog;
+import android.app.WallpaperManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.ParcelFileDescriptor;
 import android.view.Gravity;
 import android.view.WindowManager;
 import android.widget.Toast;
+
+import com.nostra13.universalimageloader.utils.IoUtils;
+
+import static android.content.ContentValues.TAG;
 
 //import com.android.internal.widget.LockPatternUtils;
 
@@ -137,5 +146,28 @@ public class SystemUIUtils {
         myIntent.putExtra(CLASS_NAME, act);
         myIntent.putExtra(SHOW_NUM, iTotalNum);
         context.sendBroadcast(myIntent);
+    }
+
+    /**
+     * 获取壁纸的bitmap
+     * @RequiresPermission(anyOf = {
+        "android.permission.INTERACT_ACROSS_USERS",
+        "android.permission.INTERACT_ACROSS_USERS_FULL"
+     * ActivityManager.getCurrentUser();需要检查是否被赋予了 INTERACT_ACROSS_USERS_FULL 权限
+     * 该权限的 protectionLevel 为 signature|installer，需要签名和预置安装
+     */
+    public static void getWallpaperBitmap(Context context) {
+        WallpaperManager wallpaperManager = (WallpaperManager) context.getSystemService(Context.WALLPAPER_SERVICE);
+        int currentUserId = 0;//ActivityManager.getCurrentUser();
+        ParcelFileDescriptor fd = wallpaperManager.getWallpaperFile(
+                WallpaperManager.FLAG_LOCK, currentUserId);
+        try {
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            Bitmap bm = BitmapFactory.decodeFileDescriptor(fd.getFileDescriptor(), null, options);
+            Log.d(getTag(), "bm = " + bm.getHeight());
+        } catch (OutOfMemoryError e) {
+            Log.w(getTag(), "Can't decode file" + e);
+        } finally {
+        }
     }
 }

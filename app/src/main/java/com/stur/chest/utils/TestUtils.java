@@ -2,8 +2,8 @@ package com.stur.chest.utils;
 
 import android.content.Context;
 
+import com.stur.lib.SystemUIUtils;
 import com.stur.lib.UIHelper;
-import com.stur.lib.network.NetworkUtils;
 
 
 /**
@@ -76,7 +76,7 @@ public class TestUtils {
         //LocationHelper.getInstance(context).startLocation();
 
         /*********** NetworkUtils ************/
-        NetworkUtils.requestCardConnect(context, 1);
+        //kNetworkUtils.requestCardConnect(context, 1);
 
         /*********** OsUtils ************/
         /*String brandName = OsUtils.getDeviceBrand();
@@ -129,6 +129,7 @@ public class TestUtils {
         //SystemUIUtils.sendBroadcastForFlashLight(getContext());
         //SystemUIUtils.setLockNone(getContext());
         //SystemUIUtils.notifyLauncherUI(getContext(), "com.un.coolmessage","com.yulong.android.contacts.dial.DialActivity", 3);
+        SystemUIUtils.getWallpaperBitmap(context);
 
         /*********** SystemProperties ************/
         //String str = SystemPropertiesProxy.get(context, "pwv.custom.custom.attach");
