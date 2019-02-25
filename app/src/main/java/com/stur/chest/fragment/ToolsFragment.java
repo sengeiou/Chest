@@ -28,6 +28,7 @@ import com.stur.chest.Constant;
 import com.stur.chest.R;
 import com.stur.chest.utils.TestUtils;
 import com.stur.lib.AdbUtils;
+import com.stur.lib.AudioUtils;
 import com.stur.lib.Log;
 import com.stur.lib.SharedPreferenceUtils;
 import com.stur.lib.SystemPropertiesProxy;
@@ -219,7 +220,20 @@ public class ToolsFragment extends Fragment {
         view.findViewById(R.id.btn_test).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new TestUtils().unitTest(getContext());
+                //new TestUtils().unitTest(getContext());
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        for (int i = 0; i < 20; i++) {
+                            AudioUtils.playSpOgg(getContext(), "/system/etc/Scan_new.ogg");
+                            try {
+                                Thread.sleep(200);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }).start();
             }
         });
 

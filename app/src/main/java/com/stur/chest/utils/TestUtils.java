@@ -2,7 +2,7 @@ package com.stur.chest.utils;
 
 import android.content.Context;
 
-import com.stur.lib.SystemUIUtils;
+import com.stur.lib.AudioUtils;
 import com.stur.lib.UIHelper;
 
 
@@ -22,6 +22,21 @@ public class TestUtils {
 
         /*********** AudioUtils ************/
         //AudioUtils.playRmOgg(context, "/system/etc/Scan_buzzer.ogg");
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < 20; i++) {
+                    //AudioUtils.playRmOgg(context, "/system/etc/Scan_buzzer.ogg");
+                    AudioUtils.playSpOgg(context, "/system/etc/Scan_buzzer.ogg");
+                    try {
+                        Thread.sleep(200);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
+        //AudioUtils.playSpOgg(context, "/system/etc/Scan_buzzer.ogg");
         //int ret = AudioUtils.getCurrentVolume(context, AudioManager.STREAM_VOICE_CALL);
 
         /*********** BluetoothUtils ************/
@@ -129,7 +144,7 @@ public class TestUtils {
         //SystemUIUtils.sendBroadcastForFlashLight(getContext());
         //SystemUIUtils.setLockNone(getContext());
         //SystemUIUtils.notifyLauncherUI(getContext(), "com.un.coolmessage","com.yulong.android.contacts.dial.DialActivity", 3);
-        SystemUIUtils.getWallpaperBitmap(context);
+        //SystemUIUtils.getWallpaperBitmap(context);
 
         /*********** SystemProperties ************/
         //String str = SystemPropertiesProxy.get(context, "pwv.custom.custom.attach");

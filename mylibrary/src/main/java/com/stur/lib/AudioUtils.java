@@ -4,14 +4,20 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.AssetFileDescriptor;
 import android.database.ContentObserver;
+import android.media.AudioAttributes;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.media.SoundPool;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Handler;
 import android.view.KeyEvent;
+
+import java.io.IOException;
 
 import static io.ganguo.app.gcache.disk.DiskBasedCache.TAG;
 
@@ -132,11 +138,13 @@ public class AudioUtils {
 
     /**
      * 使用RingtoneManager播放ogg音频文件
+     * 适合播放声音短，文件小，可以同时播放多种音频，消耗资源较小
      * @param context
      * @param soundPath，音频文件路径，比如 "/etc/Scan_buzzer.ogg"
      */
     public static Ringtone mRingtone = null;
     public static void playRmOgg(Context context, String soundPath) {
+        Log.d(getTag(), "playRmOgg E: soundPath = " + soundPath);
         final Uri soundUri = Uri.parse("file://" + soundPath);
         if (soundUri != null) {
             // 不能每播放一次声音就new一个对象来播放声音。这样能播放，但是播放了十几次就会报错。
@@ -155,25 +163,92 @@ public class AudioUtils {
     }
 
     /**
-     * 使用SoundPool播放ogg音频文件，没成功，不推荐
+     * 使用SoundPool播放ogg音频文件
+     * SoundPool支持多个音频文件同时播放(组合音频也是有上限的)，延时短，比较适合短促、密集的场景
+     * 把一段音频加载到内存在还需要一段时间，所以如果在Load方法后立即调用play，可能会播放不成功。
+     * 建议加载音频在OnCreate方法完成，播放在按钮中完成，设置OnLoadCompleteListener监听。
+     * 如果是同一个soundPool重复播放，可不用每次播完就release。但如果是不同的soundPool播放同一个音频文件，则需要release
      * @param soundPath 音频文件路径，比如 "/etc/Scan_buzzer.ogg"
      */
     public static void playSpOgg(Context context, String soundPath) {
+        Log.d(getTag(), "playSpOgg: soundPath = " + soundPath);
         // 实例化AudioManager对象
         AudioManager am = (AudioManager)context.getSystemService(context.AUDIO_SERVICE);
-        // 返回当前AudioManager对象播放所选声音的类型的最大音量值，声音音量类型默认为多媒体
-        int soundVolType = 3;
+        // 返回当前AudioManager对象播放所选声音的类型的最大音量值，声音音量类型默认为多媒体，
+        // STREAM_VOICE_CALL, STREAM_SYSTEM, STREAM_RING, STREAM_MUSIC, STREAM_ALARM, STREAM_NOTIFICATION...
+        int soundVolType = AudioManager.STREAM_SYSTEM;
         float maxVolumn = am.getStreamMaxVolume(soundVolType);
         // 返回当前AudioManager对象的音量值
         float currentVolumn = am.getStreamVolume(soundVolType);
         // 比值
-        float volumnRatio = currentVolumn / maxVolumn;
-        SoundPool soundPool = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);
-        int soundID = soundPool.load(soundPath, 1);
-        soundPool.play(soundID, volumnRatio, volumnRatio, 1, 0, 1);
+        final float volumnRatio = currentVolumn / maxVolumn;
 
-        /*SoundPool soundpool = new SoundPool(2, AudioManager.STREAM_NOTIFICATION, 0);
-        int heightBeepId = soundpool.load(soundPath, 1);
-        soundpool.play(heightBeepId, 1, 1, 0, 0, 1);*/
+        SoundPool soundPool;
+        if (Build.VERSION.SDK_INT >= 21) {
+            SoundPool.Builder builder = new SoundPool.Builder();
+            //传入音频的数量
+            builder.setMaxStreams(1);
+            //AudioAttributes是一个封装音频各种属性的类
+            AudioAttributes.Builder attrBuilder = new AudioAttributes.Builder();
+            //设置音频流的合适属性
+            attrBuilder.setLegacyStreamType(AudioManager.STREAM_SYSTEM);
+            builder.setAudioAttributes(attrBuilder.build());
+            soundPool = builder.build();
+        } else {
+            //第一个参数是可以支持的声音数量，第二个是声音类型（可选AudioManager.STREAM_MUSIC，AudioManager.STREAM_NOTIFICATION），第三个是声音品质
+            //soundPool = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);
+            soundPool = new SoundPool(1, AudioManager.STREAM_SYSTEM, 5);
+        }
+
+        soundPool.load(soundPath, 1);
+        //第一个参数Context,第二个参数资源Id，第三个参数优先级
+        //soundPool.load(context, rawId, 1);
+        soundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+            @Override
+            public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
+                //第一个参数id，即传入池中的顺序，第二个和第三个参数为左右声道，第四个参数为优先级，第五个是否循环播放，0不循环，-1循环
+                //最后一个参数播放比率，范围0.5到2，通常为1表示正常播放
+                //soundPool.play(sampleId,1,1,1,0,1);//播放
+                soundPool.play(sampleId, volumnRatio, volumnRatio, 1, 0, 1);
+                //soundPool.play(1, 1, 1, 0, 0, 1);  //播放
+
+                //回收Pool中的资源
+                soundPool.release();
+            }
+        });
     }
+
+    /**
+     * 使用MediaPlayer播放声音 不能同时播放多种音频
+     * 消耗资源较大
+     * @param rawId
+     */
+    public static void playSoundByMedia(Context context, int rawId) {
+        try {
+            MediaPlayer mediaPlayer = new MediaPlayer();
+            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+            mediaPlayer.setOnCompletionListener(beepListener);
+            try {
+                AssetFileDescriptor file = context.getResources().openRawResourceFd(
+                        rawId);
+                mediaPlayer.setDataSource(file.getFileDescriptor(),
+                        file.getStartOffset(), file.getLength());
+                file.close();
+                mediaPlayer.setVolume(0.50f, 0.50f);
+                mediaPlayer.prepare();
+                mediaPlayer.start();
+            } catch (IOException e) {
+                mediaPlayer = null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private static final MediaPlayer.OnCompletionListener beepListener = new MediaPlayer.OnCompletionListener() {
+        public void onCompletion(MediaPlayer mediaPlayer) {
+            mediaPlayer.seekTo(0);
+        }
+    };
 }
