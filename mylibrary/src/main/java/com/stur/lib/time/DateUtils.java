@@ -1,5 +1,6 @@
 package com.stur.lib.time;
 
+import android.os.SystemClock;
 import android.util.Log;
 
 import java.text.DateFormat;
@@ -17,6 +18,26 @@ public class DateUtils {
     public static String dayNames[] = {"日", "一", "二", "三", "四", "五", "六"};
     //用来全局控制 上一周，本周，下一周的周数变化
     private  int weeks = 0;
+
+    /**
+     * 获取的是系统时间，是距离1970年1月1日开始计算的一个值
+     * 获取当前日期有意义，如当前是xxxx年xx月xx时xx分xx秒xxx毫秒，这个值在系统设置中可以更改的
+     * @return
+     */
+    public static long getCurrentTime() {
+        return System.currentTimeMillis();
+    }
+
+    /**
+     * 获取从设备boot后经历的时间值
+     * 计算某个时间经历了多长时间有意义，例如通话经历了多长时间，这个值是系统设置无关
+     * 但是Android源码中计算通话时间是用System.currentTimeMillis()的，这个一般情况下是没有问题的。
+     * 但是如果有人在设备建立通话后修改系统时间，那么通话结束后的时间值就不对了
+     * @return
+     */
+    public static long getElapsedRealtime() {
+        return SystemClock.elapsedRealtime();
+    }
 
     /**
      * <pre>

@@ -2,8 +2,8 @@ package com.stur.chest.utils;
 
 import android.content.Context;
 
-import com.stur.lib.AudioUtils;
-import com.stur.lib.UIHelper;
+import com.stur.lib.Utils;
+import com.stur.lib.time.DateUtils;
 
 
 /**
@@ -22,7 +22,7 @@ public class TestUtils {
 
         /*********** AudioUtils ************/
         //AudioUtils.playRmOgg(context, "/system/etc/Scan_buzzer.ogg");
-        new Thread(new Runnable() {
+        /*new Thread(new Runnable() {
             @Override
             public void run() {
                 for (int i = 0; i < 20; i++) {
@@ -35,7 +35,7 @@ public class TestUtils {
                     }
                 }
             }
-        }).start();
+        }).start();*/
         //AudioUtils.playSpOgg(context, "/system/etc/Scan_buzzer.ogg");
         //int ret = AudioUtils.getCurrentVolume(context, AudioManager.STREAM_VOICE_CALL);
 
@@ -51,6 +51,7 @@ public class TestUtils {
 
         /*********** Date ************/
         //DateUtils.getTwoDay("20181025", "20190327");
+        long l = DateUtils.getElapsedRealtime();
 
         /*********** DB ************/
         //Settings.System.putInt(getContext().getContentResolver(),"pointer_screenshotchord", 1);
@@ -191,7 +192,7 @@ public class TestUtils {
         mTv_output.setText(csr.getAddress()); }
         }*/
 
-        UIHelper.toastMessageMiddle(context, "Clicked!");
+        Utils.display(context, "Clicked! l = " + l);
     }
 
     private void function1(String str) {

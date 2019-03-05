@@ -42,5 +42,11 @@
     public static ** valueOf(java.lang.String);
 }
 
+-dontwarn android.net.**
+-keep class android.net.** { *;}
+-dontwarn com.android.server.**
+-keep class com.android.server.** { *;}
+
+
 
 
