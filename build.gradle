@@ -25,7 +25,7 @@ allprojects {
     //添加framework的依赖jar包3-2
     gradle.projectsEvaluated {
         tasks.withType(JavaCompile){
-            options.compilerArgs.add('-Xbootclasspath/p:../libs-keystores/framework.jar;../libs-keystores/services.jar')
+            options.compilerArgs.add('-Xbootclasspath/p:../libs-keystores/framework.jar;../libs-keystores/services.jar;../libs-keystores/qcnvitems.jar')
         }
     }
 }

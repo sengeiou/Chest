@@ -11,11 +11,11 @@ import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.TimeZone;
 
-import static android.R.attr.process;
-import static com.tencent.bugly.crashreport.crash.c.e;
+import static com.loopj.android.http.AsyncHttpClient.log;
 
 public class Utils {
     /* Broadcast Definition */
@@ -115,6 +115,36 @@ public class Utils {
         }catch (Exception e) {
             Log.d(getTag(), e.toString());
             return e.toString();
+        }
+    }
+
+    /**
+     * 在Android界面上显示和获取Logcat日志输出
+     * 未完成
+     * @param command
+     * @return
+     */
+    public static void execLogcat(Context context, String command) {
+        try {
+            StringBuilder ret = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
+            sb.append("logcat ");
+            sb.append("-d "); //使用该参数可以让logcat获取日志完毕后终止进程
+            sb.append("-v ");
+            sb.append("time ");
+            sb.append("-f ");  //如果使用commandLine.add(">");是不会写入文件，必须使用-f的方式
+            sb.append("/sdcard/log/logcat.txt");
+            Log.d(getTag(), "execLogcat: command = " + sb.toString());
+            Process process = Runtime.getRuntime().exec(sb.toString());
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()), 1024);
+            String line = bufferedReader.readLine();
+            Log.d(getTag(), "execLogcat: line = " + line);
+            while ( line != null) {
+                //ret.append(line);
+                //ret.append("\n");
+                display(context, line);
+            }
+        } catch ( IOException e) {
         }
     }
 

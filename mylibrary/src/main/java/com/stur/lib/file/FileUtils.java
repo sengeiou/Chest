@@ -169,6 +169,7 @@ public class FileUtils {
             basePath = context.getCacheDir();
         }
         dataPath = basePath.getAbsolutePath();
+        Log.v(getTag(), "getDataPath X: dataPath = " + dataPath);
         return dataPath;
     }
 
@@ -995,7 +996,7 @@ public class FileUtils {
      * /sdcard/stur/image/filename
      */
     public static String getAssetsToPath(Context context, String filename) {
-        File f = new File(getDataPath(context) + filename);
+        File f = new File(getDataPath(context) + filename);  //写入的目的文件
         Log.d(getTag(), "getAssetsToPath: " + f.getPath());
         if (!f.exists()) {
             f.delete();
@@ -1088,6 +1089,23 @@ public class FileUtils {
         fos.flush();// 刷新缓冲区
         fis.close();
         fos.close();
+    }
+
+    /**
+     * 读取assets目录下的文件列表及目录名（非完整路径）
+     * 通过am.list("")得到assets目录下的所有文件和子目录名称的数组
+     * 通过am.list(SubFolderName)，得到assets/SubFolderName下所有的文件和子目录名称的数组。
+     * 无法获取文件的完整路径，只能通过InputStream输入流访问文件，
+     * 结合WebView加载assets目录下的网页：webView.loadUrl("file:///android_asset/helloworld.html");
+     * 可加载assets目录下的网页，css，js，图片等文件也会的加载。
+     * @param context
+     * @return
+     */
+    public static String[] getAssetsFiles(Context context) throws IOException {
+        AssetManager am = context.getAssets();
+        String[] files = am.list("");
+        Log.v(getTag(), "getAssetsFiles X: files = " + Arrays.toString(files));
+        return files;
     }
 
     /**

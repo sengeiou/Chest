@@ -43,14 +43,14 @@ android {
 
     signingConfigs {
         //used for urovo userdebug
-        /*debug {
+        debug {
             //keyAlias 'urovo_userdebug'
             keyAlias 'urovo_release'
             keyPassword '123456'
             //storeFile file('../../libs-keystores/urovo_userdebug.jks')
             storeFile file('../../libs-keystores/urovo_release.jks')
             storePassword '123456'
-        }*/
+        }
 
         //used for ivvi userdebug
         /*debug {
@@ -68,12 +68,20 @@ android {
             storePassword '123456'
         }*/
 
-        debug {
+        //used for mtk
+        /*debug {
+            keyAlias 'mtk_debug'
+            keyPassword '123456'
+            storeFile file('../../libs-keystores/mtk_debug.jks')
+            storePassword '123456'
+        }*/
+
+        /*debug {
             keyAlias 'stur_release'
             keyPassword '123456'
             storeFile file('../../libs-keystores/stur_release.jks')
             storePassword '123456'
-        }
+        }*/
 
         /*debug {
             keyAlias 'urovo_sq52_overseas'
@@ -135,6 +143,7 @@ dependencies {
     //compile "com.android.support:multidex:1.0.0"
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile project(':mylibrary')
+    provided files('../../libs-keystores/qcnvitems.jar')
 }
 
 //获取app的版本码

@@ -3,7 +3,7 @@ package com.stur.chest.utils;
 import android.content.Context;
 
 import com.stur.lib.Utils;
-import com.stur.lib.time.DateUtils;
+import com.stur.lib.broadcast.IntentUtils;
 
 
 /**
@@ -17,19 +17,20 @@ public class TestUtils {
      * @param context
      */
     public void unitTest(final Context context) {
+        String ret = "";
         /*********** AlarmUtils ************/
         //AlarmUtils.setPowerOffAlarm(context, System.currentTimeMillis() + 80000);
 
         /*********** AudioUtils ************/
-        //AudioUtils.playRmOgg(context, "/system/etc/Scan_buzzer.ogg");
+        //AudioUtils.playRmOgg(context, Uri.parse("android.resource://" + context.getPackageName()+"/"+ R.raw.scan_new));
         /*new Thread(new Runnable() {
             @Override
             public void run() {
-                for (int i = 0; i < 20; i++) {
-                    //AudioUtils.playRmOgg(context, "/system/etc/Scan_buzzer.ogg");
-                    AudioUtils.playSpOgg(context, "/system/etc/Scan_buzzer.ogg");
+                for (int i = 0; i < 40; i++) {
+                    AudioUtils.playRmOgg(context, Uri.parse("android.resource://" + context.getPackageName()+"/"+ R.raw.scan_new));
+                    //AudioUtils.playSpOgg(context, "/system/etc/Scan_new.ogg");
                     try {
-                        Thread.sleep(200);
+                        Thread.sleep(100);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -51,7 +52,7 @@ public class TestUtils {
 
         /*********** Date ************/
         //DateUtils.getTwoDay("20181025", "20190327");
-        long l = DateUtils.getElapsedRealtime();
+        //long l = DateUtils.getElapsedRealtime();
 
         /*********** DB ************/
         //Settings.System.putInt(getContext().getContentResolver(),"pointer_screenshotchord", 1);
@@ -78,6 +79,9 @@ public class TestUtils {
 
         /*********** GMS ************/
 
+        /*********** Intent ************/
+        IntentUtils.sendUnreadedNumIntent(context);
+
         /*********** JAVA ************/
         /**
          * 参数引用传递，
@@ -90,6 +94,9 @@ public class TestUtils {
 
         /*********** Location ************/
         //LocationHelper.getInstance(context).startLocation();
+
+        /*********** Logcat ************/
+        //Utils.execLogcat(context, "");
 
         /*********** NetworkUtils ************/
         //kNetworkUtils.requestCardConnect(context, 1);
@@ -107,6 +114,15 @@ public class TestUtils {
         /*********** PackageUtils ************/
         //PackageUtils.initiateClearUserData(getContext(), "com.android.systemui");
         //boolean ret = PackageUtils.hasSystemFeature(context);
+
+        /*********** qcnvitems ************/
+        /*String l = null;
+        try {
+            QcNvItems qni = new QcNvItems(context);
+            l = qni.getQcnVersion();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
 
         /*********** ReflectUtil ************/
         // 反射读取静态变量
@@ -192,7 +208,7 @@ public class TestUtils {
         mTv_output.setText(csr.getAddress()); }
         }*/
 
-        Utils.display(context, "Clicked! l = " + l);
+        Utils.display(context, "Clicked! ret = " + ret);
     }
 
     private void function1(String str) {

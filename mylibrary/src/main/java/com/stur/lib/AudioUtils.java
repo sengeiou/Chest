@@ -139,13 +139,16 @@ public class AudioUtils {
     /**
      * 使用RingtoneManager播放ogg音频文件
      * 适合播放声音短，文件小，可以同时播放多种音频，消耗资源较小
+     * 通过assets目录构造URI，不能用来播放视频，也不能播放音频。
+     * Uri notification = Uri.parse("file:///android_asset/beep.ogg"); 这样就不行
+     * Uri notification = Uri.parse("android.resource://"+getActivity().getPackageName()+"/"+R.raw.beep);   这样的可以
+     * 在raw目录下的文件构造URI可以播放音频，也能播放视频
      * @param context
-     * @param soundPath，音频文件路径，比如 "/etc/Scan_buzzer.ogg"
+     * @param soundUri，音频文件路径，比如 Uri.parse("file://" + "/etc/Scan_buzzer.ogg");
      */
     public static Ringtone mRingtone = null;
-    public static void playRmOgg(Context context, String soundPath) {
-        Log.d(getTag(), "playRmOgg E: soundPath = " + soundPath);
-        final Uri soundUri = Uri.parse("file://" + soundPath);
+    public static void playRmOgg(Context context, Uri soundUri) {
+        Log.d(getTag(), "playRmOgg E: soundUri = " + soundUri);
         if (soundUri != null) {
             // 不能每播放一次声音就new一个对象来播放声音。这样能播放，但是播放了十几次就会报错。
             if (mRingtone == null) {
@@ -158,7 +161,7 @@ public class AudioUtils {
                 Log.d(getTag(), "playRmOgg: failed to load ringtone from uri: " + soundUri);
             }
         } else {
-            Log.d(getTag(), "playRmOgg: could not parse Uri: " + soundPath);
+            Log.d(getTag(), "playRmOgg: could not parse Uri: " + soundUri);
         }
     }
 
