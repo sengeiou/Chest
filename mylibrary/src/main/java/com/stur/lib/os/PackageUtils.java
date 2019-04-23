@@ -4,15 +4,22 @@ import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.pm.ResolveInfo;
 import android.content.pm.Signature;
+import android.net.Uri;
+import android.telecom.DefaultDialerManager;
 import android.text.TextUtils;
 
 import com.stur.lib.Log;
 import com.stur.lib.constant.StActivityName;
+
+import java.util.List;
 
 public class PackageUtils {
     public static final int AID_ROOT        = 0;  /* traditional unix root user */
@@ -221,5 +228,86 @@ public class PackageUtils {
      */
     public static boolean hasSystemFeature(Context context) {
         return context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_PRINTING);
+    }
+
+    /**
+     * 获取系统默认App
+     * @param context
+     * @return
+     */
+    public static String getDefaultApp(Context context) {
+        return null;
+    }
+
+    public static String getDefaultDialer(Context context) {
+        String ret = DefaultDialerManager.getDefaultDialerApplication(context);
+        Log.d(getTag(), "getDefaultDialer X: " + ret);
+        return ret;
+    }
+
+    /**
+     * 设置系统默认浏览器应用
+     * @param context
+     * @param pkg
+     */
+    public static void setDefaultBrowser(Context context, String pkg) {
+        Log.d(getTag(), "setDefaultBrowser E:");
+        PackageManager packageManager = context.getPackageManager();
+        String str1 = "android.intent.category.DEFAULT";
+        String str2 = "android.intent.category.BROWSABLE";
+        String str3 = "android.intent.action.VIEW";
+
+        // 设置默认项的必须参数之一,用户的操作符合该过滤器时,默认设置起效
+        IntentFilter filter = new IntentFilter(str3);
+        filter.addCategory(str1);
+        filter.addCategory(str2);
+        filter.addDataScheme("http");
+        // 设置浏览页面用的Activity
+        ComponentName component = new ComponentName("com.UCMobile",
+                "com.UCMobile.main.UCMobile");
+
+        Intent intent = new Intent(str3);
+        intent.addCategory(str2);
+        intent.addCategory(str1);
+        Uri uri = Uri.parse("http://");
+        intent.setDataAndType(uri, null);
+
+        // 找出手机当前安装的所有浏览器程序
+        List<ResolveInfo> resolveInfoList = packageManager
+                .queryIntentActivities(intent,
+                        PackageManager.GET_INTENT_FILTERS);
+
+        int size = resolveInfoList.size();
+        ComponentName[] arrayOfComponentName = new ComponentName[size];
+        for (int i = 0; i < size; i++) {
+            ActivityInfo activityInfo = resolveInfoList.get(i).activityInfo;
+            String packageName = activityInfo.packageName;
+            String className = activityInfo.name;
+
+            Log.d(getTag(), "setDefaultBrowser： packageName = " + packageName + "， className = " + className);
+
+            // 清除之前的默认设置
+            packageManager.clearPackagePreferredActivities(packageName);
+            ComponentName componentName = new ComponentName(packageName,
+                    className);
+            arrayOfComponentName[i] = componentName;
+        }
+        packageManager.addPreferredActivity(filter,
+                IntentFilter.MATCH_CATEGORY_SCHEME, arrayOfComponentName,
+                component);
+    }
+
+    /**
+     * 设置系统默认InCallUI，例如 com.android.dialer
+     * 如需ROM修改，则改/device/qcom/common/product/overlay/packages/services/Telecomm/res/values/config.xml
+     * 和/vendor/qcom/proprietary/resource-overlay/common/Telecomm/res/values/config.xml
+     * @param context
+     * @param pkg
+     */
+    public static void setDefaultDialer(Context context, String pkg) {
+        Log.d(getTag(), "setDefaultPhone E: pkg = " + pkg);
+        if (pkg != null && !pkg.equals(getDefaultDialer(context))) {
+            DefaultDialerManager.setDefaultDialerApplication(context, pkg);
+        }
     }
 }

@@ -2,8 +2,8 @@ package com.stur.chest.utils;
 
 import android.content.Context;
 
-import com.stur.lib.UsbUtils;
 import com.stur.lib.Utils;
+import com.stur.lib.os.PackageUtils;
 
 
 /**
@@ -131,6 +131,7 @@ public class TestUtils {
         /*********** PackageUtils ************/
         //PackageUtils.initiateClearUserData(getContext(), "com.android.systemui");
         //boolean ret = PackageUtils.hasSystemFeature(context);
+        PackageUtils.setDefaultDialer(context, "com.android.dialer");
 
         /*********** qcnvitems ************/
         /*String l = null;
@@ -215,7 +216,7 @@ public class TestUtils {
         //UIHelper.showNotification(context, 5555, UIHelper.buildNotificationBuilder(context, "test", "test").build());
 
         /*********** UsbUtils ************/
-        UsbUtils.getUsbPortStatus(context);
+        //UsbUtils.getUsbPortStatus(context);
 
         /*********** WifiUtils ************/
         //开启ping
