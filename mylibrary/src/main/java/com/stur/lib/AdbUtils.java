@@ -1,6 +1,7 @@
 package com.stur.lib;
 
 import android.content.Context;
+import android.provider.Settings;
 
 import com.stur.lib.os.PackageUtils;
 
@@ -42,5 +43,14 @@ public class AdbUtils {
 		} else {
             UIHelper.toastMessageMiddle(context, AdbUtils.WIFI_ADB_PORT_PROP + ": " + SystemPropertiesProxy.get(context, AdbUtils.WIFI_ADB_PORT_PROP));
 		}
+    }
+
+    /**
+     * 启动adb调试，等同于Setting开发者选项中的操作
+     * @param context
+     */
+    public static void enableAdb(Context context) {
+        Settings.Global.putInt(context.getContentResolver(),
+                Settings.Global.ADB_ENABLED, 1);
     }
 }

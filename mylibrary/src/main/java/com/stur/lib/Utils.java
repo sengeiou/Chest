@@ -126,17 +126,27 @@ public class Utils {
      */
     public static void execLogcat(Context context, String command) {
         try {
-            StringBuilder ret = new StringBuilder();
+            /*StringBuilder ret = new StringBuilder();
             StringBuilder sb = new StringBuilder();
             sb.append("logcat ");
             sb.append("-d "); //使用该参数可以让logcat获取日志完毕后终止进程
             sb.append("-v ");
             sb.append("time ");
             sb.append("-f ");  //如果使用commandLine.add(">");是不会写入文件，必须使用-f的方式
-            sb.append("/sdcard/log/logcat.txt");
+            sb.append("/sdcard/logcat.txt");
             Log.d(getTag(), "execLogcat: command = " + sb.toString());
-            Process process = Runtime.getRuntime().exec(sb.toString());
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()), 1024);
+            Process process = Runtime.getRuntime().exec(sb.toString());*/
+
+            //第一个是Logcat ，也就是我们想要获取的log日志，第二个是 -s 也就是表示过滤的意思，
+            // 第三个就是 我们要过滤的类型 W表示warm ，我们也可以换成 D ：debug， I：info，E：error等等
+            String[] running = new String[]{"logcat", "-s", "adb logcat *: W"};
+            Process exec = Runtime.getRuntime().exec(running);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+            /*BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()), 1024);
             String line = bufferedReader.readLine();
             Log.d(getTag(), "execLogcat: line = " + line);
             while ( line != null) {
@@ -145,8 +155,7 @@ public class Utils {
                 display(context, line);
             }
         } catch ( IOException e) {
-        }
-    }
+        }*/
 
     public static void display(Context context, String str) {
         Intent it = new Intent();

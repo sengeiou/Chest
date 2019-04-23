@@ -2,8 +2,8 @@ package com.stur.chest.utils;
 
 import android.content.Context;
 
+import com.stur.lib.UsbUtils;
 import com.stur.lib.Utils;
-import com.stur.lib.broadcast.IntentUtils;
 
 
 /**
@@ -18,6 +18,9 @@ public class TestUtils {
      */
     public void unitTest(final Context context) {
         String ret = "";
+        /*********** AdbUtils ************/
+        //AdbUtils.enableAdb(context);
+
         /*********** AlarmUtils ************/
         //AlarmUtils.setPowerOffAlarm(context, System.currentTimeMillis() + 80000);
 
@@ -80,7 +83,21 @@ public class TestUtils {
         /*********** GMS ************/
 
         /*********** Intent ************/
-        IntentUtils.sendUnreadedNumIntent(context);
+        //IntentUtils.sendUnreadedNumIntent(context);
+        /*IntentUtils.registerIntent(context, "un.intent.action.AUTO_CALL_RECORDER_CHANGED", new IntentUtils.IntentReceivedCallback() {
+            @Override
+            public void onIntentReceived(Intent intent) {
+                boolean enabled0 = intent.getBooleanExtra("call_record_0", false);  //卡1的自动录音开关状态
+                boolean enabled1 = intent.getBooleanExtra("call_record_1", false);   //卡2的自动录音开关状态
+                int period0 = intent.getIntExtra("call_record_period_0", 60);  //卡1的自动录音保存周期
+                int period1 = intent.getIntExtra("call_record_period_1", 60);  //卡2的自动录音保存周期
+                Log.d(this, "onIntentReceived: enabled0 = " + enabled0 + ", enabled1 = "
+                        + enabled1 + ", period0 = " + period0 + ", period1 = " + period1);
+            }
+        });*/
+        /*IntentUtils.registerIntent(context, UsbManager.ACTION_USB_STATE, new IntentUtils.IntentReceivedCallback(){
+
+        });*/
 
         /*********** JAVA ************/
         /**
@@ -197,6 +214,8 @@ public class TestUtils {
         /*********** UIHelper ************/
         //UIHelper.showNotification(context, 5555, UIHelper.buildNotificationBuilder(context, "test", "test").build());
 
+        /*********** UsbUtils ************/
+        UsbUtils.getUsbPortStatus(context);
 
         /*********** WifiUtils ************/
         //开启ping
