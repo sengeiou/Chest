@@ -18,16 +18,27 @@ package com.stur.lib.camera;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.hardware.Camera.Size;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.v4.content.FileProvider;
 import android.view.Surface;
 
 import com.stur.lib.Log;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Camera-related utility functions.
@@ -65,6 +76,93 @@ public class CameraUtils {
      */
     public static boolean hasCameraHardware(Context context) {
         return context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA);
+    }
+
+    /**
+     * 利用intent的方式拉起相机应用，拍照后存储到指定URI
+     * 示例： CameraUtils.takePhoto(context, CameraUtils.createImageFile(Environment.getExternalStorageDirectory() + "/stur/"), 181);
+     * 注意：AndroidO上的system用户的应用通过FileProvider拉起相机时会报错，见 FileProvider Issues 20190506
+     * @param context
+     * @param photoFile 例如 new File(Environment.getExternalStorageDirectory() + "/DCIM/Camera", getPhotoFileName());
+     * @param reqCode CAMERA_WITH_DATA = 181;
+     */
+    public static void takePhoto(Context context, File photoFile, int reqCode) {
+        Log.d(getTag(), "takePhoto E: photoFile = " + photoFile.getPath() + ", reqCode = " + reqCode);
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE, null);
+
+        // 在启动第三方APK里的Activity之前，需要确定调用是否可以解析为一个Activity
+        // 通过Intent的resolveActivity方法，并向该方法传入包管理器可以对包管理器进行查询以确定是否有Activity能够启动该Intent
+        if (intent.resolveActivity(context.getPackageManager()) != null) {
+            Uri outPutUri;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {//7.0及以上
+                outPutUri = FileProvider.getUriForFile(context.getApplicationContext(), "com.stur.chest.fileprovider", photoFile);
+
+                // 如下两种授权方式二选一
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+
+                //查询Camera默认应用的包名，如果知道是 org.codeaurora.snapcam 的话可以直接填，注意用户可能会修改默认相机应用
+                //context.grantUriPermission("org.codeaurora.snapcam", outPutUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                /*List<ResolveInfo> resInfoList = context.getPackageManager().queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+                for (ResolveInfo resolveInfo : resInfoList) {
+                    String packageName = resolveInfo.activityInfo.packageName;
+                    Log.d(getTag(), "takePhoto: packageName = " + packageName);
+                    context.grantUriPermission(packageName, outPutUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                }*/
+            } else {
+                outPutUri = Uri.fromFile(photoFile);
+            }
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, outPutUri);
+            context.startActivityForResult("com.stur.chest", intent, reqCode, null);
+        }
+    }
+
+    /**
+     * 根据当前系统时间对照片命名
+     * @return
+     */
+    public static String getPhotoFileName() {
+        Date date = new Date(System.currentTimeMillis());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("'IMG'_yyyyMMdd_HHmmss");
+        return dateFormat.format(date) + ".jpg";
+    }
+
+    /**
+     * 在指定路径（/sdcard/DCIM/Camera/）下创建空照片文件（保证目录存在），按照 yyyyMMdd_HHmmss_tmp 格式命名
+     * @return
+     * @throws IOException
+     */
+    public static File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_DCIM), "Camera");
+        File image = File.createTempFile(     //这个函数会在文件名后面加一些随机数以做区分
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        //mCurrentPhotoPath = "file:" + image.getAbsolutePath();
+        return image;
+    }
+
+    /**
+     * 通过指定路径创建空照片文件（保证路径存在）,按照 IMG_yyyyMMdd_HHmmss 的格式存储
+     * @param dir
+     * @return
+     */
+    public static File createImageFile(String dir) {
+        // 这里必须先保证目录存在，否则拍照后的照片无法保存
+        File f = new File(dir);
+        if (!f.exists()) {
+            f.mkdirs();
+        }
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ENGLISH).format(new Date());
+        String imageFileName = "IMG_" + timeStamp + ".jpg";
+        File image = new File(dir + imageFileName);
+        return image;
     }
 
     /**

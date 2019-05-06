@@ -305,7 +305,7 @@ public class PackageUtils {
      * @param pkg
      */
     public static void setDefaultDialer(Context context, String pkg) {
-        Log.d(getTag(), "setDefaultPhone E: pkg = " + pkg);
+        Log.d(getTag(), "setDefaultDialer E: pkg = " + pkg);
         if (pkg != null && !pkg.equals(getDefaultDialer(context))) {
             DefaultDialerManager.setDefaultDialerApplication(context, pkg);
         }

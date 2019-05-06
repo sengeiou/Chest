@@ -1,9 +1,10 @@
 package com.stur.chest.utils;
 
 import android.content.Context;
+import android.os.Environment;
 
 import com.stur.lib.Utils;
-import com.stur.lib.os.PackageUtils;
+import com.stur.lib.camera.CameraUtils;
 
 
 /**
@@ -16,7 +17,7 @@ public class TestUtils {
      *
      * @param context
      */
-    public void unitTest(final Context context) {
+    public void unitTest(final Context context)  {
         String ret = "";
         /*********** AdbUtils ************/
         //AdbUtils.enableAdb(context);
@@ -45,6 +46,9 @@ public class TestUtils {
 
         /*********** BluetoothUtils ************/
         //BluetoothUtils.getBondedDevices();
+
+        /*********** CameraUtils ************/
+        CameraUtils.takePhoto(context, CameraUtils.createImageFile(Environment.getExternalStorageDirectory() + "/stur/"), 1);
 
         /*********** ContactsUtils ************/
         //ContactsUtils.queryContacts(getContext());
@@ -84,15 +88,20 @@ public class TestUtils {
 
         /*********** Intent ************/
         //IntentUtils.sendUnreadedNumIntent(context);
-        /*IntentUtils.registerIntent(context, "un.intent.action.AUTO_CALL_RECORDER_CHANGED", new IntentUtils.IntentReceivedCallback() {
+
+        /*String[] intents = {"un.intent.action.AUTO_CALL_RECORDER_ENABLED_CHANGED", "un.intent.action.AUTO_CALL_RECORDER_PERIOD_CHANGED"};
+        IntentUtils.registerIntent(context, intents, new IntentUtils.IntentReceivedCallback() {
             @Override
             public void onIntentReceived(Intent intent) {
-                boolean enabled0 = intent.getBooleanExtra("call_record_0", false);  //卡1的自动录音开关状态
-                boolean enabled1 = intent.getBooleanExtra("call_record_1", false);   //卡2的自动录音开关状态
-                int period0 = intent.getIntExtra("call_record_period_0", 60);  //卡1的自动录音保存周期
-                int period1 = intent.getIntExtra("call_record_period_1", 60);  //卡2的自动录音保存周期
-                Log.d(this, "onIntentReceived: enabled0 = " + enabled0 + ", enabled1 = "
-                        + enabled1 + ", period0 = " + period0 + ", period1 = " + period1);
+                if ("un.intent.action.AUTO_CALL_RECORDER_ENABLED_CHANGED".equals(intent.getAction())) {
+                    int slotId = intent.getIntExtra("call_record_slot_id", 0);    // 当前被改变的卡槽ID，0为卡1，1为卡2
+                    boolean enabled = intent.getBooleanExtra("call_record_enabled",false);  //当前被改变的卡槽ID的自动录音开关状态
+                    Log.d(this, "onIntentReceived enabled change: slotId = " + slotId + ", enabled = " + enabled);
+                } else if ("un.intent.action.AUTO_CALL_RECORDER_PERIOD_CHANGED".equals(intent.getAction())) {
+                    int slotId = intent.getIntExtra("call_record_slot_id", 0);    // 当前被改变的卡槽ID，0为卡1，1为卡2
+                    int peroid = intent.getIntExtra("call_record_period",0);  //当前被改变的卡槽ID的自动录音的周期变化
+                    Log.d(this, "onIntentReceived: peroid change slotId = " + slotId + ", peroid = " + peroid);
+                }
             }
         });*/
         /*IntentUtils.registerIntent(context, UsbManager.ACTION_USB_STATE, new IntentUtils.IntentReceivedCallback(){
@@ -131,7 +140,7 @@ public class TestUtils {
         /*********** PackageUtils ************/
         //PackageUtils.initiateClearUserData(getContext(), "com.android.systemui");
         //boolean ret = PackageUtils.hasSystemFeature(context);
-        PackageUtils.setDefaultDialer(context, "com.android.dialer");
+        //PackageUtils.setDefaultDialer(context, "com.android.dialer");
 
         /*********** qcnvitems ************/
         /*String l = null;

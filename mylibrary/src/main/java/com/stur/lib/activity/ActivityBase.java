@@ -25,8 +25,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static android.Manifest.permission.READ_PHONE_STATE;
-
 /**
  * 本应用中的Activity的基础类，里面集成了一些通用的方法，尽量本应用的所有Activity都继承该类
  * AppManager中的一些Activity堆栈操作依赖这里的初始数据
@@ -121,11 +119,14 @@ public abstract class ActivityBase extends AppCompatActivity implements IContext
                 perms.put(Manifest.permission.READ_EXTERNAL_STORAGE, PackageManager.PERMISSION_GRANTED);
                 perms.put(Manifest.permission.RECORD_AUDIO, PackageManager.PERMISSION_GRANTED);
                 perms.put(Manifest.permission.WRITE_SECURE_SETTINGS, PackageManager.PERMISSION_GRANTED);
-                perms.put(READ_PHONE_STATE, PackageManager.PERMISSION_GRANTED);
+                perms.put(Manifest.permission.READ_PHONE_STATE, PackageManager.PERMISSION_GRANTED);
+                perms.put(Manifest.permission.CAMERA, PackageManager.PERMISSION_GRANTED);
 
                 // Fill with results
-                for (int i = 0; i < permissions.length; i++)
+                for (int i = 0; i < permissions.length; i++) {
                     perms.put(permissions[i], grantResults[i]);
+                }
+
                 // Check for ACCESS_FINE_LOCATION
                 if (perms.get(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                         && perms.get(Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED
@@ -133,7 +134,8 @@ public abstract class ActivityBase extends AppCompatActivity implements IContext
                         && perms.get(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
                         && perms.get(Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED
                         && perms.get(Manifest.permission.WRITE_SECURE_SETTINGS) == PackageManager.PERMISSION_GRANTED
-                        && perms.get(READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
+                        && perms.get(Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED
+                        && perms.get(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
                     // All Permissions Granted
                 } else {
                     // Permission Denied
@@ -174,21 +176,38 @@ public abstract class ActivityBase extends AppCompatActivity implements IContext
         List<String> permissionsNeeded = new ArrayList<String>();
 
         final List<String> permissionsList = new ArrayList<String>();
-        if (!addPermission(permissionsList, Manifest.permission.ACCESS_FINE_LOCATION))
+        if (!addPermission(permissionsList, Manifest.permission.ACCESS_FINE_LOCATION)) {
             permissionsNeeded.add("GPS");
-        if (!addPermission(permissionsList, Manifest.permission.READ_CONTACTS))
+        }
+
+        if (!addPermission(permissionsList, Manifest.permission.READ_CONTACTS)) {
             permissionsNeeded.add("Read Contacts");
-        if (!addPermission(permissionsList, Manifest.permission.WRITE_CONTACTS))
+        }
+
+        if (!addPermission(permissionsList, Manifest.permission.WRITE_CONTACTS)) {
             permissionsNeeded.add("Write Contacts");
-        if (!addPermission(permissionsList, Manifest.permission.READ_EXTERNAL_STORAGE))
+        }
+
+        if (!addPermission(permissionsList, Manifest.permission.READ_EXTERNAL_STORAGE)) {
             permissionsNeeded.add("Read Sdcard");
-        if (!addPermission(permissionsList, Manifest.permission.RECORD_AUDIO))
+        }
+
+        if (!addPermission(permissionsList, Manifest.permission.RECORD_AUDIO)) {
             permissionsNeeded.add("Record Audio");
-        if (!addPermission(permissionsList, Manifest.permission.READ_PHONE_STATE))
+        }
+
+        if (!addPermission(permissionsList, Manifest.permission.READ_PHONE_STATE)) {
             permissionsNeeded.add("Read Phone State");
+        }
+
         if (PackageUtils.AID_SYSTEM == PackageUtils.getMyUid()
-                && !addPermission(permissionsList, Manifest.permission.WRITE_SECURE_SETTINGS))
+                && !addPermission(permissionsList, Manifest.permission.WRITE_SECURE_SETTINGS)) {
             permissionsNeeded.add("Write Secure Settings");
+        }
+
+        if (!addPermission(permissionsList, Manifest.permission.CAMERA)) {
+            permissionsNeeded.add("Use Camera");
+        }
 
         if (permissionsList.size() > 0) {
             if (permissionsNeeded.size() > 0) {

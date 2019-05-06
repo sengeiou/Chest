@@ -91,6 +91,20 @@ android {
         }*/
 
         /*debug {
+            keyAlias 'urovo_domestic'
+            keyPassword '123456'
+            storeFile file('../../libs-keystores/urovo_domestic.jks')
+            storePassword '123456'
+        }*/
+
+        /*debug {
+            keyAlias 'urovo_janam'
+            keyPassword '123456'
+            storeFile file('../../libs-keystores/urovo_janam.jks')
+            storePassword '123456'
+        }*/
+
+        /*debug {
             keyAlias 'cmf_release'
             keyPassword '123456'
             storeFile file('../../libs-keystores/cmf_release.jks')

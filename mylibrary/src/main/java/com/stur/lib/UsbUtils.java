@@ -31,16 +31,15 @@ public class UsbUtils {
         }
         // For now look for a connected port, in the future we should identify port in the
         // notification and pick based on that.
-        final int N = ports.length;
-        Log.d(getTag(), "getUsbPortStatus: ports length = " + N);
-        for (int i = 0; i < N; i++) {
+        final int l = ports.length;
+        Log.d(getTag(), "getUsbPortStatus: ports length = " + l);
+        for (int i = 0; i < l; i++) {
             UsbPortStatus status = um.getPortStatus(ports[i]);
             Log.d(getTag(), "getUsbPortStatus: usbPort = " + ports[i] + "connected status = " + status.isConnected());
             if (status.isConnected()) {
                 usbPort = ports[i];
                 portStatus = status;
                 Log.d(getTag(), "getUsbPortStatus: usbPort = " + usbPort + ", portStatus = " + portStatus);
-                Utils.display(context, "getUsbPortStatus: usbPort = " + usbPort + ", portStatus = " + portStatus);
                 break;
             }
         }

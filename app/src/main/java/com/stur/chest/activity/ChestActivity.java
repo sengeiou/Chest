@@ -1,6 +1,7 @@
 package com.stur.chest.activity;
 
 import android.content.ComponentName;
+import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
@@ -108,5 +109,16 @@ public class ChestActivity extends FragmentActivityBase {
         viewPager.setAdapter(new FragmentAdapter(getSupportFragmentManager(), fragmentsList));
         viewPager.setCurrentItem(0);
         viewPager.setOnPageChangeListener(this);
+    }
+
+    /**
+     * 为了得到传回的数据，必须在前面的Activity中重写onActivityResult方法
+     * requestCode 请求码，即调用startActivityForResult()传递过去的值
+     * resultCode 结果码，结果码用于标识返回数据来自哪个新Activity
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.i(this, "onActivityResult E: requestCode = " + requestCode + ", resultCode = " + resultCode);
+        String result = data.getExtras().getString("result");//得到新Activity 关闭后返回的数据
     }
 }

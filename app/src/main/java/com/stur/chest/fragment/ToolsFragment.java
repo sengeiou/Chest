@@ -207,7 +207,7 @@ public class ToolsFragment extends Fragment {
         view.findViewById(R.id.btn_share_me).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String tmpPath = FileUtils.getWorkPath(getContext(),null) + "chest.apk";
+                String tmpPath = FileUtils.getWorkPath(getContext(), null) + "chest.apk";
                 try {
                     FileUtils.copyFile(getContext(), getContext().getPackageResourcePath(), tmpPath);
                 } catch (IOException e) {
@@ -329,7 +329,8 @@ public class ToolsFragment extends Fragment {
         pieData.setValueTextSize(12f);
         pieData.setValueTextColor(Color.BLUE);
 
-        mPieChart.setData(pieData);;
+        mPieChart.setData(pieData);
+        ;
         // undo all highlights
         mPieChart.highlightValues(null);
         mPieChart.invalidate();
