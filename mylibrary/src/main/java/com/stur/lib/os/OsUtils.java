@@ -3,6 +3,8 @@ package com.stur.lib.os;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Binder;
 import android.os.StrictMode;
 import android.telephony.TelephonyManager;
@@ -120,6 +122,7 @@ public class OsUtils {
 
     /**
      * 获取手机型号
+     *
      * @return
      */
     public static String getTypeInfo() {
@@ -138,7 +141,7 @@ public class OsUtils {
     /**
      * 获取当前系统上的语言列表(Locale列表)
      *
-     * @return  语言列表
+     * @return 语言列表
      */
     public static Locale[] getSystemLanguageList() {
         return Locale.getAvailableLocales();
@@ -147,25 +150,56 @@ public class OsUtils {
     /**
      * 获取当前手机系统版本号
      *
-     * @return  系统版本号
+     * @return 系统版本号
      */
     public static String getSystemVersion() {
         return android.os.Build.VERSION.RELEASE;
     }
 
     /**
+     * 返回当前程序的版本名
+     */
+    public static String getAppVersionName(Context context) {
+        String versionName = "";
+        int versionCode = 0;
+        try {
+            // ---get the package info---
+            PackageManager pm = context.getPackageManager();
+            PackageInfo pi = pm.getPackageInfo(context.getPackageName(), 0);
+            versionName = pi.versionName;
+            versionCode = pi.versionCode;
+            if (versionName == null || versionName.length() <= 0) {
+                return "";
+            }
+        } catch (Exception e) {
+            Log.e(getTag(), "getAppVersionName Exception", e);
+        }
+        return versionName;
+    }
+
+
+    /**
      * 获取手机型号
      *
-     * @return  手机型号
+     * @return 手机型号,比如 i6310
      */
     public static String getSystemModel() {
         return android.os.Build.MODEL;
     }
 
     /**
+     * 从 ro.build.display.id 属性获取版本号
+     * 比如：SQ52-userdebug 8.1.0 OPM1.171019.026 8.1.007.SQ52 test-keys
+     * @return
+     */
+    public static String getProductVersion() {
+        return android.os.Build.DISPLAY;
+    }
+
+    /**
      * 获取手机厂商
      *
-     * @return  手机厂商
+     * @return 手机厂商
      */
     public static String getDeviceBrand() {
         return android.os.Build.BRAND;
@@ -174,7 +208,7 @@ public class OsUtils {
     /**
      * 获取手机IMEI(需要“android.permission.READ_PHONE_STATE”权限)
      *
-     * @return  手机IMEI
+     * @return 手机IMEI
      */
     public static String getIMEI(Context ctx) {
         TelephonyManager tm = (TelephonyManager) ctx.getSystemService(Activity.TELEPHONY_SERVICE);
@@ -205,7 +239,7 @@ public class OsUtils {
         String governor = null;
         DataInputStream is = null;
         try {
-            Process process = Runtime.getRuntime().exec("cat " + StSystem.PATH_CPU_FREQ  + "/scaling_governor");
+            Process process = Runtime.getRuntime().exec("cat " + StSystem.PATH_CPU_FREQ + "/scaling_governor");
             is = new DataInputStream(process.getInputStream());
             governor = is.readLine();
         } catch (IOException e) {
@@ -219,7 +253,7 @@ public class OsUtils {
         List<String> governors = new ArrayList<String>();
         DataInputStream is = null;
         try {
-            Process process = Runtime.getRuntime().exec("cat " + StSystem.PATH_CPU_FREQ  + "/scaling_available_governors");
+            Process process = Runtime.getRuntime().exec("cat " + StSystem.PATH_CPU_FREQ + "/scaling_available_governors");
             is = new DataInputStream(process.getInputStream());
             String line = is.readLine();
 

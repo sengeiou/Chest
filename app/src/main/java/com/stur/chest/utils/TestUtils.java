@@ -1,10 +1,8 @@
 package com.stur.chest.utils;
 
 import android.content.Context;
-import android.os.Environment;
 
 import com.stur.lib.Utils;
-import com.stur.lib.camera.CameraUtils;
 
 
 /**
@@ -19,6 +17,8 @@ public class TestUtils {
      */
     public void unitTest(final Context context)  {
         String ret = "";
+
+
         /*********** AdbUtils ************/
         //AdbUtils.enableAdb(context);
 
@@ -48,7 +48,7 @@ public class TestUtils {
         //BluetoothUtils.getBondedDevices();
 
         /*********** CameraUtils ************/
-        CameraUtils.takePhoto(context, CameraUtils.createImageFile(Environment.getExternalStorageDirectory() + "/stur/"), 1);
+        //CameraUtils.takePhoto(context, CameraUtils.createImageFile(Environment.getExternalStorageDirectory() + "/stur/"), 1);
 
         /*********** ContactsUtils ************/
         //ContactsUtils.queryContacts(getContext());

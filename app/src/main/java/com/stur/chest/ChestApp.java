@@ -2,6 +2,7 @@ package com.stur.chest;
 
 import android.content.SharedPreferences;
 
+import com.stur.lib.Log;
 import com.stur.lib.app.ContextBase;
 import com.stur.lib.config.ConfigManager;
 import com.stur.lib.os.OsUtils;
@@ -40,6 +41,9 @@ public class ChestApp extends ContextBase {
         //ChestController.getInstance().init(this);
 
         OsUtils.addFileUriSupport();
+
+        Log.i(this, "onCreate E: UE version = " + OsUtils.getProductVersion() +
+                ", App version = " + OsUtils.getAppVersionName(getApplicationContext()));
     }
 
     //如果添加方法数超标后需要做dex分包处理3-3
