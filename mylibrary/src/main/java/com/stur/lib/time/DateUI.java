@@ -14,9 +14,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-/**
- * Created by Tony on 1/4/15.
- */
+
 public class DateUI {
     /**
      * 选择数字

@@ -1,7 +1,9 @@
 package com.stur.chest.utils;
 
 import android.content.Context;
+import android.content.Intent;
 
+import com.stur.activity.SerialChatActivity;
 import com.stur.lib.Utils;
 
 
@@ -158,8 +160,8 @@ public class TestUtils {
 
         /*********** startActivity ************/
         //拉起某个界面
-        /*Intent intent = new Intent(context, ChipsailingFingerprintActivity.class);
-        context.startActivity(intent);*/
+        //context.startActivity(new Intent(context, ChipsailingFingerprintActivity.class));
+
         /*Intent intent =
                 new Intent("android.provider.Telephony.SECRET_CODE", Uri.parse("android_secret_code://" + "76266344"));
         ComponentName cn = new ComponentName("com.qualcomm.qti.modemtestmode", "com.qualcomm.qti.modemtestmode.DefaultReceiver");
@@ -176,6 +178,8 @@ public class TestUtils {
         /*PackageManager packageManager = context.getPackageManager();
         Intent intent = packageManager.getLaunchIntentForPackage("com.qualcomm.qti.modemtestmode");
         context.startActivity(intent);*/
+
+        context.startActivity(new Intent(context, SerialChatActivity.class));
 
         //拉起某个服务
         /*Intent startIntent = new Intent(this, ChestService.class);

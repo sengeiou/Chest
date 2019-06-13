@@ -41,7 +41,8 @@
     <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" />
     <!-- 读取Log权限 -->
     <uses-permission android:name="android.permission.READ_LOGS" />
-
+    <!--串口相关权限-->
+    <uses-permission android:name="android.permission.SERIAL_PORT" />
 
     <application
         android:name=".ChestApp"
@@ -115,6 +116,9 @@
         <activity android:name="com.stur.activity.SwipeListActivity" />
         <activity android:name="com.stur.activity.ChipsailingFingerprintActivity" />
         <activity android:name="com.stur.activity.LedSettingActivity" />
+        <activity android:name="com.stur.activity.GpioTestActivity" />
+        <activity android:name="com.stur.activity.SerialChatActivity" />
+
 
 
         <service android:name="com.stur.chest.service.ChestService" />

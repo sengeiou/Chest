@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2007 The Android Open Source Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="clear">清除</string>
+	<string name="hex">Hex</string>
+	<string name="txt">Txt</string>
+	<string name="auto_clear">自动清除</string>	
+	<string-array name="spinner1_entries" translatable="false">
+        <item>@string/device_id1</item>
+        <item>@string/device_id2</item>
+		<item>@string/device_id3</item>
+		<item>@string/device_id4</item>
+   </string-array>
+	<string name="device_id1">/dev/ttyMT0</string>
+	<string name="device_id2">/dev/ttyMT1</string>
+	<string name="device_id3">/dev/ttyXRM0</string>
+	<string name="device_id4">/dev/ttyXRM1</string>
+	<string-array name="spinner2_entries" translatable="false">
+        <item>@string/btl_id1</item>
+        <item>@string/btl_id2</item>
+   </string-array>
+    <string name="btl_id2">115200</string>
+	<string name="btl_id1">921600</string>
+	<string name="ms">ms</string>
+	<string name="auto">自动</string>
+	<string name="not_auto">手动</string>
+	<string name="send">发送</string>
+	<string name="send_hint">输入发送内容</string>
+	<string name="repeat_time_hint">输入自动发送间隔时间</string>
+	<string name="gpio_test">gpio测试</string>
+	<string name="read_gpio">读GPIO</string>
+	<string name="write_gpio">写GPIO</string>
+	<string name="gpio_no">GPIO NO</string>
+	<string name="gpio_value">GPIO VALUE</string>
+	<string name="serial_test">串口通信</string>
+	<string name="key_test">按键测试</string>
+	<string name="navbar_test">导航栏测试</string>
+	
+	<string-array name="gpio_no_entries" translatable="false">
+        <item>@string/gpio_no_91</item>
+        <item>@string/gpio_no_100</item>
+		<item>@string/gpio_no_101</item>
+        <item>@string/gpio_no_102</item>
+		<item>@string/gpio_no_103</item>
+        <item>@string/gpio_no_104</item>
+		<item>@string/gpio_usb_otg</item>
+   </string-array>
+   <string name="gpio_no_91">91</string>
+   <string name="gpio_no_100">100</string>
+   <string name="gpio_no_101">101</string>
+   <string name="gpio_no_102">102</string>
+   <string name="gpio_no_103">103</string>
+   <string name="gpio_no_104">104</string>
+   <string name="gpio_usb_otg">35</string>
+   <string name="navbar_show_test">导航栏显示</string>
+   <string name="navbar_hide_test">导航栏隐藏</string>
+</resources>
