@@ -1,13 +1,6 @@
 package com.stur.lib.db;
 
-/**
- * Created by Administrator on 2016/3/4.
- */
-/**
- * 缓存接口
- * <p/>
- * Created by zhihui_chen on 14-8-14.
- */
+
 public interface Cache {
 
     /**

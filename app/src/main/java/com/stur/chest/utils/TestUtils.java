@@ -66,6 +66,7 @@ public class TestUtils {
         /*********** DB ************/
         //Settings.System.putInt(getContext().getContentResolver(),"pointer_screenshotchord", 1);
         //Settings.Secure.putInt(getContext().getContentResolver(), "lock_screen_show_notifications", 0);
+        //LoggerSQLiteHelper.getInstance(context).addWarnningRecord(context, 0, 100);
 
         /*********** Display ************/
         /*(new ColorManagerUtils(context)).setDisplayMode(ColorManagerUtils.CE_BLACKWHITE);
