@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Build;
+import android.os.SystemProperties;
 import android.telecom.PhoneAccountHandle;
 import android.telecom.TelecomManager;
 import android.telephony.SubscriptionInfo;
@@ -128,6 +129,14 @@ public class TMUtils {
             return deviceId;
         }
         return "";
+    }
+
+    /**
+     * 获取基带版本号，直接从系统属性读取，所以需要为system用户才能获取
+     * @return
+     */
+    public static String getBasebandVersion() {
+        return SystemProperties.get("gsm.version.baseband", "");
     }
 
     /**

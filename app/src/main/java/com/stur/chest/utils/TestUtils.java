@@ -1,10 +1,9 @@
 package com.stur.chest.utils;
 
 import android.content.Context;
-import android.content.Intent;
 
-import com.stur.activity.SerialChatActivity;
 import com.stur.lib.Utils;
+import com.stur.lib.network.TMUtils;
 
 
 /**
@@ -180,7 +179,7 @@ public class TestUtils {
         Intent intent = packageManager.getLaunchIntentForPackage("com.qualcomm.qti.modemtestmode");
         context.startActivity(intent);*/
 
-        context.startActivity(new Intent(context, SerialChatActivity.class));
+        //context.startActivity(new Intent(context, SerialChatActivity.class));
 
         //拉起某个服务
         /*Intent startIntent = new Intent(this, ChestService.class);
@@ -205,6 +204,7 @@ public class TestUtils {
         //String ret = IccidParser.getInstance().getCarrier("898603");
         //TMUtils.callPhone(getContext(), "10010", 0);
         //new TMUtils.MissedCallObserver(getContext());
+        ret = TMUtils.getBasebandVersion();
 
         /*********** ThreadUtils ************/
         /*new Thread(new Runnable() {
@@ -231,6 +231,12 @@ public class TestUtils {
 
         /*********** UsbUtils ************/
         //UsbUtils.getUsbPortStatus(context);
+
+        /*********** WebUtils ************/
+        /*Intent i = new Intent(context, MinaService.class);
+        context.startService(i);
+        UserAccountDTO dto = new UserAccountDTO();
+        SessionManager.getInstance().writeToServer(GsonUtils.toJson(dto));*/
 
         /*********** WifiUtils ************/
         //开启ping
